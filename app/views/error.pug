@@ -1,0 +1,15 @@
+extends layout
+
+block content
+    #error-body
+        h1= error.status + " - " + message
+        if ( error.status === 404 )
+            audio(autoplay="autoplay")
+                source(src="/audio/LTTP_Link_Dying.wav" type="audio/wav")
+                | Your browser does not support the audio element.
+            
+            p You've located a dead link.
+            <!-- Both link picture and sound idea taken from http://fruit.gs/404.html -->
+
+            img(src="/images/deadlink.png", alt="Dead Link")
+        pre #{error.stack}
