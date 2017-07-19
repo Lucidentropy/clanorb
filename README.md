@@ -9,3 +9,4 @@ The ongoing development of the orb website.
 # Entry Points
 - Css / Scss : ./app/style.css
 - Javascript : ./app/script.js
+- HTML : ./app/views/index.pug
