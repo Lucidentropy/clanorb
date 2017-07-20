@@ -63,17 +63,11 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10333,15 +10327,133 @@ return jQuery;
 
 
 /***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+var videoList = __webpack_require__(4);
+
+var theVideo = {
+    player: document.getElementById('bg-video'),
+    videoTokens: [],
+    refs: {},
+    init: function init() {
+        var _this = this;
+
+        this.player.addEventListener('loadeddata', function () {
+            _this.play();
+        });
+        this.player.addEventListener('ended', function () {
+            _this.randomVid();
+        });
+
+        document.getElementById('video-pause').addEventListener("click", function () {
+            _this.pause();
+        });
+
+        document.getElementById('video-play').addEventListener("click", function () {
+            _this.play();
+        });
+
+        // merge children
+
+        var _loop = function _loop() {
+            _this.videoTokens = _this.videoTokens.concat(videoList[index]);
+
+            // store a reference table of object parent name to token
+            var ix = index;
+            var unCamel = ix.replace(/([A-Z])/g, " $1").replace(/([0-9])/g, " $1").replace(/ Of /g, ' of ');
+            var indexName = unCamel.charAt(0).toUpperCase() + unCamel.slice(1);
+
+            videoList[ix].forEach(function (item, index) {
+                var tokenRef = item.split(':')[1];
+                _this.refs[tokenRef] = indexName;
+            });
+        };
+
+        for (var index in videoList) {
+            _loop();
+        }
+
+        // filter out uniques
+        this.videoTokens = [].concat(_toConsumableArray(new Set(this.videoTokens)));
+
+        this.randomVid();
+    },
+    play: function play() {
+        this.player.play();
+        document.getElementById('video-play').style.display = 'none';
+        document.getElementById('video-pause').style.display = 'block';
+    },
+    pause: function pause() {
+        this.player.pause();
+        document.getElementById('video-play').style.display = 'block';
+        document.getElementById('video-pause').style.display = 'none';
+    },
+    randomVid: function randomVid() {
+
+        var token = this.videoTokens[Math.floor(Math.random() * this.videoTokens.length)];
+
+        if (typeof token !== "undefined" && token !== "") {
+            this.loadVid(token);
+        } else {
+            console.error(this.videoTokens, token);
+        }
+    },
+    loadVid: function loadVid(itoken) {
+        var webm = void 0,
+            mp4 = void 0,
+            poster = void 0;
+        var type = itoken.split(':')[0];
+        var token = itoken.split(':')[1];
+
+        switch (type) {
+            case "gfycat":
+                webm = 'http://giant.gfycat.com/' + token + '.webm';
+                mp4 = 'http://giant.gfycat.com/' + token + '.mp4';
+                poster = 'http://thumbs.gfycat.com/' + token + '-poster.jpg';
+                break;
+            case "imgur":
+                webm = 'http://i.imgur.com/' + token + '.webm';
+                mp4 = 'http://i.imgur.com/' + token + '.mp4';
+                poster = 'http://i.imgur.com/' + token + '.jpg';
+                break;
+            default:
+                console.error('No valid type found for this token : ', token);
+                this.randomVid();
+                return false;
+        }
+
+        document.querySelector('source[type="video/webm"]').setAttribute('src', webm);
+        document.querySelector('source[type="video/mp4"]').setAttribute('src', mp4);
+        this.player.setAttribute('poster', poster);
+
+        document.getElementById('video-channel').querySelector('span').innerHTML = this.refs[token];
+
+        this.player.load();
+    }
+};
+
+module.exports = theVideo;
+
+/***/ }),
 /* 2 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {
 
-__webpack_require__(0);
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+__webpack_require__(2);
 
 $(function () {
     console.log("Document Ready");
@@ -10356,88 +10468,9 @@ $(function () {
         }, 800);
     });
 
-    var theVideo = {
-        player: document.getElementById('bg-video'),
-        init: function init() {
-            var _this = this;
-
-            this.player.addEventListener('loadeddata', function () {
-                _this.play();
-            });
-            this.player.addEventListener('ended', function () {
-                _this.randomVid();
-            });
-
-            $('.video-pause').click(function () {
-                $(this).hide();
-                theVideo.pause();
-            });
-
-            $('.video-play').click(function () {
-                $(this).hide();
-                theVideo.play();
-            });
-
-            this.randomVid();
-        },
-        play: function play() {
-            this.player.play();
-            $('.video-pause').show();
-        },
-        pause: function pause() {
-            this.player.pause();
-            $('.video-play').show();
-        },
-        randomVid: function randomVid() {
-            // merge children
-            var videoTokens = [];
-            for (var index in videoList) {
-                videoTokens = videoTokens.concat(videoList[index]);
-            }
-
-            // filter out uniques
-            videoTokens = [].concat(_toConsumableArray(new Set(videoTokens)));
-
-            var token = videoTokens[Math.floor(Math.random() * videoTokens.length)];
-
-            if (typeof token !== "undefined" && token !== "") {
-                this.loadVid(token);
-            } else {
-                console.error(videoList, token);
-            }
-        },
-        loadVid: function loadVid(itoken) {
-            var webm = void 0,
-                mp4 = void 0,
-                poster = void 0;
-            var type = itoken.split(':')[0];
-            var token = itoken.split(':')[1];
-
-            switch (type) {
-                case "gfycat":
-                    webm = 'http://giant.gfycat.com/' + token + '.webm';
-                    mp4 = 'http://giant.gfycat.com/' + token + '.mp4';
-                    poster = 'http://thumbs.gfycat.com/' + token + '-poster.jpg';
-                    break;
-                case "imgur":
-                    webm = 'http://i.imgur.com/' + token + '.webm';
-                    mp4 = 'http://i.imgur.com/' + token + '.mp4';
-                    poster = 'http://i.imgur.com/' + token + '.jpg';
-                    break;
-                default:
-                    console.error('No valid type found for this token : ', token);
-                    this.randomVid();
-                    return false;
-            }
-
-            $('source[type="video/webm"]', this.player).attr('src', webm);
-            $('source[type="video/mp4"]', this.player).attr('src', mp4);
-            this.player.setAttribute('poster', poster);
-
-            this.player.load();
-        }
-    };
-    theVideo.init();
+    // background video player
+    var bgVideo = __webpack_require__(1);
+    bgVideo.init();
 
     // Konami Code
     var kkeys = [],
@@ -10463,6 +10496,15 @@ $(function () {
     console.log('▲,▲,▼,▼,◄,►,◄,►,(B),(A)');
     console.groupEnd();
 });
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 var videoList = {
     overwatch: ['gfycat:AridGroundedBactrian', 'gfycat:BaggyVictoriousIberianmole', 'gfycat:BeneficialFlippantBelugawhale', 'gfycat:BossyDistortedBudgie', 'gfycat:BossyFlippantBlackfly', 'gfycat:BreakableFairAxolotl', 'gfycat:CanineScholarlyIbisbill', 'gfycat:CaringFancyIndianspinyloach', 'gfycat:CircularExaltedFlounder', 'gfycat:CoarseSorrowfulCub', 'gfycat:ConstantBreakableImperialeagle', 'gfycat:ConstantObedientAfricanjacana', 'gfycat:CreamyShyCottonmouth', 'gfycat:DefensiveVillainousHammerkop', 'gfycat:DeficientSmallEgret', 'gfycat:DelectableRadiantKiwi', 'gfycat:DependableGlassBee', 'gfycat:DigitalOccasionalCygnet', 'gfycat:EagerGoodGangesdolphin', 'gfycat:EuphoricKindheartedIbis', 'gfycat:FavorableRewardingAnura', 'gfycat:FrankViciousHairstreak', 'gfycat:FrighteningEmptyArgusfish', 'gfycat:GeneralVeneratedGermanwirehairedpointer', 'gfycat:GiftedFrenchAzurevase', 'gfycat:GlassHappygoluckyArthropods', 'gfycat:GoldenFreeGonolek', 'gfycat:IdenticalPaltryAgama', 'gfycat:ImpartialJitteryDuiker', 'gfycat:ImpishDimAlbacoretuna', 'gfycat:ImpressionableLargeIbizanhound', 'gfycat:InfantileAdmiredDromedary', 'gfycat:InfiniteImmediateIberianlynx', 'gfycat:InstructiveMeanGuanaco', 'gfycat:JampackedFreshHoopoe', 'gfycat:LastingVacantBlackfish', 'gfycat:LightDarkDrongo', 'gfycat:LightheartedSmallEastrussiancoursinghounds', 'gfycat:LonelyUntriedBluefish', 'gfycat:MellowAnyHochstettersfrog', 'gfycat:MellowBlackHoneybee', 'gfycat:MerryNeglectedKinglet', 'gfycat:MisguidedGlaringGrassspider', 'gfycat:NaiveHopefulBergerpicard', 'gfycat:NaturalWhisperedAfricanjacana', 'gfycat:NecessaryGoldenDevilfish', 'gfycat:NecessaryWastefulGuineafowl', 'gfycat:OblongBewitchedBelugawhale', 'gfycat:OldSpryFennecfox', 'gfycat:OrneryIcyArcticwolf', 'gfycat:PassionateGrandioseKinglet', 'gfycat:PlainSecretGraysquirrel', 'gfycat:PlumpIdioticKoalabear', 'gfycat:PresentDisgustingAplomadofalcon', 'gfycat:QuickImpartialKob', 'gfycat:RedThirstyHeterodontosaurus', 'gfycat:SaltyAggressiveCockerspaniel', 'gfycat:SatisfiedSpiffyJaguar', 'gfycat:ScrawnyDrearyDaddylonglegs', 'gfycat:ShabbyAltruisticCreature', 'gfycat:SleepyBreakableFrog', 'gfycat:SmoggyQueasyFish', 'gfycat:TestyWhichBuzzard', 'gfycat:ThinColorfulAmericancrayfish', 'gfycat:UnawareSorrowfulIndianglassfish', 'gfycat:UnderstatedFearlessCoati', 'gfycat:UnlinedEnchantingAsiansmallclawedotter', 'gfycat:UnrealisticSilverFlamingo', 'gfycat:UnripeVelvetyAmethystsunbird', 'gfycat:UnsteadyCloseHedgehog', 'gfycat:VerifiableTeemingAnemonecrab', 'gfycat:WatchfulFreeCock', 'gfycat:WeepyHonorableEasternnewt', 'gfycat:WeightyLikableBrant', 'gfycat:WeightyRealisticDwarfmongoose', 'gfycat:WellwornTatteredEyra', 'gfycat:ZigzagJealousIrishredandwhitesetter', 'imgur:nHqy2FF', 'imgur:Gw63577', 'imgur:XRUjTjv', 'imgur:oegdyME', 'imgur:KXXcGMJ', 'imgur:tLIzoE1', 'imgur:6chBdw5', 'imgur:To2UDdM', 'imgur:GwnF00r', 'gfycat:EquatorialAdeptHammerheadshark', 'imgur:uy4C4I1', 'gfycat:PoliteZanyGrouper', 'imgur:WOutVGu', 'gfycat:BackPoshHawaiianmonkseal', 'gfycat:HandsomeUnimportantAngelfish', 'gfycat:FaintGregariousKoala', 'gfycat:TerribleFineHammerheadshark', 'gfycat:InferiorPeskyAustraliankelpie', 'gfycat:WhirlwindLonelyDachshund', 'gfycat:GracefulUnconsciousAustraliankelpie', 'gfycat:FluidIdenticalAmericanquarterhorse', 'gfycat:MajorBlackandwhiteColt'],
     gta5: ['imgur:uNk5woD', 'gfycat:ForsakenNervousCorydorascatfish', 'gfycat:FarWhimsicalCivet', 'imgur:xuxS3DN', 'gfycat:SimilarOpulentAnemone', 'gfycat:PepperySentimentalGraywolf', 'gfycat:SnappyAppropriateAustraliancurlew', 'imgur:0qnfTk9'],
@@ -10470,16 +10512,17 @@ var videoList = {
     justCause: ['imgur:trjS6g5'],
     battlefield: ['gfycat:AgileMeekIrukandjijellyfish', 'imgur:kMgCYt5'],
     forzaHorizon3: ['gfycat:ShinyVigorousCats'],
-    wildlands: ['imgur:A668H16'],
+    ghostReconWildlands: ['imgur:A668H16'],
     worldOfWarcraft: ['imgur:agZISAX', 'imgur:JAZClBI'],
     mario: ['imgur:RRKKAdY'],
-    pubg: ['gfycat:LameWeeBluebreastedkookaburra'],
+    playerUnknownsBattleground: ['gfycat:LameWeeBluebreastedkookaburra'],
     darkSouls: ['imgur:lr1tQRS'],
     witcher3: ['gfycat:LeanFlawedIberianchiffchaff'],
     other: ['imgur:P8MhFTn', 'imgur:ICvySRr', 'imgur:HNfYrDk', 'imgur:ZbPU4D4', 'imgur:TuISmiO', 'imgur:pWKPmx7', 'gfycat:DearFlawedAmericancreamdraft', 'gfycat:AffectionateLeafyGermanwirehairedpointer', 'imgur:b3kjvHm']
 
 };
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+
+module.exports = videoList;
 
 /***/ })
 /******/ ]);

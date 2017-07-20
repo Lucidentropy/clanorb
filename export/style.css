@@ -11,8 +11,9 @@ html {
 
 body {
   font-family: 'Open Sans', sans-serif;
-  background-color: #222;
+  margin: 0;
   color: #eee;
+  background-color: #222;
 }
 
 video {
@@ -27,10 +28,10 @@ video {
 }
 
 #error-body {
+  text-align: center;
   width: 980px;
   max-width: 98%;
   margin: 0 auto;
-  text-align: center;
 }
 
 #error-body pre {
@@ -55,6 +56,8 @@ video {
   align-items: center;
   justify-content: center;
   width: 100vw;
+  min-width: 320px;
+  max-width: 100%;
   height: 100vh;
 }
 
@@ -63,7 +66,6 @@ video {
   text-align: center;
   vertical-align: middle;
   width: 600px;
-  max-width: 95%;
   height: 600px;
   max-height: 100%;
   margin: 0 auto;
@@ -81,6 +83,11 @@ video {
   line-height: 1em;
   text-transform: uppercase;
   transform: skew(-0.25rad);
+}
+
+#lazy-center .message {
+  max-width: 95%;
+  margin: 0 auto;
 }
 
 #lazy-center .select p {
@@ -132,10 +139,14 @@ video {
 }
 
 #video-controls {
+  font-size: .8rem;
+  line-height: 30px;
   position: fixed;
   z-index: 1;
   bottom: 0;
   left: 0;
+  display: flex;
+  height: 30px;
   color: #eee;
   background-color: rgba(0, 0, 0, 0.5);
 }
@@ -144,22 +155,33 @@ video {
   margin: 0;
 }
 
-#video-controls div {
-  font-size: 12px;
-  line-height: 30px;
+#video-controls > div {
+  white-space: nowrap;
+  height: 100%;
+}
+
+#video-controls #video-pause,
+#video-controls #video-play {
   text-align: center;
-  display: inline-block;
+  display: none;
   width: 30px;
-  height: 30px;
   cursor: pointer;
 }
 
-#video-controls:hover {
+#video-controls #video-pause:hover,
+#video-controls #video-play:hover {
   color: #00a5e2;
 }
 
-#video-controls .video-play {
-  display: none;
+#video-controls #video-channel {
+  width: auto;
+  padding: 0 1em;
+}
+
+#video-controls #video-channel span {
+  font-style: italic;
+  display: inline-block;
+  padding: 0 1em;
 }
 
 @media (min-width: 480px) {
