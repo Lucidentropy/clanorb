@@ -101,7 +101,7 @@ const videoList = {
         'gfycat:FluidIdenticalAmericanquarterhorse',
         'gfycat:MajorBlackandwhiteColt',
     ],
-    gta5: [
+    grandTheftAutoV: [
         'imgur:uNk5woD',
         'gfycat:ForsakenNervousCorydorascatfish',
         'gfycat:FarWhimsicalCivet',

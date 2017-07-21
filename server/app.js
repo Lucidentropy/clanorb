@@ -1,8 +1,8 @@
 let express = require('express');
 let path = require('path');
 let favicon = require('serve-favicon');
-let logger = require('morgan');
-let cookieParser = require('cookie-parser');
+// let logger = require('morgan');
+// let cookieParser = require('cookie-parser');
 let bodyParser = require('body-parser');
 
 let routes = require('./router');
@@ -14,11 +14,27 @@ app.set('views', path.join(__dirname, '../', 'app/views'));
 app.set('view engine', 'pug');
 
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+// app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+// app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../', 'www')));
+
+// Middleware security headers
+app.use((req, res, next) => {
+  res.header("X-Frame-Options", 'DENY');
+  res.header("X-XSS-Protection", '1; mode=block');
+  res.header("Cache-Control", 'public, max-age=30672000');
+  res.header("Strict-Transport-Security", 'max-age=86400');
+  res.header("X-Content-Type-Options", 'nosniff');
+
+  // no cors for now
+  // res.header("Access-Control-Allow-Origin", "*");
+  // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("X-Zibit", 'yo dawg, I heard you like headers');
+  res.header("X-Powered-By", 'Pessimism and Syntax Errors');
+  next();
+});
 
 app.use('/', routes);
 

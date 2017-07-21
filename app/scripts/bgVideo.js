@@ -1,6 +1,6 @@
-let videoList = require('./videoList');
+const videoList = require('./videoList');
 
-var theVideo = {
+const theVideo = {
     player: document.getElementById('bg-video'),
     videoTokens: [],
     refs: {},
@@ -25,11 +25,10 @@ var theVideo = {
             this.videoTokens = this.videoTokens.concat(videoList[index]);
 
             // store a reference table of object parent name to token
-            let ix = index;
-            let unCamel = ix.replace(/([A-Z])/g, " $1").replace(/([0-9])/g, " $1").replace(/ Of /g, ' of ');
+            let unCamel = index.replace(/([A-Z])/g, " $1").replace(/([0-9])/g, " $1").replace(/ Of /g, ' of ');
             let indexName = unCamel.charAt(0).toUpperCase() + unCamel.slice(1);
 
-            videoList[ix].forEach((item, index) => {
+            videoList[index].forEach((item, index) => {
                 let tokenRef = item.split(':')[1];
                 this.refs[tokenRef] = indexName;
             });
@@ -82,8 +81,8 @@ var theVideo = {
                 return false;
         }
 
-        document.querySelector('source[type="video/webm"]').setAttribute('src', webm);
-        document.querySelector('source[type="video/mp4"]').setAttribute('src', mp4);
+        this.player.querySelector('source[type="video/webm"]').setAttribute('src', webm);
+        this.player.querySelector('source[type="video/mp4"]').setAttribute('src', mp4);
         this.player.setAttribute('poster', poster);
 
         document.getElementById('video-channel').querySelector('span').innerHTML = this.refs[token];

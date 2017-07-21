@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -10335,7 +10335,7 @@ return jQuery;
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-var videoList = __webpack_require__(4);
+var videoList = __webpack_require__(5);
 
 var theVideo = {
     player: document.getElementById('bg-video'),
@@ -10365,11 +10365,10 @@ var theVideo = {
             _this.videoTokens = _this.videoTokens.concat(videoList[index]);
 
             // store a reference table of object parent name to token
-            var ix = index;
-            var unCamel = ix.replace(/([A-Z])/g, " $1").replace(/([0-9])/g, " $1").replace(/ Of /g, ' of ');
+            var unCamel = index.replace(/([A-Z])/g, " $1").replace(/([0-9])/g, " $1").replace(/ Of /g, ' of ');
             var indexName = unCamel.charAt(0).toUpperCase() + unCamel.slice(1);
 
-            videoList[ix].forEach(function (item, index) {
+            videoList[index].forEach(function (item, index) {
                 var tokenRef = item.split(':')[1];
                 _this.refs[tokenRef] = indexName;
             });
@@ -10428,8 +10427,8 @@ var theVideo = {
                 return false;
         }
 
-        document.querySelector('source[type="video/webm"]').setAttribute('src', webm);
-        document.querySelector('source[type="video/mp4"]').setAttribute('src', mp4);
+        this.player.querySelector('source[type="video/webm"]').setAttribute('src', webm);
+        this.player.querySelector('source[type="video/mp4"]').setAttribute('src', mp4);
         this.player.setAttribute('poster', poster);
 
         document.getElementById('video-channel').querySelector('span').innerHTML = this.refs[token];
@@ -10442,18 +10441,112 @@ module.exports = theVideo;
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {
 
-__webpack_require__(2);
+/*
+                                                 ,  ,
+                                               / \/ \
+                                              (/ //_ \_
+     .-._                                      \||  .  \
+      \  '-._                            _,:__.-"/---\_ \
+ ______/___  '.    .--------------------'~-'--.)__( , )\ \
+`'--.___  _\  /    |             Here        ,'    \)|\ `\|
+     /_.-' _\ \ _:,_          Be Dragons           " ||   (
+   .'__ _.' \'-/,`-~`                                |/
+       '. ___.> /=,|                                 |
+        / .-'/_ )  '---------------------------------'
+        )'  ( /(/
+             \\ "
+              '=='
+    */
+
+// Easter Egg effects
+var effects = {
+    konami: function konami() {
+        var audio = new Audio('./audio/OOT_Secret.wav');
+        audio.play();
+
+        $('body').fadeOut(2000, function () {
+            window.location = 'http://www.clanorb.com/mood.html';
+        });
+    },
+    doom1: function doom1() {
+        console.info('DOOM GOD MODE ENABLED');
+    },
+    doom2: function doom2() {
+        console.info('DOOM ALL WEAPONS ENABLED');
+    },
+    zelda: function zelda() {
+        console.info('PRINCESS LINK');
+    },
+    tribes1: function tribes1() {
+        console.info('Shazbot');
+    }
+};
+
+// keycode listener
+var globalKeys = [];
+var codeListener = function codeListener(cb, keys) {
+    if (globalKeys.toString().indexOf(keys) >= 0) {
+        cb();
+        globalKeys = [];
+    }
+};
+var stringToKeyCode = function stringToKeyCode(string) {
+    var set = [];
+    string.toUpperCase().split('').forEach(function (c) {
+        set.push(c.charCodeAt(0));
+    });
+    return set.toString();
+};
+
+document.addEventListener('keydown', function (e) {
+    globalKeys.push(e.keyCode);
+    globalKeys = globalKeys.slice(-10);
+
+    codeListener(effects.konami, "38,38,40,40,37,39,37,39,66,65");
+    codeListener(effects.doom1, stringToKeyCode('IDDQD'));
+    codeListener(effects.doom2, stringToKeyCode('IDKFA'));
+    codeListener(effects.zelda, stringToKeyCode('zelda'));
+    codeListener(effects.tribes1, stringToKeyCode('vga'));
+});
+
+// For curious visitors
+console.groupCollapsed('%c Clanorb.com website information. Click to expand in Chrome.', 'color:#6CF; background:#000 url(http://www.clanorb.com/images/icon_b0x0rz.gif) no-repeat 5px 50%;padding:5px 5px 5px 20px;line-height:20px;');
+console.log('The orb website is written in javascript using Node and Express. HTML written in pug. Css written in scss. Javascript dependencies, html, and scss compiled by webpack. ES2015 transpiling done by babel-core.');
+console.log('Learning front-end web development? Get started with this guide : http://jstherightway.org/');
+console.log('If you still have questions about web development for gaming websites, feel free to contact me : lucid@clanorb.com ');
+console.log('▲,▲,▼,▼,◄,►,◄,►,(B),(A)');
+console.log('https://github.com/Lucidentropy/clanorb');
+console.groupEnd();
+
+// How did they build stack overflow before there was stack oveflow?
+var oneTrueJavascriptExceptionHandler = function oneTrueJavascriptExceptionHandler(cb) {
+    try {
+        cb();
+    } catch (e) {
+        window.location.href = "http://stackoverflow.com/search?q=[js] + " + e.message;
+    }
+};
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {
+
+__webpack_require__(3);
 
 $(function () {
     console.log("Document Ready");
@@ -10473,12 +10566,12 @@ $(function () {
     bgVideo.init();
 
     // It's easter somewhere
-    __webpack_require__(10);
+    __webpack_require__(2);
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10486,7 +10579,7 @@ $(function () {
 
 var videoList = {
     overwatch: ['gfycat:AridGroundedBactrian', 'gfycat:BaggyVictoriousIberianmole', 'gfycat:BeneficialFlippantBelugawhale', 'gfycat:BossyDistortedBudgie', 'gfycat:BossyFlippantBlackfly', 'gfycat:BreakableFairAxolotl', 'gfycat:CanineScholarlyIbisbill', 'gfycat:CaringFancyIndianspinyloach', 'gfycat:CircularExaltedFlounder', 'gfycat:CoarseSorrowfulCub', 'gfycat:ConstantBreakableImperialeagle', 'gfycat:ConstantObedientAfricanjacana', 'gfycat:CreamyShyCottonmouth', 'gfycat:DefensiveVillainousHammerkop', 'gfycat:DeficientSmallEgret', 'gfycat:DelectableRadiantKiwi', 'gfycat:DependableGlassBee', 'gfycat:DigitalOccasionalCygnet', 'gfycat:EagerGoodGangesdolphin', 'gfycat:EuphoricKindheartedIbis', 'gfycat:FavorableRewardingAnura', 'gfycat:FrankViciousHairstreak', 'gfycat:FrighteningEmptyArgusfish', 'gfycat:GeneralVeneratedGermanwirehairedpointer', 'gfycat:GiftedFrenchAzurevase', 'gfycat:GlassHappygoluckyArthropods', 'gfycat:GoldenFreeGonolek', 'gfycat:IdenticalPaltryAgama', 'gfycat:ImpartialJitteryDuiker', 'gfycat:ImpishDimAlbacoretuna', 'gfycat:ImpressionableLargeIbizanhound', 'gfycat:InfantileAdmiredDromedary', 'gfycat:InfiniteImmediateIberianlynx', 'gfycat:InstructiveMeanGuanaco', 'gfycat:JampackedFreshHoopoe', 'gfycat:LastingVacantBlackfish', 'gfycat:LightDarkDrongo', 'gfycat:LightheartedSmallEastrussiancoursinghounds', 'gfycat:LonelyUntriedBluefish', 'gfycat:MellowAnyHochstettersfrog', 'gfycat:MellowBlackHoneybee', 'gfycat:MerryNeglectedKinglet', 'gfycat:MisguidedGlaringGrassspider', 'gfycat:NaiveHopefulBergerpicard', 'gfycat:NaturalWhisperedAfricanjacana', 'gfycat:NecessaryGoldenDevilfish', 'gfycat:NecessaryWastefulGuineafowl', 'gfycat:OblongBewitchedBelugawhale', 'gfycat:OldSpryFennecfox', 'gfycat:OrneryIcyArcticwolf', 'gfycat:PassionateGrandioseKinglet', 'gfycat:PlainSecretGraysquirrel', 'gfycat:PlumpIdioticKoalabear', 'gfycat:PresentDisgustingAplomadofalcon', 'gfycat:QuickImpartialKob', 'gfycat:RedThirstyHeterodontosaurus', 'gfycat:SaltyAggressiveCockerspaniel', 'gfycat:SatisfiedSpiffyJaguar', 'gfycat:ScrawnyDrearyDaddylonglegs', 'gfycat:ShabbyAltruisticCreature', 'gfycat:SleepyBreakableFrog', 'gfycat:SmoggyQueasyFish', 'gfycat:TestyWhichBuzzard', 'gfycat:ThinColorfulAmericancrayfish', 'gfycat:UnawareSorrowfulIndianglassfish', 'gfycat:UnderstatedFearlessCoati', 'gfycat:UnlinedEnchantingAsiansmallclawedotter', 'gfycat:UnrealisticSilverFlamingo', 'gfycat:UnripeVelvetyAmethystsunbird', 'gfycat:UnsteadyCloseHedgehog', 'gfycat:VerifiableTeemingAnemonecrab', 'gfycat:WatchfulFreeCock', 'gfycat:WeepyHonorableEasternnewt', 'gfycat:WeightyLikableBrant', 'gfycat:WeightyRealisticDwarfmongoose', 'gfycat:WellwornTatteredEyra', 'gfycat:ZigzagJealousIrishredandwhitesetter', 'imgur:nHqy2FF', 'imgur:Gw63577', 'imgur:XRUjTjv', 'imgur:oegdyME', 'imgur:KXXcGMJ', 'imgur:tLIzoE1', 'imgur:6chBdw5', 'imgur:To2UDdM', 'imgur:GwnF00r', 'gfycat:EquatorialAdeptHammerheadshark', 'imgur:uy4C4I1', 'gfycat:PoliteZanyGrouper', 'imgur:WOutVGu', 'gfycat:BackPoshHawaiianmonkseal', 'gfycat:HandsomeUnimportantAngelfish', 'gfycat:FaintGregariousKoala', 'gfycat:TerribleFineHammerheadshark', 'gfycat:InferiorPeskyAustraliankelpie', 'gfycat:WhirlwindLonelyDachshund', 'gfycat:GracefulUnconsciousAustraliankelpie', 'gfycat:FluidIdenticalAmericanquarterhorse', 'gfycat:MajorBlackandwhiteColt'],
-    gta5: ['imgur:uNk5woD', 'gfycat:ForsakenNervousCorydorascatfish', 'gfycat:FarWhimsicalCivet', 'imgur:xuxS3DN', 'gfycat:SimilarOpulentAnemone', 'gfycat:PepperySentimentalGraywolf', 'gfycat:SnappyAppropriateAustraliancurlew', 'imgur:0qnfTk9'],
+    grandTheftAutoV: ['imgur:uNk5woD', 'gfycat:ForsakenNervousCorydorascatfish', 'gfycat:FarWhimsicalCivet', 'imgur:xuxS3DN', 'gfycat:SimilarOpulentAnemone', 'gfycat:PepperySentimentalGraywolf', 'gfycat:SnappyAppropriateAustraliancurlew', 'imgur:0qnfTk9'],
     rocketLeague: ['gfycat:ElderlyThreadbareHuemul', 'imgur:IRhpB15', 'gfycat:ConfusedElderlyBorzoi', 'gfycat:ShadyImprobableIberianbarbel', 'gfycat:GreedyLimitedBalloonfish'],
     justCause: ['imgur:trjS6g5'],
     battlefield: ['gfycat:AgileMeekIrukandjijellyfish', 'imgur:kMgCYt5'],
@@ -10502,44 +10595,6 @@ var videoList = {
 };
 
 module.exports = videoList;
-
-/***/ }),
-/* 5 */,
-/* 6 */,
-/* 7 */,
-/* 8 */,
-/* 9 */,
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {
-
-// Konami Code
-var kkeys = [],
-    konami = "38,38,40,40,37,39,37,39,66,65";
-$(document).keydown(function (e) {
-    kkeys.push(e.keyCode);
-    if (kkeys.toString().indexOf(konami) >= 0) {
-        kkeys = [];
-        var audio = new Audio('./audio/OOT_Secret.wav');
-        audio.play();
-
-        $('body').fadeOut(2000, function () {
-            window.location = 'http://www.clanorb.com/mood.html';
-        });
-    }
-});
-
-// For curious visitors
-console.groupCollapsed('%c Clanorb.com website information. Click to expand in Chrome.', 'color:#6CF; background:#000 url(http://www.clanorb.com/images/icon_b0x0rz.gif) no-repeat 5px 50%;padding:5px 5px 5px 20px;line-height:20px;');
-console.log('The orb website is written in javascript using Node and Express. HTML written in pug. Css written in scss. Javascript dependencies, html, and scss compiled by webpack. ES2015 transpiling done by babel-core.');
-console.log('Learning front-end web development? Get started with this guide : http://jstherightway.org/');
-console.log('If you still have questions about web development for gaming websites, feel free to contact me : lucid@clanorb.com ');
-console.log('▲,▲,▼,▼,◄,►,◄,►,(B),(A)');
-console.log('https://github.com/Lucidentropy/clanorb');
-console.groupEnd();
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ })
 /******/ ]);
