@@ -1,5 +1,6 @@
 extends layout
 block content
+    canvas#confetti
     #container
         #lazy-center
             p.header Clan Orb
@@ -18,10 +19,16 @@ block content
             source(class="webmSource" src="http://giant.gfycat.com/PlumpIdioticKoalabear.webm" type="video/webm")
             source(class="mp4Source" src="http://giant.gfycat.com/PlumpIdioticKoalabear.mp4" type="video/mp4")
             img(src="http://thumbs.gfycat.com/PlumpIdioticKoalabear-poster.jpg" title="Sorry, your browser doesn't support HTML5 video.")
+    #video-playlist
+        p.header Game Filter : <span>all</span>
+        ul#game-selector
     #video-controls
         #video-pause(title="Pause") &#10074;&#10074;
         #video-play(title="Play") &#9658;
-        #video-random(title="Random") &#9701;
+        #video-random(title="Next Random") &#9658;&#9658;|
+        #video-aspect(title="Aspect Ratio")
+            img(src="./images/ic_aspect_ratio_white_24px.svg")
+        #video-gameSelector(title="Game Selector") &#9881;
         #video-channel Now Playing : 
             span
 

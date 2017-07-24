@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
     res.render('index', {});
 });
 
-router.get('/build', function(req, res, next) {
+router.get('/export', function(req, res, next) {
     res.render('index', {}, function(err, html) {
         setTimeout(()=>{ 
          // // Flatfile build for current server setup
@@ -20,6 +20,8 @@ router.get('/build', function(req, res, next) {
             fs.createReadStream("./www/scripts.js").pipe(fs.createWriteStream('./export/scripts.js'));
             fs.createReadStream("./www/style.css").pipe(fs.createWriteStream('./export/style.css'));
         },1000);
+        let timestamp = new Date().toUTCString();
+        res.send('Export successful. <br> ' + timestamp);
     });
 });
 

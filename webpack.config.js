@@ -23,7 +23,7 @@ module.exports = {
                         presets: ["es2015"]
                     }
                 }],
-                exclude: /node_modules/
+                exclude: [/node_modules/, /export/]
             }, {
                 test: /\.s?css$/,
                 use: ExtractTextPlugin.extract({

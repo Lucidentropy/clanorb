@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 6);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -10335,18 +10335,36 @@ return jQuery;
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-var videoList = __webpack_require__(5);
+var videoList = __webpack_require__(8);
 
 var theVideo = {
     player: document.getElementById('bg-video'),
-    videoTokens: [],
-    refs: {},
+    videoTokens: [], // Array of all available tokens
+    videoPlaylist: [], // Array of remaining items to be played
+    refs: {}, // Allows a plain text reference to a token's game
+    gameList: [],
+    filterMode: 'all',
+    gameIndexes: [],
     init: function init() {
         var _this = this;
+
+        // Makes fullscreen video clickable to toggle playstate
+        this.player.addEventListener('click', function () {
+            if (_this.player.paused) {
+                _this.play();
+            } else {
+                _this.pause();
+            }
+        });
+
+        this.player.addEventListener('dblclick', function () {
+            _this.randomVid();
+        });
 
         this.player.addEventListener('loadeddata', function () {
             _this.play();
         });
+
         this.player.addEventListener('ended', function () {
             _this.randomVid();
         });
@@ -10358,8 +10376,40 @@ var theVideo = {
         document.getElementById('video-play').addEventListener("click", function () {
             _this.play();
         });
+
+        // Avoid trying to force video state while it's loading another
         document.getElementById('video-random').addEventListener("click", function () {
-            _this.randomVid();
+            if (_this.player.readyState == 4) {
+                _this.randomVid();
+            } else {
+                console.error('Video not ready for randomVid(). Readystate', _this.player.readyState);
+                return false;
+            }
+        });
+
+        // Toggle minHeight and width to control wether or not the video fits or zooms
+        document.getElementById('video-aspect').addEventListener("click", function () {
+            var styles = window.getComputedStyle(_this.player);
+            var getHeight = styles.getPropertyValue('min-height');
+
+            if (getHeight === "100%") {
+                _this.player.style.minHeight = "auto";
+                _this.player.style.width = "100%";
+            } else {
+                _this.player.style.minHeight = "100%";
+                _this.player.style.width = "auto";
+            }
+        });
+
+        document.getElementById('video-gameSelector').addEventListener("click", function () {
+            var playlist = document.getElementById('video-playlist');
+            var visible = playlist.style.display === 'block';
+
+            if (visible) {
+                playlist.style.display = 'none';
+            } else {
+                playlist.style.display = 'block';
+            }
         });
 
         // Lets not waste bandwidth while window is out of focus
@@ -10371,29 +10421,96 @@ var theVideo = {
             _this.pause();
         });
 
-        // merge children
+        this.buildReferences();
+        this.buildGameSelector();
+        this.buildPlaylist();
+        this.randomVid();
+    },
+    buildGameSelector: function buildGameSelector() {
+        var _this2 = this;
 
-        var _loop = function _loop() {
-            _this.videoTokens = _this.videoTokens.concat(videoList[index]);
+        var gameListUl = document.getElementById('video-playlist').querySelector('ul');
+        gameListUl.innerHTML = '';
+        var statusSpan = document.getElementById('video-playlist').querySelector('.header span');
 
+        var _loop = function _loop(index) {
+            var ul = gameListUl;
+            var li = document.createElement('li');
+            li.setAttribute('data-cat', index);
+            li.addEventListener('click', function (e) {
+                if (_this2.filterMode === 'all') {
+                    _this2.filterMode = 'select';
+                    statusSpan.innerHTML = 'select';
+                    _this2.gameIndexes = [];
+                }
+
+                if (e.currentTarget.className === "on") {
+                    if (_this2.gameIndexes.length > 1) {
+                        _this2.gameIndexes.remove(index);
+                    } else {
+                        _this2.filterMode = 'all';
+                        statusSpan.innerHTML = 'all';
+                        _this2.buildPlaylist();
+                    }
+                    e.currentTarget.className = '';
+                } else {
+                    _this2.gameIndexes.push(index);
+                    e.currentTarget.className = 'on';
+                }
+
+                if (_this2.filterMode !== 'all') {
+                    var len = _this2.gameIndexes.length;
+                    statusSpan.innerHTML = len + ' game' + (len > 1 ? 's' : '');
+                }
+                _this2.buildPlaylist();
+                _this2.randomVid();
+            });
+            var unCamel = index.replace(/([A-Z])/g, " $1").replace(/([0-9])/g, " $1").replace(/ Of /g, ' of ');
+            var indexName = unCamel.charAt(0).toUpperCase() + unCamel.slice(1);
+            var span = document.createElement('span');
+            span.innerHTML = videoList[index].length;
+
+            li.appendChild(document.createTextNode(indexName));
+            li.appendChild(span);
+            ul.appendChild(li);
+        };
+
+        for (var index in videoList) {
+            _loop(index);
+        }
+    },
+    buildPlaylist: function buildPlaylist() {
+        this.videoPlaylist = [];
+        for (var index in videoList) {
+            if (this.filterMode === "all" || this.filterMode === "select" && this.gameIndexes.contains(index)) {
+                this.videoPlaylist = this.videoPlaylist.concat(videoList[index]);
+            }
+        }
+        // filter out uniques
+        this.videoPlaylist = [].concat(_toConsumableArray(new Set(this.videoPlaylist)));
+    },
+    buildReferences: function buildReferences() {
+        var _this3 = this;
+
+        var _loop2 = function _loop2(index) {
+            _this3.videoTokens = _this3.videoTokens.concat(videoList[index]);
             // store a reference table of object parent name to token
             var unCamel = index.replace(/([A-Z])/g, " $1").replace(/([0-9])/g, " $1").replace(/ Of /g, ' of ');
             var indexName = unCamel.charAt(0).toUpperCase() + unCamel.slice(1);
 
+            _this3.gameList.push(indexName);
+            if (_this3.filterMode === "all") {
+                _this3.gameIndexes.push(index);
+            }
             videoList[index].forEach(function (item, index) {
                 var tokenRef = item.split(':')[1];
-                _this.refs[tokenRef] = indexName;
+                _this3.refs[tokenRef] = indexName;
             });
         };
 
         for (var index in videoList) {
-            _loop();
+            _loop2(index);
         }
-
-        // filter out uniques
-        this.videoTokens = [].concat(_toConsumableArray(new Set(this.videoTokens)));
-
-        this.randomVid();
     },
     play: function play() {
         this.player.play();
@@ -10406,23 +10523,28 @@ var theVideo = {
         document.getElementById('video-pause').style.display = 'none';
     },
     randomVid: function randomVid() {
+        if (typeof this.videoPlaylist === "undefined" || this.videoPlaylist.length < 1) {
+            this.buildPlaylist();
+        }
 
-        var random = Math.floor(Math.random() * this.videoTokens.length);
-        var token = this.videoTokens[random];
+        var random = Math.floor(Math.random() * this.videoPlaylist.length);
+        var token = this.videoPlaylist[random];
         var smalltoken = token.split(':')[1];
+
+        this.videoPlaylist.remove(token);
 
         if (typeof token !== "undefined" && token !== "") {
             this.loadVid(token);
-            console.log(this.videoTokens.length, random, token, this.refs[smalltoken]);
         } else {
-            console.error('Error with token : ', token);
+            console.error('Error with token : [' + token + ']', this.videoPlaylist.length, random, this.refs[smalltoken]);
             this.randomVid();
         }
     },
     loadVid: function loadVid(itoken) {
         var webm = void 0,
             mp4 = void 0,
-            poster = void 0;
+            poster = void 0,
+            link = void 0;
         var type = itoken.split(':')[0];
         var token = itoken.split(':')[1];
 
@@ -10442,16 +10564,34 @@ var theVideo = {
                 this.randomVid();
                 return false;
         }
+        this.player.poster = '';
+        this.player.poster = poster;
+
+        if (type == "imgur ") {
+            link = 'https://imgur.com/' + token;
+        }
+        if (type === "gfycat") {
+            link = 'https://gfycat.com/gifs/detail/' + token;
+        }
+        var linkMarkup = '<a href="' + link + '" target="_blank" rel="noopener noreferrer">' + type + '</a>';
+        document.getElementById('video-channel').querySelector('span').innerHTML = this.refs[token] + ' - ' + linkMarkup;
+
+        // Pause
+        this.player.pause();
+        this.player.src = '';
+
+        // Change Source
         if (type !== "imgur") {
             // imgur doesn't do webm it seems
-            this.player.querySelector('source[type="video/webm"]').setAttribute('src', webm);
+            this.player.querySelector('source[type="video/webm"]').src = webm;
         }
-        this.player.querySelector('source[type="video/mp4"]').setAttribute('src', mp4);
-        this.player.setAttribute('poster', poster);
+        this.player.querySelector('source[type="video/mp4"]').src = mp4;
 
-        document.getElementById('video-channel').querySelector('span').innerHTML = this.refs[token];
+        this.player.src = mp4;
 
+        // Re-load and play
         this.player.load();
+        // play event is handled by loadeddata event
     }
 };
 
@@ -10464,6 +10604,7 @@ module.exports = theVideo;
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {
 
+var confetti = __webpack_require__(7);
 /*
                                                  ,  ,
                                                / \/ \
@@ -10509,6 +10650,7 @@ var effects = {
 var globalKeys = [];
 var codeListener = function codeListener(cb, keys) {
     if (globalKeys.toString().indexOf(keys) >= 0) {
+        confetti();
         cb();
         globalKeys = [];
     }
@@ -10553,28 +10695,112 @@ var oneTrueJavascriptExceptionHandler = function oneTrueJavascriptExceptionHandl
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-// removed by extract-text-webpack-plugin
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {
+
+var inlineSVG = function inlineSVG() {
+	$('img[src$=".svg"]').each(function () {
+		var $img = $(this);
+		var imgID = $img.attr('id');
+		var imgClass = $img.attr('class');
+		var imgURL = $img.attr('src');
+
+		$.get(imgURL, function (data) {
+			// Get the SVG tag, ignore the rest
+			var $svg = $(data).find('svg');
+
+			// Add replaced image's ID to the new SVG
+			if (typeof imgID !== 'undefined') {
+				$svg = $svg.attr('id', imgID);
+			}
+			// Add replaced image's classes to the new SVG
+			if (typeof imgClass !== 'undefined') {
+				$svg = $svg.attr('class', imgClass + ' replaced-svg');
+			}
+
+			// Remove any invalid XML tags as per http://validator.w3.org
+			$svg = $svg.removeAttr('xmlns:a');
+
+			// Check if the viewport is set, if the viewport is not set the SVG wont't scale.
+			if (!$svg.attr('viewBox') && $svg.attr('height') && $svg.attr('width')) {
+				$svg.attr('viewBox', '0 0 ' + $svg.attr('height') + ' ' + $svg.attr('width'));
+			}
+
+			// Replace image with new SVG
+			$img.replaceWith($svg);
+		}, 'xml');
+	});
+};
+
+module.exports = inlineSVG;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+Array.prototype.remove = function () {
+    var what,
+        a = arguments,
+        L = a.length,
+        ax;
+    while (L && this.length) {
+        what = a[--L];
+        while ((ax = this.indexOf(what)) !== -1) {
+            this.splice(ax, 1);
+        }
+    }
+    return this;
+};
+
+Array.prototype.contains = function (v) {
+    for (var i = 0; i < this.length; i++) {
+        if (this[i] === v) return true;
+    }
+    return false;
+};
+
+Array.prototype.unique = function () {
+    var arr = [];
+    for (var i = 0; i < this.length; i++) {
+        if (!arr.contains(this[i])) {
+            arr.push(this[i]);
+        }
+    }
+    return arr;
+};
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /* WEBPACK VAR INJECTION */(function($) {
 
-__webpack_require__(3);
+__webpack_require__(5);
+
+__webpack_require__(4);
 
 $(function () {
     console.log("Document Ready", '$', $.fn.jquery);
     // It's easter somewhere
     __webpack_require__(2);
 
-    $('.go').click(function () {
-        $('.message').text('Switching to highlight reel').fadeIn();
+    $('#container .go').click(function () {
+        $('#container .message').text('Switching to highlight reel').fadeIn();
         setTimeout(function () {
-            $('.message, .header').fadeOut(1000, function () {
+            $('#container .message, #container .header').fadeOut(1000, function () {
                 $('#vid-container').css('opacity', 1);
                 $('#container').fadeOut();
             });
@@ -10584,32 +10810,265 @@ $(function () {
     // background video player
     var bgVideo = __webpack_require__(1);
     bgVideo.init();
+
+    // convert svg images into inline svg so they're easier to manipulate in css
+    __webpack_require__(3)();
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 5 */
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {
+
+// Taken from https://jsfiddle.net/Javalsu/vxP5q/743/
+var confetti = function confetti() {
+
+    // globals
+    var canvas;
+    var ctx;
+    var W;
+    var H;
+    var mp = 150; //max particles
+    var particles = [];
+    var angle = 0;
+    var tiltAngle = 0;
+    var confettiActive = true;
+    var animationComplete = true;
+    var deactivationTimerHandler;
+    var reactivationTimerHandler;
+    var animationHandler;
+
+    // objects
+
+    var particleColors = {
+        colorOptions: ["DodgerBlue", "OliveDrab", "Gold", "pink", "SlateBlue", "lightblue", "Violet", "PaleGreen", "SteelBlue", "SandyBrown", "Chocolate", "Crimson"],
+        colorIndex: 0,
+        colorIncrementer: 0,
+        colorThreshold: 10,
+        getColor: function getColor() {
+            if (this.colorIncrementer >= 10) {
+                this.colorIncrementer = 0;
+                this.colorIndex++;
+                if (this.colorIndex >= this.colorOptions.length) {
+                    this.colorIndex = 0;
+                }
+            }
+            this.colorIncrementer++;
+            return this.colorOptions[this.colorIndex];
+        }
+    };
+
+    function confettiParticle(color) {
+        this.x = Math.random() * W; // x-coordinate
+        this.y = Math.random() * H - H; //y-coordinate
+        this.r = RandomFromTo(10, 30); //radius;
+        this.d = Math.random() * mp + 10; //density;
+        this.color = color;
+        this.tilt = Math.floor(Math.random() * 10) - 10;
+        this.tiltAngleIncremental = Math.random() * 0.07 + .05;
+        this.tiltAngle = 0;
+
+        this.draw = function () {
+            ctx.beginPath();
+            ctx.lineWidth = this.r / 2;
+            ctx.strokeStyle = this.color;
+            ctx.moveTo(this.x + this.tilt + this.r / 4, this.y);
+            ctx.lineTo(this.x + this.tilt, this.y + this.tilt + this.r / 4);
+            return ctx.stroke();
+        };
+    }
+
+    $(document).ready(function () {
+        SetGlobals();
+        InitializeButton();
+        InitializeConfetti();
+
+        $(window).resize(function () {
+            W = window.innerWidth;
+            H = window.innerHeight;
+            canvas.width = W;
+            canvas.height = H;
+        });
+    });
+
+    function InitializeButton() {
+        $('#stopButton').click(DeactivateConfetti);
+        $('#startButton').click(RestartConfetti);
+    }
+
+    function SetGlobals() {
+        canvas = document.getElementById("confetti");
+        ctx = canvas.getContext("2d");
+        W = window.innerWidth;
+        H = window.innerHeight;
+        canvas.width = W;
+        canvas.height = H;
+    }
+
+    function InitializeConfetti() {
+        particles = [];
+        animationComplete = false;
+        for (var i = 0; i < mp; i++) {
+            var particleColor = particleColors.getColor();
+            particles.push(new confettiParticle(particleColor));
+        }
+        StartConfetti();
+    }
+
+    function Draw() {
+        ctx.clearRect(0, 0, W, H);
+        var results = [];
+        for (var i = 0; i < mp; i++) {
+            (function (j) {
+                results.push(particles[j].draw());
+            })(i);
+        }
+        Update();
+
+        return results;
+    }
+
+    function RandomFromTo(from, to) {
+        return Math.floor(Math.random() * (to - from + 1) + from);
+    }
+
+    function Update() {
+        var remainingFlakes = 0;
+        var particle;
+        angle += 0.01;
+        tiltAngle += 0.1;
+
+        for (var i = 0; i < mp; i++) {
+            particle = particles[i];
+            if (animationComplete) return;
+
+            if (!confettiActive && particle.y < -15) {
+                particle.y = H + 100;
+                continue;
+            }
+
+            stepParticle(particle, i);
+
+            if (particle.y <= H) {
+                remainingFlakes++;
+            }
+            CheckForReposition(particle, i);
+        }
+
+        if (remainingFlakes === 0) {
+            StopConfetti();
+        }
+    }
+
+    function CheckForReposition(particle, index) {
+        if ((particle.x > W + 20 || particle.x < -20 || particle.y > H) && confettiActive) {
+            if (index % 5 > 0 || index % 2 == 0) //66.67% of the flakes
+                {
+                    repositionParticle(particle, Math.random() * W, -10, Math.floor(Math.random() * 10) - 10);
+                } else {
+                if (Math.sin(angle) > 0) {
+                    //Enter from the left
+                    repositionParticle(particle, -5, Math.random() * H, Math.floor(Math.random() * 10) - 10);
+                } else {
+                    //Enter from the right
+                    repositionParticle(particle, W + 5, Math.random() * H, Math.floor(Math.random() * 10) - 10);
+                }
+            }
+        }
+    }
+
+    function stepParticle(particle, particleIndex) {
+        particle.tiltAngle += particle.tiltAngleIncremental;
+        particle.y += (Math.cos(angle + particle.d) + 3 + particle.r / 2) / 2;
+        particle.x += Math.sin(angle);
+        particle.tilt = Math.sin(particle.tiltAngle - particleIndex / 3) * 15;
+    }
+
+    function repositionParticle(particle, xCoordinate, yCoordinate, tilt) {
+        particle.x = xCoordinate;
+        particle.y = yCoordinate;
+        particle.tilt = tilt;
+    }
+
+    function StartConfetti() {
+        W = window.innerWidth;
+        H = window.innerHeight;
+        canvas.width = W;
+        canvas.height = H;
+        (function animloop() {
+            if (animationComplete) return null;
+            animationHandler = requestAnimFrame(animloop);
+            return Draw();
+        })();
+    }
+
+    function ClearTimers() {
+        clearTimeout(reactivationTimerHandler);
+        clearTimeout(animationHandler);
+    }
+
+    function DeactivateConfetti() {
+        confettiActive = false;
+        ClearTimers();
+    }
+
+    function StopConfetti() {
+        animationComplete = true;
+        if (ctx == undefined) return;
+        ctx.clearRect(0, 0, W, H);
+    }
+
+    function RestartConfetti() {
+        ClearTimers();
+        StopConfetti();
+        reactivationTimerHandler = setTimeout(function () {
+            confettiActive = true;
+            animationComplete = false;
+            InitializeConfetti();
+        }, 100);
+    }
+
+    window.requestAnimFrame = function () {
+        return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (callback) {
+            return window.setTimeout(callback, 1000 / 30);
+        };
+    }();
+};
+
+module.exports = confetti;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var videoList = {
-    overwatch: ['gfycat:AridGroundedBactrian', 'gfycat:BaggyVictoriousIberianmole', 'gfycat:BeneficialFlippantBelugawhale', 'gfycat:BossyDistortedBudgie', 'gfycat:BossyFlippantBlackfly', 'gfycat:BreakableFairAxolotl', 'gfycat:CanineScholarlyIbisbill', 'gfycat:CaringFancyIndianspinyloach', 'gfycat:CircularExaltedFlounder', 'gfycat:CoarseSorrowfulCub', 'gfycat:ConstantBreakableImperialeagle', 'gfycat:ConstantObedientAfricanjacana', 'gfycat:CreamyShyCottonmouth', 'gfycat:DefensiveVillainousHammerkop', 'gfycat:DeficientSmallEgret', 'gfycat:DelectableRadiantKiwi', 'gfycat:DependableGlassBee', 'gfycat:DigitalOccasionalCygnet', 'gfycat:EagerGoodGangesdolphin', 'gfycat:EuphoricKindheartedIbis', 'gfycat:FavorableRewardingAnura', 'gfycat:FrankViciousHairstreak', 'gfycat:FrighteningEmptyArgusfish', 'gfycat:GeneralVeneratedGermanwirehairedpointer', 'gfycat:GiftedFrenchAzurevase', 'gfycat:GlassHappygoluckyArthropods', 'gfycat:GoldenFreeGonolek', 'gfycat:IdenticalPaltryAgama', 'gfycat:ImpartialJitteryDuiker', 'gfycat:ImpishDimAlbacoretuna', 'gfycat:ImpressionableLargeIbizanhound', 'gfycat:InfantileAdmiredDromedary', 'gfycat:InfiniteImmediateIberianlynx', 'gfycat:InstructiveMeanGuanaco', 'gfycat:JampackedFreshHoopoe', 'gfycat:LastingVacantBlackfish', 'gfycat:LightDarkDrongo', 'gfycat:LightheartedSmallEastrussiancoursinghounds', 'gfycat:LonelyUntriedBluefish', 'gfycat:MellowAnyHochstettersfrog', 'gfycat:MellowBlackHoneybee', 'gfycat:MerryNeglectedKinglet', 'gfycat:MisguidedGlaringGrassspider', 'gfycat:NaiveHopefulBergerpicard', 'gfycat:NaturalWhisperedAfricanjacana', 'gfycat:NecessaryGoldenDevilfish', 'gfycat:NecessaryWastefulGuineafowl', 'gfycat:OblongBewitchedBelugawhale', 'gfycat:OldSpryFennecfox', 'gfycat:OrneryIcyArcticwolf', 'gfycat:PassionateGrandioseKinglet', 'gfycat:PlainSecretGraysquirrel', 'gfycat:PlumpIdioticKoalabear', 'gfycat:PresentDisgustingAplomadofalcon', 'gfycat:QuickImpartialKob', 'gfycat:RedThirstyHeterodontosaurus', 'gfycat:SaltyAggressiveCockerspaniel', 'gfycat:SatisfiedSpiffyJaguar', 'gfycat:ScrawnyDrearyDaddylonglegs', 'gfycat:ShabbyAltruisticCreature', 'gfycat:SleepyBreakableFrog', 'gfycat:SmoggyQueasyFish', 'gfycat:TestyWhichBuzzard', 'gfycat:ThinColorfulAmericancrayfish', 'gfycat:UnawareSorrowfulIndianglassfish', 'gfycat:UnderstatedFearlessCoati', 'gfycat:UnlinedEnchantingAsiansmallclawedotter', 'gfycat:UnrealisticSilverFlamingo', 'gfycat:UnripeVelvetyAmethystsunbird', 'gfycat:UnsteadyCloseHedgehog', 'gfycat:VerifiableTeemingAnemonecrab', 'gfycat:WatchfulFreeCock', 'gfycat:WeepyHonorableEasternnewt', 'gfycat:WeightyLikableBrant', 'gfycat:WeightyRealisticDwarfmongoose', 'gfycat:WellwornTatteredEyra', 'gfycat:ZigzagJealousIrishredandwhitesetter', 'imgur:nHqy2FF', 'imgur:Gw63577', 'imgur:XRUjTjv', 'imgur:oegdyME', 'imgur:KXXcGMJ', 'imgur:tLIzoE1', 'imgur:6chBdw5', 'imgur:To2UDdM', 'imgur:GwnF00r', 'gfycat:EquatorialAdeptHammerheadshark', 'imgur:uy4C4I1', 'gfycat:PoliteZanyGrouper', 'imgur:WOutVGu', 'gfycat:BackPoshHawaiianmonkseal', 'gfycat:HandsomeUnimportantAngelfish', 'gfycat:FaintGregariousKoala', 'gfycat:TerribleFineHammerheadshark', 'gfycat:InferiorPeskyAustraliankelpie', 'gfycat:WhirlwindLonelyDachshund', 'gfycat:GracefulUnconsciousAustraliankelpie', 'gfycat:FluidIdenticalAmericanquarterhorse', 'gfycat:MajorBlackandwhiteColt'],
-    grandTheftAutoV: ['imgur:uNk5woD', 'gfycat:ForsakenNervousCorydorascatfish', 'gfycat:FarWhimsicalCivet', 'imgur:xuxS3DN', 'gfycat:SimilarOpulentAnemone', 'gfycat:PepperySentimentalGraywolf', 'gfycat:SnappyAppropriateAustraliancurlew', 'imgur:0qnfTk9', 'gfycat:DirectMassiveHawaiianmonkseal', 'imgur:YSo4hkD', 'gfycat:UnknownSparseHoneyeater', 'gfycat:FancyThinHorse', 'imgur:4iVHDZk', 'imgur:eF5Yt8H', 'gfycat:FrayedGoldenGorilla', 'gfycat:serpentineenlightenedgroundhog', 'imgur:vWhHAgV', 'gfycat:HarmlessQuestionableAnura', 'gfycat:EnchantedWindingAegeancat', 'gfycat:FlawlessThinInexpectatumpleco', 'imgur:GaBLx9X', 'imgur:ZOANMrO', 'gfycat:ConsciousJollyChrysalis', 'imgur:EOAYAsT', 'gfycat:TameGrotesqueHarpyeagle', 'imgur:b7EMEYu', 'imgur:qmtPDEq'],
-    rocketLeague: ['gfycat:ElderlyThreadbareHuemul', 'imgur:IRhpB15', 'gfycat:ConfusedElderlyBorzoi', 'gfycat:ShadyImprobableIberianbarbel', 'gfycat:GreedyLimitedBalloonfish'],
-    justCause3: ['imgur:trjS6g5', 'gfycat:CorruptAdmiredIsabellineshrike', 'gfycat:InnocentColossalCicada', 'gfycat:BogusHappygoluckyAmurratsnake', 'gfycat:DelightfulWaryGrebe', 'gfycat:CheeryNaturalArrowworm', 'gfycat:SevereContentDarklingbeetle', 'gfycat:EvilPointedHapuka', 'gfycat:PerkyPlasticAsp', 'gfycat:MarvelousFluffyBlobfish', 'gfycat:TenseInsistentChrysomelid', 'gfycat:FailingEvergreenKingbird', 'gfycat:AridBlondBarasingha', 'imgur:v1ReynT', 'gfycat:ScratchyJaggedHornet', 'gfycat:TediousDependentEider', 'gfycat:CompassionateMiniatureKestrel', 'imgur:VP8jBPg', 'gfycat:BewitchedDeliriousGibbon', 'gfycat:HauntingSafeAntarcticfurseal', 'gfycat:WarmColorfulJackal', 'gfycat:HelplessUnevenGlassfrog', 'gfycat:ThoughtfulFormalAmericanbadger', ''],
-    battlefield: ['gfycat:AgileMeekIrukandjijellyfish', 'imgur:kMgCYt5'],
+    assassinsCreed: ['gfycat:SecretBriskChital', 'gfycat:RegularCanineGerbil', '', ''],
+    battlefield: ['gfycat:AgileMeekIrukandjijellyfish', 'imgur:3ykvWne', 'imgur:kMgCYt5', 'gfycat:AcademicTemptingEnglishpointer', 'gfycat:JampackedMediumBird', '', '', '', '', '', ''],
+    contra3: ['imgur:u89VA7b'],
+    cuphead: ['imgur:6tVdRp3'],
+    darkSouls: ['imgur:lr1tQRS', 'gfycat:SandySpryArchaeopteryx', 'imgur:EQO9X8p'],
+    fallout: ['imgur:RuWFo6B', 'gfycat:AmazingRequiredAmericanbobtail', 'imgur:xYsCgmu', 'imgur:YJtq0zB', '', '', '', '', '', ''],
     forzaHorizon3: ['gfycat:ShinyVigorousCats'],
-    ghostReconWildlands: ['imgur:A668H16', 'gfycat:UnawareShadyCrownofthornsstarfish', 'gfycat:PaleHandyAidi', 'gfycat:AridFarflungFieldmouse', 'gfycat:CavernousIdioticAmericancrayfish', 'imgur.com:5OaANDn', 'gfycat:DarlingDangerousChicken', 'imgur.com:CdDAc5h', 'imgur.com:vPnVIwO', 'gfycat:InsistentSentimentalBufeo', '', '', '', ''],
-    worldOfWarcraft: ['imgur:agZISAX', 'imgur:JAZClBI'],
+    ghostReconWildlands: ['imgur:A668H16', 'gfycat:UnawareShadyCrownofthornsstarfish', 'gfycat:PaleHandyAidi', 'gfycat:AridFarflungFieldmouse', 'gfycat:CavernousIdioticAmericancrayfish', 'imgur:5OaANDn', 'gfycat:DarlingDangerousChicken', 'imgur:CdDAc5h', 'imgur:vPnVIwO', 'gfycat:InsistentSentimentalBufeo', '', '', '', ''],
+    grandTheftAuto4: ['imgur:k7gQ66O'],
+    grandTheftAutoV: ['imgur:uNk5woD', 'gfycat:ForsakenNervousCorydorascatfish', 'gfycat:FarWhimsicalCivet', 'imgur:xuxS3DN', 'gfycat:SimilarOpulentAnemone', 'gfycat:PepperySentimentalGraywolf', 'gfycat:SnappyAppropriateAustraliancurlew', 'imgur:0qnfTk9', 'gfycat:DirectMassiveHawaiianmonkseal', 'imgur:YSo4hkD', 'gfycat:UnknownSparseHoneyeater', 'gfycat:FancyThinHorse', 'imgur:4iVHDZk', 'imgur:eF5Yt8H', 'gfycat:FrayedGoldenGorilla', 'imgur:vWhHAgV', 'gfycat:HarmlessQuestionableAnura', 'gfycat:EnchantedWindingAegeancat', 'gfycat:FlawlessThinInexpectatumpleco', 'imgur:GaBLx9X', 'imgur:ZOANMrO', 'gfycat:ConsciousJollyChrysalis', 'imgur:EOAYAsT', 'gfycat:TameGrotesqueHarpyeagle', 'imgur:b7EMEYu', 'imgur:qmtPDEq', 'gfycat:DefiniteFearlessCobra', 'imgur:4XYMSLy', 'imgur:9xKQTu7', 'gfycat:PowerfulSecondArcticwolf', 'imgur:J0s8Ks6', 'imgur:UNvPoNC', 'imgur:IOVbtql', 'imgur:qclx6PM', 'imgur:K1AuBC5', 'imgur:oGLtuPr', 'imgur:ONBKZaj', 'imgur:dErnnAg', 'gfycat:ObviousScratchyKingfisher', 'gfycat:HotDesertedHerring', 'gfycat:LegitimateSpectacularCygnet', 'gfycat:CalmUniqueGroundbeetle', 'gfycat:DarlingScholarlyEkaltadeta', 'imgur:3dJYKU5', 'imgur:XEClLfV', 'imgur:0SxpxDf', 'gfycat:PartialAliveAquaticleech', 'gfycat:PinkJauntyCaiman', 'imgur:PHd4Q0O', '', ''],
+    justCause3: ['imgur:trjS6g5', 'gfycat:CorruptAdmiredIsabellineshrike', 'gfycat:InnocentColossalCicada', 'gfycat:BogusHappygoluckyAmurratsnake', 'gfycat:DelightfulWaryGrebe', 'gfycat:CheeryNaturalArrowworm', 'gfycat:SevereContentDarklingbeetle', 'gfycat:EvilPointedHapuka', 'gfycat:PerkyPlasticAsp', 'gfycat:MarvelousFluffyBlobfish', 'gfycat:TenseInsistentChrysomelid', 'gfycat:FailingEvergreenKingbird', 'gfycat:AridBlondBarasingha', 'imgur:v1ReynT', 'gfycat:ScratchyJaggedHornet', 'gfycat:TediousDependentEider', 'gfycat:CompassionateMiniatureKestrel', 'imgur:VP8jBPg', 'gfycat:BewitchedDeliriousGibbon', 'gfycat:HauntingSafeAntarcticfurseal', 'gfycat:WarmColorfulJackal', 'gfycat:HelplessUnevenGlassfrog', 'gfycat:ThoughtfulFormalAmericanbadger', 'imgur:TtVzQg2', 'imgur:47zDmP3', 'gfycat:CookedGargantuanGangesdolphin', 'imgur:cWcpEIQ', '', '', ''],
     mario: ['imgur:RRKKAdY'],
+    overwatch: ['gfycat:AridGroundedBactrian', 'gfycat:BaggyVictoriousIberianmole', 'gfycat:BeneficialFlippantBelugawhale', 'gfycat:BossyDistortedBudgie', 'gfycat:BossyFlippantBlackfly', 'gfycat:BreakableFairAxolotl', 'gfycat:CanineScholarlyIbisbill', 'gfycat:CaringFancyIndianspinyloach', 'gfycat:CircularExaltedFlounder', 'gfycat:CoarseSorrowfulCub', 'gfycat:ConstantBreakableImperialeagle', 'gfycat:ConstantObedientAfricanjacana', 'gfycat:CreamyShyCottonmouth', 'gfycat:DefensiveVillainousHammerkop', 'gfycat:DeficientSmallEgret', 'gfycat:DelectableRadiantKiwi', 'gfycat:DependableGlassBee', 'gfycat:DigitalOccasionalCygnet', 'gfycat:EagerGoodGangesdolphin', 'gfycat:EuphoricKindheartedIbis', 'gfycat:FavorableRewardingAnura', 'gfycat:FrankViciousHairstreak', 'gfycat:FrighteningEmptyArgusfish', 'gfycat:GeneralVeneratedGermanwirehairedpointer', 'gfycat:GiftedFrenchAzurevase', 'gfycat:GlassHappygoluckyArthropods', 'gfycat:GoldenFreeGonolek', 'gfycat:IdenticalPaltryAgama', 'gfycat:ImpartialJitteryDuiker', 'gfycat:ImpishDimAlbacoretuna', 'gfycat:ImpressionableLargeIbizanhound', 'gfycat:InfantileAdmiredDromedary', 'gfycat:InfiniteImmediateIberianlynx', 'gfycat:InstructiveMeanGuanaco', 'gfycat:JampackedFreshHoopoe', 'gfycat:LastingVacantBlackfish', 'gfycat:LightDarkDrongo', 'gfycat:LightheartedSmallEastrussiancoursinghounds', 'gfycat:LonelyUntriedBluefish', 'gfycat:MellowAnyHochstettersfrog', 'gfycat:MellowBlackHoneybee', 'gfycat:MerryNeglectedKinglet', 'gfycat:MisguidedGlaringGrassspider', 'gfycat:NaiveHopefulBergerpicard', 'gfycat:NaturalWhisperedAfricanjacana', 'gfycat:NecessaryGoldenDevilfish', 'gfycat:NecessaryWastefulGuineafowl', 'gfycat:OblongBewitchedBelugawhale', 'gfycat:OldSpryFennecfox', 'gfycat:OrneryIcyArcticwolf', 'gfycat:PassionateGrandioseKinglet', 'gfycat:PlainSecretGraysquirrel', 'gfycat:PlumpIdioticKoalabear', 'gfycat:PresentDisgustingAplomadofalcon', 'gfycat:QuickImpartialKob', 'gfycat:RedThirstyHeterodontosaurus', 'gfycat:SaltyAggressiveCockerspaniel', 'gfycat:SatisfiedSpiffyJaguar', 'gfycat:ScrawnyDrearyDaddylonglegs', 'gfycat:ShabbyAltruisticCreature', 'gfycat:SleepyBreakableFrog', 'gfycat:SmoggyQueasyFish', 'gfycat:TestyWhichBuzzard', 'gfycat:ThinColorfulAmericancrayfish', 'gfycat:UnawareSorrowfulIndianglassfish', 'gfycat:UnderstatedFearlessCoati', 'gfycat:UnlinedEnchantingAsiansmallclawedotter', 'gfycat:UnrealisticSilverFlamingo', 'gfycat:UnripeVelvetyAmethystsunbird', 'gfycat:UnsteadyCloseHedgehog', 'gfycat:VerifiableTeemingAnemonecrab', 'gfycat:WatchfulFreeCock', 'gfycat:WeepyHonorableEasternnewt', 'gfycat:WeightyLikableBrant', 'gfycat:WeightyRealisticDwarfmongoose', 'gfycat:WellwornTatteredEyra', 'gfycat:ZigzagJealousIrishredandwhitesetter', 'imgur:nHqy2FF', 'imgur:Gw63577', 'imgur:XRUjTjv', 'imgur:oegdyME', 'imgur:KXXcGMJ', 'imgur:tLIzoE1', 'imgur:6chBdw5', 'imgur:To2UDdM', 'imgur:GwnF00r', 'gfycat:EquatorialAdeptHammerheadshark', 'imgur:uy4C4I1', 'gfycat:PoliteZanyGrouper', 'imgur:WOutVGu', 'gfycat:BackPoshHawaiianmonkseal', 'gfycat:HandsomeUnimportantAngelfish', 'gfycat:FaintGregariousKoala', 'gfycat:TerribleFineHammerheadshark', 'gfycat:InferiorPeskyAustraliankelpie', 'gfycat:WhirlwindLonelyDachshund', 'gfycat:GracefulUnconsciousAustraliankelpie', 'gfycat:FluidIdenticalAmericanquarterhorse', 'gfycat:MajorBlackandwhiteColt'],
+    other: ['imgur:P8MhFTn', 'imgur:ICvySRr', 'imgur:HNfYrDk', 'imgur:ZbPU4D4', 'imgur:pWKPmx7', 'gfycat:DearFlawedAmericancreamdraft', 'gfycat:AffectionateLeafyGermanwirehairedpointer', 'imgur:Q8z3Wr9'],
     playerUnknownsBattleground: ['gfycat:LameWeeBluebreastedkookaburra'],
-    darkSouls: ['imgur:lr1tQRS'],
-    witcher3: ['gfycat:LeanFlawedIberianchiffchaff', 'imgur:nnQsyej'],
     portal: ['imgur:b3kjvHm'],
-    fallout: ['imgur:RuWFo6B', 'gfycat:AmazingRequiredAmericanbobtail', '', '', '', '', '', '', '', ''],
-    other: ['imgur:P8MhFTn', 'imgur:ICvySRr', 'imgur:HNfYrDk', 'imgur:ZbPU4D4', 'imgur:TuISmiO', 'imgur:pWKPmx7', 'gfycat:DearFlawedAmericancreamdraft', 'gfycat:AffectionateLeafyGermanwirehairedpointer', 'imgur:Q8z3Wr9']
+    rocketLeague: ['gfycat:ElderlyThreadbareHuemul', 'imgur:IRhpB15', 'gfycat:ConfusedElderlyBorzoi', 'gfycat:ShadyImprobableIberianbarbel', 'gfycat:GreedyLimitedBalloonfish', 'gfycat:DenseSarcasticDogwoodtwigborer', 'gfycat:LankyEsteemedBoar', '', '', '', ''],
+    teamFortress2: ['gfycat:ImperturbableTintedHorse'],
+    witcher3: ['gfycat:LeanFlawedIberianchiffchaff', 'imgur:nnQsyej'],
+    worldOfWarcraft: ['imgur:agZISAX', 'imgur:JAZClBI']
 
 };
 

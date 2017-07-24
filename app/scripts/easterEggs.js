@@ -1,3 +1,4 @@
+    let confetti = require('./confetti');
     /*
                                                      ,  ,
                                                    / \/ \
@@ -27,7 +28,8 @@
             });
         },
         doom1() {
-            console.info('DOOM GOD MODE ENABLED')
+            console.info('DOOM GOD MODE ENABLED');
+            
         },
         doom2() {
             console.info('DOOM ALL WEAPONS ENABLED')
@@ -44,6 +46,7 @@
     let globalKeys = [];
     const codeListener = (cb, keys) => {
         if (globalKeys.toString().indexOf(keys) >= 0) {
+            confetti();
             cb();
             globalKeys = [];
         }
