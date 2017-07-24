@@ -10358,6 +10358,18 @@ var theVideo = {
         document.getElementById('video-play').addEventListener("click", function () {
             _this.play();
         });
+        document.getElementById('video-random').addEventListener("click", function () {
+            _this.randomVid();
+        });
+
+        // Lets not waste bandwidth while window is out of focus
+        window.addEventListener('focus', function () {
+            _this.play();
+        });
+
+        window.addEventListener('blur', function () {
+            _this.pause();
+        });
 
         // merge children
 
@@ -10395,12 +10407,16 @@ var theVideo = {
     },
     randomVid: function randomVid() {
 
-        var token = this.videoTokens[Math.floor(Math.random() * this.videoTokens.length)];
+        var random = Math.floor(Math.random() * this.videoTokens.length);
+        var token = this.videoTokens[random];
+        var smalltoken = token.split(':')[1];
 
         if (typeof token !== "undefined" && token !== "") {
             this.loadVid(token);
+            console.log(this.videoTokens.length, random, token, this.refs[smalltoken]);
         } else {
-            console.error(this.videoTokens, token);
+            console.error('Error with token : ', token);
+            this.randomVid();
         }
     },
     loadVid: function loadVid(itoken) {
@@ -10426,8 +10442,10 @@ var theVideo = {
                 this.randomVid();
                 return false;
         }
-
-        this.player.querySelector('source[type="video/webm"]').setAttribute('src', webm);
+        if (type !== "imgur") {
+            // imgur doesn't do webm it seems
+            this.player.querySelector('source[type="video/webm"]').setAttribute('src', webm);
+        }
         this.player.querySelector('source[type="video/mp4"]').setAttribute('src', mp4);
         this.player.setAttribute('poster', poster);
 
@@ -10549,7 +10567,9 @@ var oneTrueJavascriptExceptionHandler = function oneTrueJavascriptExceptionHandl
 __webpack_require__(3);
 
 $(function () {
-    console.log("Document Ready");
+    console.log("Document Ready", '$', $.fn.jquery);
+    // It's easter somewhere
+    __webpack_require__(2);
 
     $('.go').click(function () {
         $('.message').text('Switching to highlight reel').fadeIn();
@@ -10564,9 +10584,6 @@ $(function () {
     // background video player
     var bgVideo = __webpack_require__(1);
     bgVideo.init();
-
-    // It's easter somewhere
-    __webpack_require__(2);
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
@@ -10579,18 +10596,20 @@ $(function () {
 
 var videoList = {
     overwatch: ['gfycat:AridGroundedBactrian', 'gfycat:BaggyVictoriousIberianmole', 'gfycat:BeneficialFlippantBelugawhale', 'gfycat:BossyDistortedBudgie', 'gfycat:BossyFlippantBlackfly', 'gfycat:BreakableFairAxolotl', 'gfycat:CanineScholarlyIbisbill', 'gfycat:CaringFancyIndianspinyloach', 'gfycat:CircularExaltedFlounder', 'gfycat:CoarseSorrowfulCub', 'gfycat:ConstantBreakableImperialeagle', 'gfycat:ConstantObedientAfricanjacana', 'gfycat:CreamyShyCottonmouth', 'gfycat:DefensiveVillainousHammerkop', 'gfycat:DeficientSmallEgret', 'gfycat:DelectableRadiantKiwi', 'gfycat:DependableGlassBee', 'gfycat:DigitalOccasionalCygnet', 'gfycat:EagerGoodGangesdolphin', 'gfycat:EuphoricKindheartedIbis', 'gfycat:FavorableRewardingAnura', 'gfycat:FrankViciousHairstreak', 'gfycat:FrighteningEmptyArgusfish', 'gfycat:GeneralVeneratedGermanwirehairedpointer', 'gfycat:GiftedFrenchAzurevase', 'gfycat:GlassHappygoluckyArthropods', 'gfycat:GoldenFreeGonolek', 'gfycat:IdenticalPaltryAgama', 'gfycat:ImpartialJitteryDuiker', 'gfycat:ImpishDimAlbacoretuna', 'gfycat:ImpressionableLargeIbizanhound', 'gfycat:InfantileAdmiredDromedary', 'gfycat:InfiniteImmediateIberianlynx', 'gfycat:InstructiveMeanGuanaco', 'gfycat:JampackedFreshHoopoe', 'gfycat:LastingVacantBlackfish', 'gfycat:LightDarkDrongo', 'gfycat:LightheartedSmallEastrussiancoursinghounds', 'gfycat:LonelyUntriedBluefish', 'gfycat:MellowAnyHochstettersfrog', 'gfycat:MellowBlackHoneybee', 'gfycat:MerryNeglectedKinglet', 'gfycat:MisguidedGlaringGrassspider', 'gfycat:NaiveHopefulBergerpicard', 'gfycat:NaturalWhisperedAfricanjacana', 'gfycat:NecessaryGoldenDevilfish', 'gfycat:NecessaryWastefulGuineafowl', 'gfycat:OblongBewitchedBelugawhale', 'gfycat:OldSpryFennecfox', 'gfycat:OrneryIcyArcticwolf', 'gfycat:PassionateGrandioseKinglet', 'gfycat:PlainSecretGraysquirrel', 'gfycat:PlumpIdioticKoalabear', 'gfycat:PresentDisgustingAplomadofalcon', 'gfycat:QuickImpartialKob', 'gfycat:RedThirstyHeterodontosaurus', 'gfycat:SaltyAggressiveCockerspaniel', 'gfycat:SatisfiedSpiffyJaguar', 'gfycat:ScrawnyDrearyDaddylonglegs', 'gfycat:ShabbyAltruisticCreature', 'gfycat:SleepyBreakableFrog', 'gfycat:SmoggyQueasyFish', 'gfycat:TestyWhichBuzzard', 'gfycat:ThinColorfulAmericancrayfish', 'gfycat:UnawareSorrowfulIndianglassfish', 'gfycat:UnderstatedFearlessCoati', 'gfycat:UnlinedEnchantingAsiansmallclawedotter', 'gfycat:UnrealisticSilverFlamingo', 'gfycat:UnripeVelvetyAmethystsunbird', 'gfycat:UnsteadyCloseHedgehog', 'gfycat:VerifiableTeemingAnemonecrab', 'gfycat:WatchfulFreeCock', 'gfycat:WeepyHonorableEasternnewt', 'gfycat:WeightyLikableBrant', 'gfycat:WeightyRealisticDwarfmongoose', 'gfycat:WellwornTatteredEyra', 'gfycat:ZigzagJealousIrishredandwhitesetter', 'imgur:nHqy2FF', 'imgur:Gw63577', 'imgur:XRUjTjv', 'imgur:oegdyME', 'imgur:KXXcGMJ', 'imgur:tLIzoE1', 'imgur:6chBdw5', 'imgur:To2UDdM', 'imgur:GwnF00r', 'gfycat:EquatorialAdeptHammerheadshark', 'imgur:uy4C4I1', 'gfycat:PoliteZanyGrouper', 'imgur:WOutVGu', 'gfycat:BackPoshHawaiianmonkseal', 'gfycat:HandsomeUnimportantAngelfish', 'gfycat:FaintGregariousKoala', 'gfycat:TerribleFineHammerheadshark', 'gfycat:InferiorPeskyAustraliankelpie', 'gfycat:WhirlwindLonelyDachshund', 'gfycat:GracefulUnconsciousAustraliankelpie', 'gfycat:FluidIdenticalAmericanquarterhorse', 'gfycat:MajorBlackandwhiteColt'],
-    grandTheftAutoV: ['imgur:uNk5woD', 'gfycat:ForsakenNervousCorydorascatfish', 'gfycat:FarWhimsicalCivet', 'imgur:xuxS3DN', 'gfycat:SimilarOpulentAnemone', 'gfycat:PepperySentimentalGraywolf', 'gfycat:SnappyAppropriateAustraliancurlew', 'imgur:0qnfTk9'],
+    grandTheftAutoV: ['imgur:uNk5woD', 'gfycat:ForsakenNervousCorydorascatfish', 'gfycat:FarWhimsicalCivet', 'imgur:xuxS3DN', 'gfycat:SimilarOpulentAnemone', 'gfycat:PepperySentimentalGraywolf', 'gfycat:SnappyAppropriateAustraliancurlew', 'imgur:0qnfTk9', 'gfycat:DirectMassiveHawaiianmonkseal', 'imgur:YSo4hkD', 'gfycat:UnknownSparseHoneyeater', 'gfycat:FancyThinHorse', 'imgur:4iVHDZk', 'imgur:eF5Yt8H', 'gfycat:FrayedGoldenGorilla', 'gfycat:serpentineenlightenedgroundhog', 'imgur:vWhHAgV', 'gfycat:HarmlessQuestionableAnura', 'gfycat:EnchantedWindingAegeancat', 'gfycat:FlawlessThinInexpectatumpleco', 'imgur:GaBLx9X', 'imgur:ZOANMrO', 'gfycat:ConsciousJollyChrysalis', 'imgur:EOAYAsT', 'gfycat:TameGrotesqueHarpyeagle', 'imgur:b7EMEYu', 'imgur:qmtPDEq'],
     rocketLeague: ['gfycat:ElderlyThreadbareHuemul', 'imgur:IRhpB15', 'gfycat:ConfusedElderlyBorzoi', 'gfycat:ShadyImprobableIberianbarbel', 'gfycat:GreedyLimitedBalloonfish'],
-    justCause: ['imgur:trjS6g5'],
+    justCause3: ['imgur:trjS6g5', 'gfycat:CorruptAdmiredIsabellineshrike', 'gfycat:InnocentColossalCicada', 'gfycat:BogusHappygoluckyAmurratsnake', 'gfycat:DelightfulWaryGrebe', 'gfycat:CheeryNaturalArrowworm', 'gfycat:SevereContentDarklingbeetle', 'gfycat:EvilPointedHapuka', 'gfycat:PerkyPlasticAsp', 'gfycat:MarvelousFluffyBlobfish', 'gfycat:TenseInsistentChrysomelid', 'gfycat:FailingEvergreenKingbird', 'gfycat:AridBlondBarasingha', 'imgur:v1ReynT', 'gfycat:ScratchyJaggedHornet', 'gfycat:TediousDependentEider', 'gfycat:CompassionateMiniatureKestrel', 'imgur:VP8jBPg', 'gfycat:BewitchedDeliriousGibbon', 'gfycat:HauntingSafeAntarcticfurseal', 'gfycat:WarmColorfulJackal', 'gfycat:HelplessUnevenGlassfrog', 'gfycat:ThoughtfulFormalAmericanbadger', ''],
     battlefield: ['gfycat:AgileMeekIrukandjijellyfish', 'imgur:kMgCYt5'],
     forzaHorizon3: ['gfycat:ShinyVigorousCats'],
-    ghostReconWildlands: ['imgur:A668H16'],
+    ghostReconWildlands: ['imgur:A668H16', 'gfycat:UnawareShadyCrownofthornsstarfish', 'gfycat:PaleHandyAidi', 'gfycat:AridFarflungFieldmouse', 'gfycat:CavernousIdioticAmericancrayfish', 'imgur.com:5OaANDn', 'gfycat:DarlingDangerousChicken', 'imgur.com:CdDAc5h', 'imgur.com:vPnVIwO', 'gfycat:InsistentSentimentalBufeo', '', '', '', ''],
     worldOfWarcraft: ['imgur:agZISAX', 'imgur:JAZClBI'],
     mario: ['imgur:RRKKAdY'],
     playerUnknownsBattleground: ['gfycat:LameWeeBluebreastedkookaburra'],
     darkSouls: ['imgur:lr1tQRS'],
-    witcher3: ['gfycat:LeanFlawedIberianchiffchaff'],
-    other: ['imgur:P8MhFTn', 'imgur:ICvySRr', 'imgur:HNfYrDk', 'imgur:ZbPU4D4', 'imgur:TuISmiO', 'imgur:pWKPmx7', 'gfycat:DearFlawedAmericancreamdraft', 'gfycat:AffectionateLeafyGermanwirehairedpointer', 'imgur:b3kjvHm']
+    witcher3: ['gfycat:LeanFlawedIberianchiffchaff', 'imgur:nnQsyej'],
+    portal: ['imgur:b3kjvHm'],
+    fallout: ['imgur:RuWFo6B', 'gfycat:AmazingRequiredAmericanbobtail', '', '', '', '', '', '', '', ''],
+    other: ['imgur:P8MhFTn', 'imgur:ICvySRr', 'imgur:HNfYrDk', 'imgur:ZbPU4D4', 'imgur:TuISmiO', 'imgur:pWKPmx7', 'gfycat:DearFlawedAmericancreamdraft', 'gfycat:AffectionateLeafyGermanwirehairedpointer', 'imgur:Q8z3Wr9']
 
 };
 

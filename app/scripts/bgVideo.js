@@ -19,6 +19,19 @@ const theVideo = {
         document.getElementById('video-play').addEventListener("click", () => {
             this.play();
         });
+        document.getElementById('video-random').addEventListener("click", () => {
+            this.randomVid();
+        });
+
+        // Lets not waste bandwidth while window is out of focus
+        window.addEventListener('focus', () => {
+            this.play();
+        });
+
+        window.addEventListener('blur', () => {
+            this.pause();
+        });
+
 
         // merge children
         for (var index in videoList) {
@@ -51,12 +64,16 @@ const theVideo = {
     },
     randomVid() {
 
-        let token = this.videoTokens[Math.floor(Math.random() * this.videoTokens.length)];
+        let random = Math.floor(Math.random() * this.videoTokens.length);
+        let token = this.videoTokens[random];
+        let smalltoken = token.split(':')[1];
 
         if (typeof token !== "undefined" && token !== "") {
             this.loadVid(token);
+            console.log(this.videoTokens.length, random, token,  this.refs[smalltoken]);
         } else {
-            console.error(this.videoTokens, token);
+            console.error('Error with token : ', token);
+            this.randomVid();
         }
     },
     loadVid(itoken) {
@@ -80,8 +97,9 @@ const theVideo = {
                 this.randomVid();
                 return false;
         }
-
-        this.player.querySelector('source[type="video/webm"]').setAttribute('src', webm);
+        if ( type !== "imgur" ) { // imgur doesn't do webm it seems
+            this.player.querySelector('source[type="video/webm"]').setAttribute('src', webm);
+        }
         this.player.querySelector('source[type="video/mp4"]').setAttribute('src', mp4);
         this.player.setAttribute('poster', poster);
 

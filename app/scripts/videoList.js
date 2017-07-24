@@ -110,6 +110,26 @@ const videoList = {
         'gfycat:PepperySentimentalGraywolf',
         'gfycat:SnappyAppropriateAustraliancurlew',
         'imgur:0qnfTk9',
+        'gfycat:DirectMassiveHawaiianmonkseal',
+        'imgur:YSo4hkD',  
+        'gfycat:UnknownSparseHoneyeater',
+        'gfycat:FancyThinHorse',
+        'imgur:4iVHDZk',
+        'imgur:eF5Yt8H',
+        'gfycat:FrayedGoldenGorilla',
+        'gfycat:serpentineenlightenedgroundhog',
+        'imgur:vWhHAgV',
+        'gfycat:HarmlessQuestionableAnura',
+        'gfycat:EnchantedWindingAegeancat',
+        'gfycat:FlawlessThinInexpectatumpleco',
+        'imgur:GaBLx9X',
+        'imgur:ZOANMrO',
+        'gfycat:ConsciousJollyChrysalis',
+        'imgur:EOAYAsT',
+        'gfycat:TameGrotesqueHarpyeagle',
+        'imgur:b7EMEYu',
+        'imgur:qmtPDEq',
+
     ],
     rocketLeague: [
         'gfycat:ElderlyThreadbareHuemul',
@@ -119,9 +139,33 @@ const videoList = {
         'gfycat:GreedyLimitedBalloonfish',
 
     ],
-    justCause: [
-
+    justCause3: [
         'imgur:trjS6g5',
+        'gfycat:CorruptAdmiredIsabellineshrike',
+        'gfycat:InnocentColossalCicada',
+        'gfycat:BogusHappygoluckyAmurratsnake',
+        'gfycat:DelightfulWaryGrebe',
+        'gfycat:CheeryNaturalArrowworm',
+        'gfycat:SevereContentDarklingbeetle',
+        'gfycat:EvilPointedHapuka',
+        'gfycat:PerkyPlasticAsp',
+        'gfycat:MarvelousFluffyBlobfish',
+        'gfycat:TenseInsistentChrysomelid',
+        'gfycat:FailingEvergreenKingbird',
+        'gfycat:AridBlondBarasingha',
+        'imgur:v1ReynT',
+        'gfycat:ScratchyJaggedHornet',
+        'gfycat:TediousDependentEider',
+        'gfycat:CompassionateMiniatureKestrel',
+        'imgur:VP8jBPg',
+        'gfycat:BewitchedDeliriousGibbon',
+        'gfycat:HauntingSafeAntarcticfurseal',
+        'gfycat:WarmColorfulJackal',
+        'gfycat:HelplessUnevenGlassfrog',
+        'gfycat:ThoughtfulFormalAmericanbadger',
+        '',
+
+
     ],
     battlefield: [
         'gfycat:AgileMeekIrukandjijellyfish',
@@ -135,6 +179,20 @@ const videoList = {
     ghostReconWildlands: [
 
         'imgur:A668H16',
+        'gfycat:UnawareShadyCrownofthornsstarfish',
+        'gfycat:PaleHandyAidi',
+        'gfycat:AridFarflungFieldmouse',
+        'gfycat:CavernousIdioticAmericancrayfish',
+        'imgur.com:5OaANDn',
+        'gfycat:DarlingDangerousChicken',
+        'imgur.com:CdDAc5h',
+        'imgur.com:vPnVIwO',
+        'gfycat:InsistentSentimentalBufeo',
+        '',
+        '',
+        '',
+        '',
+
     ],
     worldOfWarcraft: [
 
@@ -154,6 +212,23 @@ const videoList = {
     ],
     witcher3: [
         'gfycat:LeanFlawedIberianchiffchaff',
+        'imgur:nnQsyej',
+    ],
+    portal : [
+        'imgur:b3kjvHm',
+    ],
+    fallout : [
+        'imgur:RuWFo6B',
+        'gfycat:AmazingRequiredAmericanbobtail',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+
     ],
     other: [
         'imgur:P8MhFTn',
@@ -164,7 +239,7 @@ const videoList = {
         'imgur:pWKPmx7',
         'gfycat:DearFlawedAmericancreamdraft',
         'gfycat:AffectionateLeafyGermanwirehairedpointer',
-        'imgur:b3kjvHm',
+        'imgur:Q8z3Wr9',
     ]
 
 }

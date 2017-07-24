@@ -160,6 +160,15 @@ video {
   height: 100%;
 }
 
+#video-controls #video-random {
+  text-align: center;
+  cursor: pointer;
+}
+
+#video-controls #video-random:hover {
+  color: #00a5e2;
+}
+
 #video-controls #video-pause,
 #video-controls #video-play {
   text-align: center;

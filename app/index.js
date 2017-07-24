@@ -2,7 +2,10 @@
 import './index.scss';
 
 $(function() {
-    console.log("Document Ready");
+    console.log("Document Ready", '$',$.fn.jquery);
+    // It's easter somewhere
+    require('./scripts/easterEggs');
+
 
     $('.go').click(() => {
         $('.message').text('Switching to highlight reel').fadeIn();
@@ -18,6 +21,4 @@ $(function() {
     let bgVideo = require('./scripts/bgVideo');
     bgVideo.init();
 
-    // It's easter somewhere
-    require('./scripts/easterEggs');
 });

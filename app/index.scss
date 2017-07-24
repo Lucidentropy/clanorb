@@ -177,6 +177,14 @@ video {
 
         height: 100%;
     }
+    #video-random {
+        text-align:center;
+        cursor:pointer;
+        &:hover {
+            color:#00a5e2;
+        }
+    }
+
     #video-pause,
     #video-play {
         text-align: center;
