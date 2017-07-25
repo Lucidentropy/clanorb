@@ -60,6 +60,14 @@ body {
         transform: translateX(-50%) translateY(-50%);
 
         box-shadow: 0 0 130px #000;
+        &.unzoom {
+            width: auto;
+            min-width: 0;
+            max-width: 100%;
+            height: auto;
+            min-height: 0;
+            max-height: 100%;
+        }
     }
 }
 
@@ -187,10 +195,9 @@ body {
         cursor: pointer;
         &:hover {
             color: #00a5e2;
+            background-color: #444;
 
             fill: #00a5e2;
-
-            background-color: #444;
         }
     }
     #video-random {
@@ -208,7 +215,6 @@ body {
         text-align: center;
 
         display: none;
-
     }
     #video-channel {
         width: auto;
@@ -217,7 +223,7 @@ body {
         cursor: default;
         &:hover {
             color: inherit;
-            background-color:transparent;
+            background-color: transparent;
         }
         a {
             text-decoration: none;
@@ -248,7 +254,7 @@ body {
         }
     }
     #video-gameSelector {
-        font-size:24px;
+        font-size: 24px;
     }
 }
 
@@ -275,15 +281,16 @@ body {
         padding: 20px 0;
         li {
             padding: 0 20px;
+
             cursor: pointer;
-            &:hover{
-                background-color:rgba(0,0,0,.4);
+            &:hover {
+                background-color: rgba(0, 0, 0, .4);
             }
             &.on {
-                text-shadow:0 0 2px #00a5e2;
                 font-weight: bold;
-                color: #00a5e2;
 
+                color: #00a5e2;
+                text-shadow: 0 0 2px #00a5e2;
             }
             span {
                 font-size: .7rem;
@@ -293,7 +300,7 @@ body {
                 padding-left: 30px;
 
                 color: #888;
-                text-shadow:none;
+                text-shadow: none;
             }
         }
     }

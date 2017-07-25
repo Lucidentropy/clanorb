@@ -5,9 +5,9 @@ const theVideo = {
     videoTokens: [], // Array of all available tokens
     videoPlaylist: [], // Array of remaining items to be played
     refs: {}, // Allows a plain text reference to a token's game
-    gameList: [],
+    gameList: [], // reference of all games
     filterMode: 'all',
-    gameIndexes: [],
+    gameIndexes: [], // used to determine which games we want to filter on
     init() {
         // Makes fullscreen video clickable to toggle playstate
         this.player.addEventListener('click', () => {
@@ -15,6 +15,38 @@ const theVideo = {
                 this.play();
             } else {
                 this.pause();
+            }
+        });
+
+        this.player.addEventListener('error', (e) => {
+            let src = this.player.src.toString();
+
+            if (src.indexOf('giant.gfycat') !== -1 && e.target.error.MEDIA_ERR_SRC_NOT_SUPPORTED) {
+                console.log('Downgrading link from giant.gfycat to fat.gfycat');
+                this.player.src = src.replace('giant.', 'fat.');
+            } else {
+
+                console.error('Video player encountered an error. Readystate ', this.player.readyState);
+
+                switch (e.target.error.code) {
+                    case e.target.error.MEDIA_ERR_ABORTED:
+                        console.warn(e.target.error.code, 'You aborted the video playback.');
+                        break;
+                    case e.target.error.MEDIA_ERR_NETWORK:
+                        console.warn(e.target.error.code, 'A network error caused the video download to fail part-way.');
+                        break;
+                    case e.target.error.MEDIA_ERR_DECODE:
+                        console.warn(e.target.error.code, 'The video playback was aborted due to a corruption problem or because the video used features your browser did not support.');
+                        break;
+                    case e.target.error.MEDIA_ERR_SRC_NOT_SUPPORTED:
+                        console.warn(e.target.error.code, 'The video could not be loaded, either because the server or network failed or because the format is not supported.');
+                        break;
+                    default:
+                        console.warn(e.target.error.code, 'An unknown error occurred.');
+                        break;
+                }
+
+                this.randomVid();
             }
         });
 
@@ -50,28 +82,14 @@ const theVideo = {
 
         // Toggle minHeight and width to control wether or not the video fits or zooms
         document.getElementById('video-aspect').addEventListener("click", () => {
-            let styles = window.getComputedStyle(this.player);
-            let getHeight = styles.getPropertyValue('min-height');
-
-            if (getHeight === "100%") {
-                this.player.style.minHeight = "auto";
-                this.player.style.width = "100%";
-            } else {
-                this.player.style.minHeight = "100%";
-                this.player.style.width = "auto";
-            }
+            this.player.classList.toggle('unzoom');
         });
 
         document.getElementById('video-gameSelector').addEventListener("click", () => {
             let playlist = document.getElementById('video-playlist');
             let visible = playlist.style.display === 'block';
-            
-            if ( visible ) {
-                playlist.style.display = 'none';
-            } else {
-                playlist.style.display = 'block';
-            }
 
+            playlist.style.display = (visible) ? 'none' : 'block';
         });
 
         // Lets not waste bandwidth while window is out of focus
@@ -87,6 +105,8 @@ const theVideo = {
         this.buildGameSelector();
         this.buildPlaylist();
         this.randomVid();
+
+        console.log('[bgplayer] init.', this.videoTokens.length, 'videos.', this.gameList.length, 'games.');
     },
     buildGameSelector() {
         let gameListUl = document.getElementById('video-playlist').querySelector('ul');
@@ -120,16 +140,18 @@ const theVideo = {
 
                 if (this.filterMode !== 'all') {
                     let len = this.gameIndexes.length;
-                    statusSpan.innerHTML = len + ' game' + ((len > 1) ? 's' :'');
+                    statusSpan.innerHTML = len + ' game' + ((len > 1) ? 's' : '');
                 }
                 this.buildPlaylist();
-                this.randomVid();
+                setTimeout(() => {
+                    this.randomVid();
+                }, 500);
 
             });
-            let unCamel = index.replace(/([A-Z])/g, " $1").replace(/([0-9])/g, " $1").replace(/ Of /g, ' of ');
-            let indexName = unCamel.charAt(0).toUpperCase() + unCamel.slice(1);
+            let indexName = this.unCamelCaseString(index);
+            // Show number of videos per game, filter removes nulls/blanks
             let span = document.createElement('span');
-            span.innerHTML = videoList[index].length;
+            span.innerHTML = videoList[index].filter((n) => { return n !== "" }).length;
 
             li.appendChild(document.createTextNode(indexName));
             li.appendChild(span);
@@ -144,16 +166,19 @@ const theVideo = {
                 this.videoPlaylist = this.videoPlaylist.concat(videoList[index]);
             }
         }
-        // filter out uniques
+        // filter out uniques and nulls
         this.videoPlaylist = [...new Set(this.videoPlaylist)];
+        this.videoPlaylist = this.videoPlaylist.filter((n) => { return n !== "" });
     },
     buildReferences() {
         for (let index in videoList) {
-            this.videoTokens = this.videoTokens.concat(videoList[index]);
-            // store a reference table of object parent name to token
-            let unCamel = index.replace(/([A-Z])/g, " $1").replace(/([0-9])/g, " $1").replace(/ Of /g, ' of ');
-            let indexName = unCamel.charAt(0).toUpperCase() + unCamel.slice(1);
+            let sortedList = videoList[index].slice();
+            sortedList = sortedList.filter((n) => { return n != "" });
 
+            this.videoTokens = this.videoTokens.concat(sortedList);
+            // store a reference table of object parent name to token
+
+            let indexName = this.unCamelCaseString(index);
             this.gameList.push(indexName);
             if (this.filterMode === "all") {
                 this.gameIndexes.push(index);
@@ -164,6 +189,11 @@ const theVideo = {
 
             });
         }
+    },
+    unCamelCaseString(text) {
+        let unCameler = text.replace(/([A-Z])/g, " $1").replace(/([0-9])/g, " $1").replace(/ Of /g, ' of ');
+        unCameler = unCameler.charAt(0).toUpperCase() + unCameler.slice(1);
+        return unCameler.toString();
     },
     play() {
         this.player.play();
@@ -176,7 +206,7 @@ const theVideo = {
         document.getElementById('video-pause').style.display = 'none';
     },
     randomVid() {
-        if (typeof this.videoPlaylist === "undefined" || this.videoPlaylist.length < 1) {
+        if (typeof this.videoPlaylist === "undefined" || this.videoPlaylist.length < 3) {
             this.buildPlaylist();
         }
 
@@ -184,12 +214,12 @@ const theVideo = {
         let token = this.videoPlaylist[random];
         let smalltoken = token.split(':')[1];
 
-        this.videoPlaylist.remove(token);
-
         if (typeof token !== "undefined" && token !== "") {
+            this.videoPlaylist.remove(token);
             this.loadVid(token);
         } else {
-            console.error('Error with token : [' + token + ']', this.videoPlaylist.length, random, this.refs[smalltoken]);
+            console.error('Null token. this.videoPlaylist[' + random + '] length :', this.videoPlaylist.length);
+            console.error(this.videoPlaylist);
             this.randomVid();
         }
     },
@@ -230,15 +260,16 @@ const theVideo = {
         this.player.pause();
         this.player.src = '';
 
-        // Change Source
+        // Changing Source tags
         if (type !== "imgur") { // imgur doesn't do webm it seems
             this.player.querySelector('source[type="video/webm"]').src = webm;
         }
         this.player.querySelector('source[type="video/mp4"]').src = mp4;
 
+        // this is probably the more correct way to update source
         this.player.src = mp4;
 
-        // Re-load and play
+        // Load and play
         this.player.load();
         // play event is handled by loadeddata event
     }

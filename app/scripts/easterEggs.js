@@ -1,4 +1,5 @@
     let confetti = require('./confetti');
+    let browser = require('./browserSniff');
     /*
                                                      ,  ,
                                                    / \/ \
@@ -71,15 +72,22 @@
     });
 
     // For curious visitors
-    console.groupCollapsed(
-        `%c Clanorb.com website information. Click to expand in Chrome.`,
-        'color:#6CF; background:#000 url(http://www.clanorb.com/images/icon_b0x0rz.gif) no-repeat 5px 50%;padding:5px 5px 5px 20px;line-height:20px;');
-    console.log('The orb website is written in javascript using Node and Express. HTML written in pug. Css written in scss. Javascript dependencies, html, and scss compiled by webpack. ES2015 transpiling done by babel-core.');
-    console.log('Learning front-end web development? Get started with this guide : http://jstherightway.org/');
-    console.log('If you still have questions about web development for gaming websites, feel free to contact me : lucid@clanorb.com ');
-    console.log('▲,▲,▼,▼,◄,►,◄,►,(B),(A)');
-    console.log('https://github.com/Lucidentropy/clanorb');
-    console.groupEnd();
+    if ( browser !== 'Firefox' ) { // Firefox doesn't support collapsed console
+        console.groupCollapsed(
+            `%c Clanorb.com website information. Click to expand in Chrome.`,
+            'color:#6CF; background:#000 url(http://www.clanorb.com/images/icon_b0x0rz.gif) no-repeat 5px 50%;padding:5px 5px 5px 20px;line-height:20px;');
+    } else {
+        console.info(`Clanorb.com website information.`);
+    }
+    console.log(`The orb website is written in javascript using Node and Express. HTML written in pug. Css written in scss. Javascript dependencies, html, and scss compiled by webpack. ES2015 transpiling done by babel-core.
+This website is my personal testing ground and proof of concepts, it may not work great on non-modern browsers.
+Learning front-end web development? Get started with this guide : http://jstherightway.org/
+If you still have questions about web development for gaming websites, feel free to contact me : lucid@clanorb.com 
+▲,▲,▼,▼,◄,►,◄,►,(B),(A)
+Development Repo : https://github.com/Lucidentropy/clanorb`);
+    if ( browser !== 'Firefox' ) {
+        console.groupEnd();
+    }
 
     // How did they build stack overflow before there was stack oveflow?
     const oneTrueJavascriptExceptionHandler = (cb) => {
