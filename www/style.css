@@ -376,49 +376,103 @@ body {
   font-size: 24px;
 }
 
-#video-playlist {
-  font-size: .8rem;
-  line-height: 30px;
+#playlists {
   position: fixed;
+  pointer-events: none;
   z-index: 1;
-  bottom: 40px;
-  left: 20px;
+  bottom: 4vw;
+  left: 1vw;
   display: none;
   max-height: 100%;
+}
+
+#playlists #video-playlist {
+  pointer-events: auto;
+  font-size: .8rem;
+  line-height: 30px;
+  margin-right: 1vw;
   color: #eee;
   background-color: rgba(0, 0, 0, 0.5);
   text-shadow: 1px 1px 2px #000;
+  flex: 0 0 auto;
 }
 
-#video-playlist p.header {
+#playlists #video-playlist p.header {
   padding: 20px 20px 0 20px;
 }
 
-#video-playlist ul {
+#playlists #video-playlist ul {
   padding: 20px 0;
 }
 
-#video-playlist ul li {
+#playlists #video-playlist ul li {
   padding: 0 20px;
   cursor: pointer;
 }
 
-#video-playlist ul li:hover {
+#playlists #video-playlist ul li:hover {
   background-color: rgba(0, 0, 0, 0.4);
 }
 
-#video-playlist ul li.on {
+#playlists #video-playlist ul li.on {
   font-weight: bold;
   color: #00a5e2;
   text-shadow: 0 0 2px #00a5e2;
 }
 
-#video-playlist ul li span {
+#playlists #video-playlist ul li span {
   font-size: .7rem;
   float: right;
   padding-left: 30px;
   color: #888;
   text-shadow: none;
+}
+
+#playlists #image-playlist {
+  display: none;
+  pointer-events: auto;
+  font-size: .8rem;
+  max-height: 100%;
+  margin-right: 1vw;
+  color: #eee;
+  background-color: rgba(0, 0, 0, 0.5);
+  text-shadow: 1px 1px 2px #000;
+  align-self: flex-end;
+}
+
+#playlists #image-playlist p.header {
+  padding: 20px 20px 0 20px;
+}
+
+#playlists #image-playlist ul {
+  display: flex;
+  flex-wrap: wrap;
+  max-height: 92vh;
+  padding: 20px;
+}
+
+#playlists #image-playlist ul li {
+  text-align: center;
+  overflow: hidden;
+  width: 69px;
+  height: 39px;
+  margin: 1px;
+  cursor: pointer;
+}
+
+#playlists #image-playlist ul li.on {
+  outline: 1px solid #00a5e2;
+}
+
+#playlists #image-playlist ul li:hover {
+  transition: .15s ease-out all;
+  transform: scale(2.5);
+  outline: 1px solid #00a5e2;
+  box-shadow: 2px 2px 15px 1px #000;
+}
+
+#playlists #image-playlist ul li img {
+  max-width: 100%;
 }
 
 #confetti {

@@ -6,22 +6,27 @@ let fs = require('fs');
 router.get('/', function(req, res, next) {
     res.render('index', {});
 });
+router.get('/pano', function(req, res, next) {
+    res.render('panorama', {});
+});
 
-router.get('/export', function(req, res, next) {
-    res.render('index', {}, function(err, html) {
+router.get('/export/:view', function(req, res, next) {
+    const view = req.params.view || "index";
+    res.render(view, {}, function(err, html) {
         setTimeout(()=>{ 
          // // Flatfile build for current server setup
-            fs.writeFile("./export/index.html", html, function(err) {
+            fs.writeFile("./export/" +view+ ".html", html, function(err) {
                 if (err) {
                     return console.log(`ERROR fs.writeFile `,err);
                 }
             });
-
-            fs.createReadStream("./www/scripts.js").pipe(fs.createWriteStream('./export/scripts.js'));
-            fs.createReadStream("./www/style.css").pipe(fs.createWriteStream('./export/style.css'));
+            if ( view === "index" ) {
+                fs.createReadStream("./www/scripts.js").pipe(fs.createWriteStream('./export/scripts.js'));
+                fs.createReadStream("./www/style.css").pipe(fs.createWriteStream('./export/style.css'));
+            }
         },1000);
         let timestamp = new Date().toUTCString();
-        res.send('Export successful. <br> ' + timestamp);
+        res.send('Export successful on view : ' +view+ '. <br> ' + timestamp);
     });
 });
 

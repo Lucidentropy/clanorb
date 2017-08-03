@@ -1,0 +1,22 @@
+extends layout
+block content
+   #panorama
+
+block styles
+    link(rel="stylesheet", href="https://cdn.pannellum.org/2.3/pannellum.css")
+    style.
+        #panorama {
+            width:95vw;
+            height:56vh;
+            margin:0 auto;
+            max-width: 2560px;
+            max-height: 1440px;
+        }
+   
+block scripts
+    script(src="https://cdn.pannellum.org/2.3/pannellum.js")
+    script.
+        pannellum.viewer('panorama', {
+            "type": "equirectangular",
+            "panorama": "http://clanorb.com/images/wd2panotest.jpg"
+        });        
