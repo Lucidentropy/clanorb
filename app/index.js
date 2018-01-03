@@ -12,7 +12,7 @@ $(function() {
     require('./scripts/easterEggs');
 
     
-    $('nav a').click(e => {
+    $('nav ul a').click(e => {
         e.stopPropagation();
         e.preventDefault();
         return false;

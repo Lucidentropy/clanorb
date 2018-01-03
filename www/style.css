@@ -149,6 +149,22 @@ table {
   }
 }
 
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.1);
+  }
+
+  85% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
 html {
   font-family: sans-serif;
   box-sizing: border-box;
@@ -201,11 +217,13 @@ body h1 {
   margin: 0 auto;
 }
 
-#main {
+main {
   padding: 1rem 2.5rem;
   background: rgba(0, 0, 0, 0.6);
   border-radius: 9px;
-  min-height: 830px;
+  min-height: 430px;
+  max-width: calc(100vw - 10px);
+  margin: 0 auto;
   border: 1px solid rgba(102, 204, 255, 0.8);
   animation-name: outerCircleGlow;
   animation-duration: 6s;
@@ -228,7 +246,7 @@ nav {
   padding: 0 0 0 10px;
 }
 
-nav ul a {
+nav a {
   line-height: 40px;
   display: inline-block;
   padding: 0 15px;
@@ -257,6 +275,32 @@ nav a span {
   transition: inherit;
 }
 
+nav li.about > a,
+nav li.about .leader > a {
+  padding: 0 25px;
+}
+
+nav li.games > a,
+nav li.games .leader > a {
+  padding: 0 20px;
+}
+
+nav li.steam .leader {
+  position: relative;
+  left: -1px;
+}
+
+nav li.steam > a,
+nav li.steam .leader > a {
+  background: url(./images/nav-steam-icon.png) 5px 50% no-repeat;
+  padding: 0 15px 0 25px !important;
+}
+
+nav li.links > a,
+nav li.links .leader > a {
+  padding: 0 25px;
+}
+
 nav > ul li {
   display: inline-block;
   position: relative;
@@ -264,12 +308,16 @@ nav > ul li {
   transition: .5s all linear;
 }
 
-nav ul li:hover ul {
+nav > ul li:hover ul {
   display: block;
   opacity: 1;
   border-bottom: 1px solid #6CF;
   margin-top: -40px;
   z-index: 10;
+}
+
+nav > ul li:hover ul li {
+  opacity: 1;
 }
 
 nav ul ul {
@@ -291,12 +339,61 @@ nav ul ul li {
   display: block !important;
   height: 20px;
   line-height: 20px;
+  opacity: .25;
+  animation: fadeIn .25s linear;
+  animation-fill-mode: both;
+}
+
+nav ul ul li:nth-child(1) {
+  animation-delay: 0.05s;
+}
+
+nav ul ul li:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+nav ul ul li:nth-child(3) {
+  animation-delay: 0.15s;
+}
+
+nav ul ul li:nth-child(4) {
+  animation-delay: 0.2s;
+}
+
+nav ul ul li:nth-child(5) {
+  animation-delay: 0.25s;
+}
+
+nav ul ul li:nth-child(6) {
+  animation-delay: 0.3s;
+}
+
+nav ul ul li:nth-child(7) {
+  animation-delay: 0.35s;
+}
+
+nav ul ul li:nth-child(8) {
+  animation-delay: 0.4s;
+}
+
+nav ul ul li:nth-child(9) {
+  animation-delay: 0.45s;
+}
+
+nav ul ul li a {
+  transition: .05s transform, .05s opacity;
+}
+
+nav ul ul li a:active {
+  transform: scale(2);
+  opacity: 0;
 }
 
 nav ul ul li.leader {
   height: 40px;
   line-height: 40px;
   text-shadow: 0 0 12px #ccc;
+  animation: none;
 }
 
 nav ul ul li.leader:hover {
@@ -308,6 +405,7 @@ nav ul ul li.leader a {
   line-height: 40px;
   padding: 0;
   text-align: center;
+  cursor: default;
 }
 
 nav ul ul li.leader a:hover {
@@ -329,12 +427,6 @@ nav ul ul a:hover {
   border: 3px solid rgba(102, 204, 255, 0.5);
   border-width: 0 3px;
   padding: 2px 6px;
-}
-
-nav ul ul a:active {
-  transform: scale(2);
-  transition: .25s all;
-  opacity: 0;
 }
 
 footer {

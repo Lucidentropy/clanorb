@@ -24,86 +24,11 @@ html
 
 	body
 		header
-			.hamburger
-		#container
+			.cheeseburger
+		section#container
 			nav
-				ul
-					li
-						a(href="/") Home
-					li
-						a(href="/about-orb") About Orb
-						ul
-							li.leader
-								a(href="/about-orb") About Orb
-							li
-								a(href="/about-orb/joining-orb") Joining Orb
-							li
-								a(href="/about-orb/links") Links
-							li
-								a(href="/about-orb/members") Members
-
-					
-					li
-						a(href="/games") Games we play
-						ul
-							li.leader
-								a(href="/games") Games we play
-							li
-								a(href="/games/classic") Classic
-							li
-								a(href="/games/destiny") Destiny 2
-							li
-								a(href="/games/diablo") Diablo
-							li
-								a(href="/games/gta") GTA V
-							li
-								a(href="/games/overwatch") Overwatch
-							li
-								a(href="/games/pubg") PUBG
-							li
-								a(href="/games/tribes") Tribes
-							li
-								a(href="/games/wow") Warcraft
-
-					li
-						a(href="/steam") Steam
-						ul
-							li.leader
-								a(href="/steam") Steam
-							li
-								a(href="/steam/popular") Popular
-					li
-						a(href="/games/wow") World of Warcraft
-						ul
-							li.leader
-								a(href="/games/wow") World of Warcraft
-							li
-								a(href="/games/wow/guild-members") Guild Members
-							li
-								a(href="/games/wow/progression") Progression
-					li
-						a(href="/contact") Contact
-						ul
-							li.leader
-								a(href="/contact") Contact
-							li
-								a(href="/") Facebook
-							li
-								a(href="/") Slack
-							li
-								a(href="/") Discord
-							li
-								a(href="/") Steam									
-					li
-						a(href="/archive") Website Archive
-						ul
-							li.leader
-								a(href="/archive") Website Archive
-							li
-								a(href="/archive/t1-map-tutorial") T1 Map Tutorial
-							li
-								a(href="/archive/t1-skinning-tutorial") T1 Skinning
-			#main
+				include nav
+			main
 				block content
 			footer &copy; 2000-#{new Date().getFullYear()} Clan Orb. Site design and content developed by Lucid and other members of Orb
 	
