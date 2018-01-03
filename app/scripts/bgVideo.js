@@ -105,7 +105,7 @@ const theVideo = {
             let playlist = document.getElementById('playlists');
             let visible = playlist.style.display === 'flex';
 
-            playlist.style.display = (visible) ? 'none' : 'flex';
+            playlist.style.display = visible ? 'none' : 'flex';
         });
 
         // Lets not waste bandwidth while window is out of focus
@@ -185,7 +185,6 @@ const theVideo = {
         if (this.gameIndexes.contains(hash)) {
             setTimeout(() => {
                 hash.split(',').forEach(game => {
-                    console.log('game', game);
                     document.querySelector('#game-selector [data-cat=' + game + ']').click();
                 });
             }, 500);
@@ -215,8 +214,7 @@ const theVideo = {
         imageListUl.innerHTML = '';
         this.videoPlaylist.slice(0,max).forEach(index => {
             let li = document.createElement('li');
-            let service = index.split(':')[0];
-            let token = index.split(':')[1];
+            let [service, token] = index.split(':');
 
             li.setAttribute('data-token', token);
             let img;

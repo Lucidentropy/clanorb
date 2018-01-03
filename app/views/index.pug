@@ -1,41 +1,5 @@
 extends layout
 block content
-    canvas#confetti
-    #container
-        #lazy-center
-            p.header Clan Orb
-            .message
-                p We're still around, just waiting for the next big game to bring us together again.
-                p Find us :
-                p Slack - <a href="http://clanorb.slack.com" target="_blank" rel="noopener noreferrer">clanorb.slack.com</a>
-                p Steam - <a href="http://steam.clanorb.com" target="_blank" rel="noopener noreferrer">steam.clanorb.com</a>
-                p Discord - <a href="https://discord.gg/BHNHrky" target="_blank" rel="noopener noreferrer">https://discord.gg/BHNHrky</a>
-                p Facebook - <a href="http://facebook.clanorb.com" target="_blank" rel="noopener noreferrer">facebook.clanorb.com</a>
-                p GTA 5 Crew - <a href="https://socialclub.rockstargames.com/crew/clan_orb" target="_blank" rel="noopener noreferrer">Clan Orb Crew</a>
+    p SOME CRAP
 
-                p.go Hide this and show the highlight reel &#9658
-    #vid-container
-        video(id="bg-video" poster="http://thumbs.gfycat.com/PlumpIdioticKoalabear-poster.jpg" muted="")
-            source(class="webmSource" src="http://giant.gfycat.com/PlumpIdioticKoalabear.webm" type="video/webm")
-            source(class="mp4Source" src="http://giant.gfycat.com/PlumpIdioticKoalabear.mp4" type="video/mp4")
-            img(src="http://thumbs.gfycat.com/PlumpIdioticKoalabear-poster.jpg" title="Sorry, your browser doesn't support HTML5 video.")
-    #playlists
-        #video-playlist
-            p.header Game Filter : <span>all</span>
-            ul#game-selector
-        #image-playlist
-            p.header Thumbnails
-            ul#playlist-thumbnails
-    #video-controls
-        #video-pause(title="Pause") &#10074;&#10074;
-        #video-play(title="Play") &#9658;
-        #video-random(title="Next Random") &#9658;&#9658;|
-        #video-aspect(title="Aspect Ratio")
-            img(src="./images/ic_aspect_ratio_white_24px.svg")
-        #video-gameSelector(title="Game Selector") &#9881;
-        #video-channel Now Playing : 
-            span
-
-block scripts
-    script(src='/scripts.js', type='text/javascript')
 

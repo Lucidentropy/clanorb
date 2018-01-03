@@ -1,0 +1,310 @@
+#vid-container {
+    position: relative;
+    z-index: -100;
+    transition: 1s opacity;
+    opacity: .25;
+    #bg-video {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        width: auto;
+        min-width: 100%;
+        height: auto;
+        min-height: 100%;
+        transform: translateX(-50%) translateY(-50%);
+        box-shadow: 0 0 130px #000;
+        &.unzoom {
+            width: auto;
+            min-width: 0;
+            max-width: 100%;
+            height: auto;
+            min-height: 0;
+            max-height: 100%;
+        }
+    }
+}
+
+#video-controls {
+    font-size: .8rem;
+    line-height: 30px;
+    position: fixed;
+    z-index: 1;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    height: 30px;
+    color: #eee;
+    background-color: rgba(0, 0, 0, .5);
+    p {
+        margin: 0;
+    }
+    &>div {
+        white-space: nowrap;
+        height: 100%;
+        padding: 0 3%;
+        cursor: pointer;
+        &:hover {
+            color: #00a5e2;
+            background-color: #444;
+            fill: #00a5e2;
+        }
+    }
+    #video-random {
+        text-align: center;
+        letter-spacing: -4px;
+        &:hover {
+            color: #00a5e2;
+        }
+        &.disabled {
+            color: #222;
+        }
+    }
+    #video-pause,
+    #video-play {
+        text-align: center;
+        display: none;
+    }
+    #video-channel {
+        width: auto;
+        padding: 0 1em;
+        cursor: default;
+        &:hover {
+            color: inherit;
+            background-color: transparent;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+        span {
+            font-style: italic;
+            display: inline-block;
+            padding: 0 1em;
+        }
+    }
+    #video-aspect {
+        svg {
+            margin-top: 3px;
+            cursor: pointer;
+            fill: #eee;
+            &:hover {
+                fill: #00a5e2;
+            }
+        }
+    }
+    #video-gameSelector {
+        font-size: 24px;
+    }
+}
+
+#playlists {
+    position: fixed;
+    pointer-events: none;
+    z-index: 1;
+    bottom: 4vw;
+    left: 1vw;
+    display: none;
+    max-height: 100%;
+    #video-playlist {
+        pointer-events: auto;
+        font-size: .8rem;
+        line-height: 30px;
+        margin-right: 1vw;
+        color: #eee;
+        background-color: rgba(0, 0, 0, .5);
+        text-shadow: 1px 1px 2px #000;
+        flex: 0 0 auto;
+        p.header {
+            padding: 20px 20px 0 20px;
+        }
+        ul {
+            padding: 20px 0;
+            li {
+                padding: 0 20px;
+                cursor: pointer;
+                &:hover {
+                    background-color: rgba(0, 0, 0, .4);
+                }
+                &.on {
+                    font-weight: bold;
+                    color: #00a5e2;
+                    text-shadow: 0 0 2px #00a5e2;
+                }
+                span {
+                    font-size: .7rem;
+                    float: right;
+                    padding-left: 30px;
+                    color: #888;
+                    text-shadow: none;
+                }
+            }
+        }
+    }
+    #image-playlist {
+        display: none;
+        pointer-events: auto;
+        font-size: .8rem;
+        max-height: 100%;
+        margin-right: 1vw;
+        color: #eee;
+        background-color: rgba(0, 0, 0, .5);
+        text-shadow: 1px 1px 2px #000;
+        align-self: flex-end;
+        p.header {
+            padding: 20px 20px 0 20px;
+        }
+        ul {
+            display: flex;
+            flex-wrap: wrap;
+            max-height: 92vh;
+            padding: 20px;
+            li {
+                text-align: center;
+                overflow: hidden;
+                width: 69px;
+                height: 39px;
+                margin: 1px;
+                cursor: pointer;
+                &.on {
+                    outline: 1px solid #00a5e2;
+                }
+                &:hover {
+                    transition: .15s ease-out all;
+                    transform: scale(2.5);
+                    outline: 1px solid #00a5e2;
+                    box-shadow: 2px 2px 15px 1px #000;
+                }
+                img {
+                    max-width: 100%; // width:100%;
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// old
+
+#lazy-center {
+    font-size: 40px;
+    text-align: center;
+    vertical-align: middle;
+    width: 600px;
+    height: 600px;
+    max-height: 100%;
+    margin: 0 auto;
+    color: #fff;
+    background: url('./images/overwatch_logo_04_flat.svg') no-repeat 50% 50%;
+    text-shadow: 0 0 6px rgb(255, 255, 255);
+    img {
+        max-height: 100%;
+    }
+    .header {
+        font-size: 40px;
+        line-height: 1em;
+        text-transform: uppercase;
+        margin: 1em 0;
+        transform: skew(-.25rad);
+    }
+    .message {
+        max-width: 95%;
+        margin: 0 auto;
+    }
+    .select p {
+        font-size: 40px;
+        line-height: 80px;
+        text-align: center;
+        display: inline-block;
+        width: 80px;
+        height: 80px;
+        margin: 0 13px;
+        cursor: pointer;
+        transition: .25s linear all;
+        transform: skew(-.25rad);
+        border: 3px solid #00a5e2;
+        border-radius: 10px;
+        background-color: #263149;
+        box-shadow: 0 0 8px #222;
+        &:hover {
+            background-color: #f7931e !important;
+            box-shadow: 0 0 10px #00a5e2;
+        }
+        span {
+            display: block;
+            transform: skew(.25rad);
+        }
+    }
+}
+
+.message {
+    /*display: none;*/
+    font-size: 20px;
+    line-height: 2.5rem;
+    a {
+        color: #fff;
+        box-shadow: 0;
+    }
+    .go {
+        font-size: 14px;
+        cursor: pointer;
+    }
+}
+
+@keyframes pulse {
+    50% {
+        border-color: #fff;
+    }
+}
+
+#confetti {
+    pointer-events: none;
+    position: fixed;
+    z-index: 1000;
+    width: 100vw;
+    height: 100vh;
+}
+
+#containerZZZZ {
+    position: fixed;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    min-width: 320px;
+    max-width: 100%;
+    height: 100vh;
+}
+
+#error-body {
+    text-align: center;
+    width: 980px;
+    max-width: 98%;
+    margin: 0 auto;
+    pre {
+        text-align: left;
+    }
+    img {
+        max-width: 100%;
+    }
+}

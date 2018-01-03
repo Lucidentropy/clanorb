@@ -26,7 +26,7 @@ router.get('/export/:view', function(req, res, next) {
             }
         },1000);
         let timestamp = new Date().toUTCString();
-        res.send('Export successful on view : ' +view+ '. <br> ' + timestamp);
+        res.send('Export successful on view : ' + view + '. <br> ' + timestamp);
     });
 });
 
