@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -10363,13 +10363,14 @@ var theBrowser = isOpera ? 'Opera' : isFirefox ? 'Firefox' : isSafari ? 'Safari'
 module.exports = theBrowser;
 
 /***/ }),
-/* 2 */
+/* 2 */,
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {
 
-var confetti = __webpack_require__(7);
+var confetti = __webpack_require__(8);
 var browser = __webpack_require__(1);
 /*
                                                  ,  ,
@@ -10463,7 +10464,7 @@ var oneTrueJavascriptExceptionHandler = function oneTrueJavascriptExceptionHandl
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10507,7 +10508,7 @@ module.exports = inlineSVG;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10545,33 +10546,33 @@ Array.prototype.unique = function () {
 };
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {
 
-__webpack_require__(5);
+__webpack_require__(6);
 
-__webpack_require__(4);
+__webpack_require__(5);
 
 var browser = __webpack_require__(1);
 
 $(function () {
     console.log("Document Ready", '$', $.fn.jquery, browser);
     // convert svg images into inline svg so they're easier to manipulate in css
-    __webpack_require__(3)();
+    __webpack_require__(4)();
 
     // It's easter somewhere
-    __webpack_require__(2);
+    __webpack_require__(3);
 
-    $('nav ul a').click(function (e) {
+    $('nav .leader a').click(function (e) {
         e.stopPropagation();
         e.preventDefault();
         return false;
@@ -10580,7 +10581,7 @@ $(function () {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

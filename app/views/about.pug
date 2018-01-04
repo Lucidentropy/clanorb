@@ -1,0 +1,13 @@
+extends layout
+block content
+    if section == "orb" || !section
+        include about-orb
+        
+    if section == "joining"
+        include about-joining
+                        
+    if section == "links"
+        include about-links
+            
+    if section == "members"        
+        include about-members

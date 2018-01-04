@@ -153,15 +153,20 @@ table {
   0% {
     opacity: 0;
     transform: scale(0.1);
+    text-shadow: 0;
+    color: #fff;
   }
 
   85% {
     opacity: 1;
     transform: scale(1.05);
+    text-shadow: 0 0 5px #fff;
   }
 
   100% {
     transform: scale(1);
+    text-shadow: 0;
+    color: inherit;
   }
 }
 
@@ -184,7 +189,9 @@ body {
   background: #666;
   background: url(./images/footer-bg.png) bottom center repeat-x, url(./images/star-bg.png) 50% 139px repeat-x;
   background-size: 100% auto;
-  height: 100vh;
+  height: 100%;
+  min-height: 100vh;
+  overflow-y: scroll;
 }
 
 body a {
@@ -205,9 +212,32 @@ body hr {
 }
 
 body h1 {
-  font-size: 1.5rem;
+  font-size: 2rem;
   line-height: 1.2;
   font-weight: normal;
+  background: linear-gradient(to bottom, #ebf1f6 0%, #abd3ee 50%, #257694 55%, #d5ebfb 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: "Ropa Sans", sans-serif;
+  font-weight: bold;
+  text-shadow: none;
+}
+
+body h2 {
+  font-size: 17px;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 1px #000336;
+  margin: 10px -10px;
+  color: #fff;
+  font-weight: normal;
+  background-color: rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  padding: 10px;
+}
+
+body em {
+  font-style: italic;
 }
 
 #container {
@@ -229,6 +259,23 @@ main {
   animation-duration: 6s;
   animation-iteration-count: infinite;
   animation-timing-function: ease-in;
+  line-height: 20px;
+  font-size: 13px;
+}
+
+main p {
+  margin: 0 0 10px 0;
+}
+
+main ul {
+  margin: 0 0 10px 20px;
+  list-style-type: square;
+  list-style-position: inside;
+}
+
+main ul.column-list {
+  column-count: 4;
+  column-gap: 20px;
 }
 
 header {
@@ -273,11 +320,6 @@ nav a:hover span {
 
 nav a span {
   transition: inherit;
-}
-
-nav li.about > a,
-nav li.about .leader > a {
-  padding: 0 25px;
 }
 
 nav li.games > a,
@@ -382,11 +424,6 @@ nav ul ul li:nth-child(9) {
 
 nav ul ul li a {
   transition: .05s transform, .05s opacity;
-}
-
-nav ul ul li a:active {
-  transform: scale(2);
-  opacity: 0;
 }
 
 nav ul ul li.leader {

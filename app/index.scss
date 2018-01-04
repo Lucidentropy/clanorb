@@ -22,7 +22,10 @@ body {
     background: #666;
     background: url(./images/footer-bg.png) bottom center repeat-x, url(./images/star-bg.png) 50% 139px repeat-x;
     background-size: 100% auto;
-    height: 100vh;
+    height: 100%;
+    min-height: 100vh;
+    overflow-y:scroll;
+    
     a {
         color: #C1E6FF;
         text-decoration: none;
@@ -38,9 +41,30 @@ body {
         border-top: solid #6cf 1px;
     }
     h1 {
-        font-size: 1.5rem;
+        font-size: 2rem;
         line-height: 1.2;
+        font-weight: normal; // background: linear-gradient(to bottom, #ebf1f6 0%,#abd3ee 50%,#89c3eb 51%,#d5ebfb 100%);
+        background: linear-gradient(to bottom, #ebf1f6 0%, #abd3ee 50%, #257694 55%, #d5ebfb 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-family: "Ropa Sans", sans-serif;
+        font-weight: bold;
+        text-shadow: none;
+    }
+    h2 {
+        font-size: 17px;
+        letter-spacing: 1px;
+        text-shadow: 1px 1px 1px #000336;
+        margin: 10px -10px;
+        color: #fff;
         font-weight: normal;
+        background-color: rgba(0, 0, 0, .1);
+        border: 1px solid rgba(0, 0, 0, .3);
+        border-radius: 4px;
+        padding: 10px;
+    }
+    em {
+        font-style: italic;
     }
 }
 
@@ -63,6 +87,21 @@ main {
     animation-duration: 6s;
     animation-iteration-count: infinite;
     animation-timing-function: ease-in;
+    line-height: 20px;
+    font-size: 13px;
+    p {
+        margin: 0 0 10px 0;
+    }
+
+    ul {
+        margin: 0 0 10px 20px;
+        list-style-type: square;
+        list-style-position: inside;
+        &.column-list {
+            column-count: 4;
+            column-gap: 20px;
+        }
+    }
 }
 
 header {
@@ -104,27 +143,29 @@ nav {
         }
     }
     li.about {
-        & > a, .leader > a {
-            padding: 0 25px;
-        } 
+        &>a,
+        .leader>a {}
     }
     li.games {
-        & > a, .leader > a {
+        &>a,
+        .leader>a {
             padding: 0 20px;
-        } 
+        }
     }
     li.steam {
         .leader {
             position: relative;
-            left:-1px;
+            left: -1px;
         }
-        & > a, .leader > a {
+        &>a,
+        .leader>a {
             background: url(./images/nav-steam-icon.png) 5px 50% no-repeat;
             padding: 0 15px 0 25px !important;
         }
     }
     li.links {
-        & > a, .leader > a {
+        &>a,
+        .leader>a {
             padding: 0 25px;
         }
     }
@@ -171,11 +212,10 @@ nav {
             }
             a {
                 transition: .05s transform, .05s opacity;
-            }
-            a:active {
-                transform: scale(2);
-                opacity: 0;
-            }
+            } // a:active {
+            //     transform: scale(2);
+            //     opacity: 0;
+            // }
             &.leader {
                 height: 40px;
                 line-height: 40px;
@@ -183,7 +223,6 @@ nav {
                 animation: none;
                 &:hover {
                     background: none;
-                    
                 }
                 a {
                     height: 40px;
@@ -192,11 +231,13 @@ nav {
                     text-align: center;
                     cursor: default;
                     &:hover {
-                        
                         border: 1px outset rgba(102, 204, 255, .5);
                         border-width: 0 1px;
                         padding: 0;
-                    }
+                    } // &:active {
+                    //     transform: none;
+                    //     opacity:1;
+                    // }
                 }
             }
         }
