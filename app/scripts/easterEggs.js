@@ -1,4 +1,3 @@
-    let confetti = require('./confetti');
     let browser = require('./browserSniff');
     /*
                                                      ,  ,

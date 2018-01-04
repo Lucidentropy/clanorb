@@ -16,7 +16,9 @@
     "extract-text-webpack-plugin": "^2.1.2",
     "jquery": "^3.2.1",
     "node-cache": "^4.1.1",
-    "serve-favicon": "~2.3.0"
+    "particles.js": "^2.0.0",
+    "serve-favicon": "~2.3.0",
+    "pug": "^2.0.0-rc.2"
   },
   "devDependencies": {
     "style-loader": "^0.17.0",
@@ -24,7 +26,6 @@
     "webpack": "^2.5.1",
     "webpack-dev-server": "^2.4.5",
     "node-sass": "^4.5.2",
-    "pug": "^2.0.0-rc.2",
     "resolve-url-loader": "^2.0.2",
     "sass-loader": "^6.0.5",
     "css-loader": "^0.28.1",
