@@ -1,6 +1,6 @@
 "use strict";
 import './index.scss';
-let browser = require('./scripts/browserSniff');
+const browser = require('./scripts/browserSniff');
 require('particles.js');
 
 $(function () {
@@ -14,10 +14,10 @@ $(function () {
     particlesJS("particles-js", {
         "particles": {
             "number": {
-                "value": 380,
+                "value": 400,
                 "density": {
                     "enable": true,
-                    "value_area": 2000
+                    "value_area": 3000
                 }
             },
             "color": {
@@ -31,11 +31,6 @@ $(function () {
                 },
                 "polygon": {
                     "nb_sides": 5
-                },
-                "image": {
-                    "src": "img/github.svg",
-                    "width": 100,
-                    "height": 100
                 }
             },
             "opacity": {
