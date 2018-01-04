@@ -55,6 +55,7 @@ if (app.get('env') === 'development') {
         res.render('error', {
             environment : app.get('env'),
             message: err.message,
+            code : err.status,
             error: err
         });
     });
@@ -66,6 +67,7 @@ app.use(function(err, req, res, next) {
     res.render('error', {
         environment : app.get('env'),
         message: err.message,
+        code : err.status,
         error: {}
     });
 });

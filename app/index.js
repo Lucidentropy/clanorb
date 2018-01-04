@@ -1,6 +1,5 @@
 "use strict";
 import './index.scss';
-import './scripts/prototypes.js';
 let browser = require('./scripts/browserSniff');
 
 $(function() {

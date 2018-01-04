@@ -286,16 +286,16 @@ header {
 }
 
 nav {
+  position: relative;
   font-family: "Ropa Sans", sans-serif;
   font-size: 12px;
-  position: relative;
   width: 100%;
   padding: 0 0 0 10px;
 }
 
 nav a {
-  line-height: 40px;
   display: inline-block;
+  line-height: 40px;
   padding: 0 15px;
   font-size: 13px;
   text-align: center;
@@ -364,8 +364,8 @@ nav > ul li:hover ul li {
 
 nav ul ul {
   display: none;
-  opacity: 0;
   position: absolute;
+  opacity: 0;
   box-shadow: 0px 0px 15px #222, 0 0px 200px -3px rgba(102, 204, 255, 0.5);
   z-index: 100;
   transition: .5s all linear;
@@ -452,9 +452,9 @@ nav ul ul li.leader a:hover {
 }
 
 nav ul ul a {
+  display: block;
   height: 20px;
   line-height: 20px;
-  display: block;
   text-align: left;
   padding: 2px 8px;
   white-space: nowrap;
