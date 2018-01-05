@@ -1,5 +1,5 @@
 @import './styles/reset';
-@import './styles/variables';
+// @import './styles/variables';
 //@import './styles/videoPlayer';
 @import './styles/keyframes';
 html {
@@ -41,7 +41,7 @@ body {
     h1 {
         font-size: 2rem;
         line-height: 1.2;
-        font-weight: normal; // background: linear-gradient(to bottom, #ebf1f6 0%,#abd3ee 50%,#89c3eb 51%,#d5ebfb 100%);
+        font-weight: normal;
         background: linear-gradient(to bottom, #ebf1f6 0%, #abd3ee 50%, #257694 55%, #d5ebfb 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -64,8 +64,7 @@ body {
     em {
         font-style: italic;
     }
-
-    & > * {
+    &>* {
         z-index: 10;
         position: relative;
     }
@@ -76,12 +75,12 @@ body {
     width: 100%;
     height: 100%;
     background-color: transparent;
-    background-image: url("");
+    // background-image: url(""); // This line breaks chrome inspector
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 50% 50%;
     z-index: 1 !important;
-    opacity:.5;
+    opacity: .5;
 }
 
 #container {
@@ -116,6 +115,9 @@ main {
             column-count: 4;
             column-gap: 20px;
         }
+    }
+    img {
+        max-width: 100%;
     }
 }
 
@@ -156,10 +158,6 @@ nav {
         span {
             transition: inherit;
         }
-    }
-    li.about {
-        &>a,
-        .leader>a {}
     }
     li.games {
         &>a,
@@ -227,10 +225,7 @@ nav {
             }
             a {
                 transition: .05s transform, .05s opacity;
-            } // a:active {
-            //     transform: scale(2);
-            //     opacity: 0;
-            // }
+            }
             &.leader {
                 height: 40px;
                 line-height: 40px;
@@ -249,10 +244,7 @@ nav {
                         border: 1px outset rgba(102, 204, 255, .5);
                         border-width: 0 1px;
                         padding: 0;
-                    } // &:active {
-                    //     transform: none;
-                    //     opacity:1;
-                    // }
+                    }
                 }
             }
         }
@@ -280,15 +272,17 @@ footer {
 }
 
 .intro {
-    display:block;
-    margin:50px auto;
-    box-shadow:rgb(1, 52, 102) 0px 0px 20px 9px;
+    display: block;
+    margin: 50px auto;
+    box-shadow: rgb(1, 52, 102) 0px 0px 20px 9px;
 }
+
 .center {
-    text-align:center;
+    text-align: center;
 }
+
 img.center {
-    margin-left:auto;
-    margin-right:auto;
-    display:block;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }

@@ -8,7 +8,7 @@ var provideJQuery = new webpack.ProvidePlugin({
 
 module.exports = {
     context: __dirname + "/app",
-    entry: "./index.js",
+    entry: "./layout.js",
     output: {
         path: __dirname + "/www",
         filename: "scripts.js"

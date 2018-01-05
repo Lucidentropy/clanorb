@@ -1,5 +1,5 @@
 "use strict";
-import './index.scss';
+import './layout.scss';
 const browser = require('./scripts/browserSniff');
 require('particles.js');
 
