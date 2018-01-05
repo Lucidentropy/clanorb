@@ -491,3 +491,19 @@ footer {
   margin-bottom: 5rem;
 }
 
+.intro {
+  display: block;
+  margin: 50px auto;
+  box-shadow: #013466 0px 0px 20px 9px;
+}
+
+.center {
+  text-align: center;
+}
+
+img.center {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
