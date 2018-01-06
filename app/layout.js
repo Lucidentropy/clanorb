@@ -1,18 +1,25 @@
 "use strict";
 import './layout.scss';
-const browser = require('./scripts/browserSniff');
+const browser = require('./scripts/includes/browserSniff');
 require('particles.js');
 
 $(function () {
-    console.log("Document Ready", '$', $.fn.jquery, browser);
+    console.log("Ready", '$', $.fn.jquery, browser);
     // convert svg images into inline svg so they're easier to manipulate in css
-    require('./scripts/inlineSVG')();
+    require('./scripts/includes/inlineSVG')();
 
     // It's easter somewhere
-    require('./scripts/easterEggs');
+    require('./scripts/includes/easterEggs');
 
-    let bgVideo = require('./scripts/bgVideo');
-    bgVideo.init();
+    let page = (window.location.pathname || "/").split("/")[1];
+    switch (page) {
+        case "about" :
+            require('./scripts/about.js');
+        break;
+        case "" : 
+            require('./scripts/index.js');
+        break;
+    }
 
     particlesJS("particles-js", {
         "particles": {

@@ -1,12 +1,8 @@
 let express = require('express');
 let path = require('path');
 let favicon = require('serve-favicon');
-// let logger = require('morgan');
-// let cookieParser = require('cookie-parser');
 let bodyParser = require('body-parser');
-
 let routes = require('./router');
-
 let app = express();
 
 // view engine setup

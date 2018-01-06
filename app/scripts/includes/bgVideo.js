@@ -86,6 +86,14 @@ const theVideo = {
             this.play();
         });
 
+        document.querySelector('#vid-container .close').addEventListener("click", () => {
+            document.getElementById('playlists').classList.remove('open');
+        });
+
+        document.querySelector('#intro .close').addEventListener("click", () => {
+            document.getElementById('intro').classList.remove('show');
+        });
+
         // Avoid trying to force video state while it's loading another
         document.getElementById('video-random').addEventListener("click", () => {
             if (this.player.readyState == 4) {
@@ -97,15 +105,16 @@ const theVideo = {
         });
 
         // Toggle css to control wether or not the video fits or zooms
-        document.getElementById('video-aspect').addEventListener("click", () => {
-            this.player.classList.toggle('unzoom');
-        });
+        // document.getElementById('video-aspect').addEventListener("click", () => {
+        //     this.player.classList.toggle('unzoom');
+        // });
 
         document.getElementById('video-gameSelector').addEventListener("click", () => {
             let playlist = document.getElementById('playlists');
-            let visible = playlist.style.display === 'flex';
+            playlist.classList.toggle('open');
+            // let visible = playlist.style.display === 'flex';
 
-            playlist.style.display = visible ? 'none' : 'flex';
+            // playlist.style.display = visible ? 'none' : 'flex';
         });
 
         // Lets not waste bandwidth while window is out of focus
@@ -210,7 +219,7 @@ const theVideo = {
     },
     buildImageList() {
         let imageListUl = document.getElementById('image-playlist').querySelector('ul');
-        let max = 100;
+        let max = 99;
         imageListUl.innerHTML = '';
         this.videoPlaylist.slice(0,max).forEach(index => {
             let li = document.createElement('li');
@@ -229,6 +238,7 @@ const theVideo = {
 
             li.addEventListener('click', e => {
                 this.loadVid(index);
+                document.getElementById('playlists').classList.remove('open');
             });
 
             imageListUl.appendChild(li);
