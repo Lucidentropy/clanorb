@@ -86,12 +86,22 @@ const theVideo = {
             this.play();
         });
 
-        document.querySelector('#playlists .close').addEventListener("click", () => {
+        document.getElementById('playlists').querySelector('.close').addEventListener("click", () => {
             document.getElementById('playlists').classList.remove('open');
         });
 
-        document.querySelector('#intro .close').addEventListener("click", () => {
+        document.getElementById('intro').querySelector('.close').addEventListener("click", () => {
             document.getElementById('intro').classList.remove('show');
+        });
+
+
+        Array.from(document.getElementsByClassName('theaterModeToggle')).forEach(element => {
+            element.addEventListener('click', function () {
+                document.querySelector('main').classList.toggle('theater');
+                this.classList.toggle('on');
+                document.getElementById('intro').classList.remove('show');
+                document.getElementById('playlists').classList.remove('open');
+            });
         });
 
         // Avoid trying to force video state while it's loading another
@@ -174,7 +184,9 @@ const theVideo = {
             let indexName = this.unCamelCaseString(index);
             // Show number of videos per game, filter removes nulls/blanks
             let span = document.createElement('span');
-            let listLength = videoList[index].filter(n => { return n !== "" }).length;
+            let listLength = videoList[index].filter(n => {
+                return n !== ""
+            }).length;
             if (listLength > 5) {
                 span.innerHTML = listLength;
 
@@ -186,7 +198,7 @@ const theVideo = {
         }
         let prams = new getParams();
         let hash = getParams('game');
-        
+
         if (this.gameIndexes.contains(hash)) {
             setTimeout(() => {
                 hash.split(',').forEach(game => {
@@ -206,30 +218,32 @@ const theVideo = {
         }
         // filter out uniques and nulls
         this.videoPlaylist = [...new Set(this.videoPlaylist)];
-        this.videoPlaylist = this.videoPlaylist.filter((n) => { return n !== "" });
+        this.videoPlaylist = this.videoPlaylist.filter((n) => {
+            return n !== ""
+        });
 
         if (this.hashInUse && this.gameIndexes.length !== 0 && this.gameIndexes.length < 6) {
             window.location.hash = this.gameIndexes.join(',');
-        }       
+        }
         this.buildImageList();
     },
     buildImageList() {
         let imageListUl = document.getElementById('image-playlist').querySelector('ul');
         let max = 99;
         imageListUl.innerHTML = '';
-        this.videoPlaylist.slice(0,max).forEach(index => {
+        this.videoPlaylist.slice(0, max).forEach(index => {
             let li = document.createElement('li');
             let [service, token] = index.split(':');
 
             li.setAttribute('data-token', token);
             let img;
-            if ( service === "gfycat" ) {
+            if (service === "gfycat") {
                 img = '<img src="https://thumbs.gfycat.com/' + token + '-thumb100.jpg"/>';
                 li.innerHTML = img;
             }
-            if ( service === "imgur" ) {
+            if (service === "imgur") {
                 img = '<img src="https://i.imgur.com/' + token + 's.jpg"/>';
-                li.innerHTML = img;   
+                li.innerHTML = img;
             }
 
             li.addEventListener('click', e => {
@@ -242,7 +256,9 @@ const theVideo = {
     },
     buildReferences() {
         for (let index in videoList) {
-            let sortedList = videoList[index].slice().filter((n) => { return n != "" });
+            let sortedList = videoList[index].slice().filter((n) => {
+                return n != ""
+            });
 
             this.videoTokens = this.videoTokens.concat(sortedList);
             // store a reference table of object parent name to token
@@ -340,16 +356,16 @@ const theVideo = {
         this.player.load();
         // play event is handled by loadeddata event
 
-        [].forEach.call(document.querySelectorAll('#image-playlist [data-token].on'), function(el) {
+        [].forEach.call(document.querySelectorAll('#image-playlist [data-token].on'), function (el) {
             el.classList.remove("on");
         });
 
         let highlight = document.querySelector('#image-playlist [data-token="' + token + '"]');
-        if ( highlight ) highlight.classList.add('on');
+        if (highlight) highlight.classList.add('on');
     }
 }
 
-Array.prototype.remove = function() {
+Array.prototype.remove = function () {
     var what, a = arguments,
         L = a.length,
         ax;
@@ -362,14 +378,14 @@ Array.prototype.remove = function() {
     return this;
 };
 
-Array.prototype.contains = function(v) {
+Array.prototype.contains = function (v) {
     for (var i = 0; i < this.length; i++) {
         if (this[i] === v) return true;
     }
     return false;
 };
 
-Array.prototype.unique = function() {
+Array.prototype.unique = function () {
     var arr = [];
     for (var i = 0; i < this.length; i++) {
         if (!arr.contains(this[i])) {
