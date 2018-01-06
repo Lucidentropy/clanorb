@@ -5,8 +5,7 @@
   "scripts": {
     "start": "nodemon ./server/www",
     "watch": "webpack --watch",
-    "dev": "npm run watch & npm run start",
-    "prod": "pm2 startOrReload ecosystem.json --env production",
+    "prod": "pm2 startOrReload ecosystem.config.json --env production",
     "build": "webpack -p --progress"
   },
   "dependencies": {
