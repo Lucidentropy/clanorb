@@ -1,17 +1,35 @@
+#intro {
+    position:absolute;
+    bottom:10%;
+    left:15%;
+    text-align:center;
+    padding:20px;
+    border-radius:10px;
+    width:70%;
+    z-index: 10;
+    background-color:rgba(0,0,0,.75);
+    box-shadow:0 0 10px rgba(0,0,0,.75);
+
+    line-height: 1.15rem;
+
+    h3 {
+        font-size:1.5rem;
+        color:#fff;
+        margin:0 0 10px
+    }
+}
+
 #vid-container {
     position: relative;
-    z-index: -100;
-    transition: 1s opacity;
-    opacity: .25;
+    margin: -20px;
+    border-radius: 9px;
+    overflow: hidden;
+    
     #bg-video {
-        position: fixed;
-        top: 50%;
-        left: 50%;
         width: auto;
+        display: block;
         min-width: 100%;
-        height: auto;
-        min-height: 100%;
-        transform: translateX(-50%) translateY(-50%);
+        max-width: 100%;
         box-shadow: 0 0 130px #000;
         &.unzoom {
             width: auto;
@@ -182,129 +200,5 @@
                 }
             }
         }
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// old
-
-#lazy-center {
-    font-size: 40px;
-    text-align: center;
-    vertical-align: middle;
-    width: 600px;
-    height: 600px;
-    max-height: 100%;
-    margin: 0 auto;
-    color: #fff;
-    background: url('./images/overwatch_logo_04_flat.svg') no-repeat 50% 50%;
-    text-shadow: 0 0 6px rgb(255, 255, 255);
-    img {
-        max-height: 100%;
-    }
-    .header {
-        font-size: 40px;
-        line-height: 1em;
-        text-transform: uppercase;
-        margin: 1em 0;
-        transform: skew(-.25rad);
-    }
-    .message {
-        max-width: 95%;
-        margin: 0 auto;
-    }
-    .select p {
-        display: inline-block;
-        font-size: 40px;
-        line-height: 80px;
-        text-align: center;
-        width: 80px;
-        height: 80px;
-        margin: 0 13px;
-        cursor: pointer;
-        transition: .25s linear all;
-        transform: skew(-.25rad);
-        border: 3px solid #00a5e2;
-        border-radius: 10px;
-        background-color: #263149;
-        box-shadow: 0 0 8px #222;
-        &:hover {
-            background-color: #f7931e !important;
-            box-shadow: 0 0 10px #00a5e2;
-        }
-        span {
-            display: block;
-            transform: skew(.25rad);
-        }
-    }
-}
-
-.message {
-    /*display: none;*/
-    font-size: 20px;
-    line-height: 2.5rem;
-    a {
-        color: #fff;
-        box-shadow: 0;
-    }
-    .go {
-        font-size: 14px;
-        cursor: pointer;
-    }
-}
-
-@keyframes pulse {
-    50% {
-        border-color: #fff;
-    }
-}
-
-#confetti {
-    position: fixed;
-    pointer-events: none;
-    z-index: 1000;
-    width: 100vw;
-    height: 100vh;
-}
-
-#containerZZZZ {
-    display: flex;
-    position: fixed;
-    z-index: 1;
-    align-items: center;
-    justify-content: center;
-    width: 100vw;
-    min-width: 320px;
-    max-width: 100%;
-    height: 100vh;
-}
-
-#error-body {
-    text-align: center;
-    width: 980px;
-    max-width: 98%;
-    margin: 0 auto;
-    pre {
-        text-align: left;
-    }
-    img {
-        max-width: 100%;
     }
 }

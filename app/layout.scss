@@ -1,6 +1,6 @@
 @import './styles/reset';
 // @import './styles/variables';
-//@import './styles/videoPlayer';
+@import './styles/videoPlayer';
 @import './styles/keyframes';
 html {
     font-family: sans-serif;
@@ -91,7 +91,7 @@ body {
 }
 
 main {
-    padding: 1rem 2.5rem;
+    padding: 20px;
     background: rgba(0, 0, 0, .6);
     border-radius: 9px;
     min-height: 430px;
@@ -110,7 +110,7 @@ main {
     ul {
         margin: 0 0 10px 20px;
         list-style-type: square;
-        list-style-position: inside;
+        list-style:none inside none;
         &.column-list {
             column-count: 4;
             column-gap: 20px;

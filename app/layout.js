@@ -11,6 +11,9 @@ $(function () {
     // It's easter somewhere
     require('./scripts/easterEggs');
 
+    let bgVideo = require('./scripts/bgVideo');
+    bgVideo.init();
+
     particlesJS("particles-js", {
         "particles": {
             "number": {

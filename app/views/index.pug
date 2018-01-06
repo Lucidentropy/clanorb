@@ -1,6 +1,29 @@
 extends layout
 block content
     
-    img.intro(src="/images/orb_memories.jpg")
-
+    //- img.intro(src="/images/orb_memories.jpg")
+    #intro
+        h3 Orb Gaming Community
+        p Founded in 2000, Orb is an online gaming community dedicated to the belief that online gaming should be about fun and good times with friends, not score, items, or being the best. Sense of humor required.
+    #vid-container
+        video(id="bg-video" poster="http://thumbs.gfycat.com/PlumpIdioticKoalabear-poster.jpg" muted="")
+            source(class="webmSource" src="http://giant.gfycat.com/PlumpIdioticKoalabear.webm" type="video/webm")
+            source(class="mp4Source" src="http://giant.gfycat.com/PlumpIdioticKoalabear.mp4" type="video/mp4")
+            img(src="http://thumbs.gfycat.com/PlumpIdioticKoalabear-poster.jpg" title="Sorry, your browser doesn't support HTML5 video.")
+    #playlists
+        #video-playlist
+            p.header Game Filter : <span>all</span>
+            ul#game-selector
+        #image-playlist
+            p.header Thumbnails
+            ul#playlist-thumbnails
+    #video-controls
+        #video-pause(title="Pause") &#10074;&#10074;
+        #video-play(title="Play") &#9658;
+        #video-random(title="Next Random") &#9658;&#9658;|
+        #video-aspect(title="Aspect Ratio")
+            img(src="./images/ic_aspect_ratio_white_24px.svg")
+        #video-gameSelector(title="Game Selector") &#9881;
+        #video-channel Now Playing : 
+            span
 
