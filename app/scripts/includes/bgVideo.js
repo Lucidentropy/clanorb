@@ -86,7 +86,7 @@ const theVideo = {
             this.play();
         });
 
-        document.querySelector('#vid-container .close').addEventListener("click", () => {
+        document.querySelector('#playlists .close').addEventListener("click", () => {
             document.getElementById('playlists').classList.remove('open');
         });
 
@@ -136,7 +136,6 @@ const theVideo = {
     buildGameSelector() {
         let gameListUl = document.getElementById('video-playlist').querySelector('ul');
         gameListUl.innerHTML = '';
-        let statusSpan = document.getElementById('video-playlist').querySelector('.header span');
 
         for (let index in videoList) {
             let ul = gameListUl;
@@ -145,7 +144,6 @@ const theVideo = {
             li.addEventListener('click', e => {
                 if (this.filterMode === 'all') {
                     this.filterMode = 'select';
-                    statusSpan.innerHTML = 'select';
                     this.gameIndexes = [];
                 }
 
@@ -154,7 +152,6 @@ const theVideo = {
                         this.gameIndexes.remove(index);
                     } else {
                         this.filterMode = 'all';
-                        statusSpan.innerHTML = 'all';
                         this.buildPlaylist();
                         document.getElementById('image-playlist').style.display = 'none';
                     }
@@ -166,7 +163,6 @@ const theVideo = {
 
                 if (this.filterMode !== 'all') {
                     let len = this.gameIndexes.length;
-                    statusSpan.innerHTML = len + ' game' + ((len > 1) ? 's' : '');
                     document.getElementById('image-playlist').style.display = 'block';
                 }
                 this.buildPlaylist();
@@ -326,8 +322,8 @@ const theVideo = {
         if (type === "gfycat") {
             link = 'https://gfycat.com/gifs/detail/' + token;
         }
-        let linkMarkup = '<a href="' + link + '" target="_blank" rel="noopener noreferrer">' + type + '</a>';
-        document.getElementById('video-channel').querySelector('span').innerHTML = this.refs[token] + ' - ' + linkMarkup;
+        let linkMarkup = '<a href="' + link + '" target="_blank" rel="noopener noreferrer" title="View original on ' + type + '">source</a>';
+        document.getElementById('video-channel').innerHTML = this.refs[token] + linkMarkup;
 
         // Pause
         this.player.pause();
