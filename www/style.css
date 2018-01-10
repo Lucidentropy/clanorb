@@ -717,7 +717,7 @@ nav li.discord .leader > a {
 
 nav li.discord ul {
   width: auto;
-  right: 0;
+  right: -1px;
   top: 0;
   margin-top: 0 !important;
   width: 240px;
