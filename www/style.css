@@ -709,20 +709,61 @@ nav li.discord {
 nav li.discord > a,
 nav li.discord .leader > a {
   text-align: right;
-  padding: 0 15px 0 30px !important;
+  padding: 8px 15px 0 30px !important;
   background: url(./images/Discord-Logo-White.png) 5px 50% no-repeat;
   background-size: 20px;
+  line-height: 1em;
 }
 
 nav li.discord ul {
   width: auto;
   right: 0;
+  top: 0;
+  margin-top: 0 !important;
+  width: 240px;
+  text-align: left;
 }
 
-nav li.discord ul li,
-nav li.discord ul span,
-nav li.discord ul a {
-  text-align: right;
+nav li.discord ul li.duser {
+  position: relative;
+}
+
+nav li.discord ul li.duser .avatar {
+  height: 16px;
+  width: 16px;
+  line-height: 1em;
+  border-radius: 100%;
+  margin-left: 7px;
+  border: 1px solid #000;
+}
+
+nav li.discord ul li.duser .avatar.online {
+  border-color: green;
+}
+
+nav li.discord ul li.duser .avatar.dnd {
+  border-color: red;
+}
+
+nav li.discord ul li.duser .avatar.idle {
+  border-color: #ccc;
+}
+
+nav li.discord ul li.duser .username {
+  white-space: nowrap;
+}
+
+nav li.discord ul li.duser .game {
+  float: right;
+}
+
+nav li.discord ul li.duser span {
+  display: inline-block;
+}
+
+nav li.discord ul li.duser span:hover {
+  border: none;
+  padding: 2px 8px;
 }
 
 nav > ul li {

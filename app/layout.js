@@ -137,9 +137,17 @@ $(function () {
         $('nav li.discord ul li').not('.leader').remove();
 
         data.members.forEach(member => {
-            $('nav li.discord ul').append('<li><span>' + member.username + '</span></li>');
+            let li = $("<li />");
+            li.attr('class', 'duser');
+            // li.append('<span class="status ' + member.status + '"/>');
+            li.append('<img src="' + member.avatar_url + '" class="avatar ' + member.status + '" />')
+            li.append('<span class="username"> ' + member.username + '</span>');
+            if ( member.game ) {
+                li.append('<span class="game">' + member.game.name + '</span>');
+            }
+            $('nav li.discord ul').append(li);
         });
 
-        $('nav li.discord > a, nav li.discord li.leader > a').text('Discord : ' + data.members.length);
+        $('nav li.discord > a, nav li.discord li.leader > a').html('Discord<br>' + data.members.length + ' online');
     })
 });
