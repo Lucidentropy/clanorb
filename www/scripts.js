@@ -12217,6 +12217,16 @@ $(function () {
         e.preventDefault();
         return false;
     });
+
+    $.get('/api/discord', function (data) {
+        $('nav li.discord ul li').not('.leader').remove();
+
+        data.members.forEach(function (member) {
+            $('nav li.discord ul').append('<li><span>' + member.username + '</span></li>');
+        });
+
+        $('nav li.discord > a, nav li.discord li.leader > a').text('Discord : ' + data.members.length);
+    });
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 

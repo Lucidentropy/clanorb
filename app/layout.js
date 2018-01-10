@@ -132,4 +132,14 @@ $(function () {
         e.preventDefault();
         return false;
     })
+
+    $.get('/api/discord', data => {
+        $('nav li.discord ul li').not('.leader').remove();
+
+        data.members.forEach(member => {
+            $('nav li.discord ul').append('<li><span>' + member.username + '</span></li>');
+        });
+
+        $('nav li.discord > a, nav li.discord li.leader > a').text('Discord : ' + data.members.length);
+    })
 });

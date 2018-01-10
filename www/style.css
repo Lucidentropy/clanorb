@@ -646,7 +646,7 @@ nav {
   font-family: "Ropa Sans", sans-serif;
   font-size: 12px;
   width: 100%;
-  padding: 0 0 0 10px;
+  padding: 0 10px;
   text-align: center;
 }
 
@@ -698,6 +698,31 @@ nav li.steam .leader > a {
 nav li.links > a,
 nav li.links .leader > a {
   padding: 0 25px;
+}
+
+nav li.discord {
+  float: right;
+  width: 105px;
+  text-align: right;
+}
+
+nav li.discord > a,
+nav li.discord .leader > a {
+  text-align: right;
+  padding: 0 15px 0 30px !important;
+  background: url(./images/Discord-Logo-White.png) 5px 50% no-repeat;
+  background-size: 20px;
+}
+
+nav li.discord ul {
+  width: auto;
+  right: 0;
+}
+
+nav li.discord ul li,
+nav li.discord ul span,
+nav li.discord ul a {
+  text-align: right;
 }
 
 nav > ul li {
@@ -808,6 +833,7 @@ nav ul ul li.leader a:hover {
   padding: 0;
 }
 
+nav ul ul li > span,
 nav ul ul a {
   display: block;
   height: 20px;
@@ -817,6 +843,7 @@ nav ul ul a {
   white-space: nowrap;
 }
 
+nav ul ul li > span:hover,
 nav ul ul a:hover {
   border: 3px solid rgba(102, 204, 255, 0.5);
   border-width: 0 3px;
