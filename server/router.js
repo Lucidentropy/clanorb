@@ -18,6 +18,7 @@ router.get('/about/:section?', function (req, res, next) {
     });
 });
 
+// Steam
 router.get('/api/steam/:section?', function (req, res, next) {
     let section = req.params.section;
 
@@ -43,6 +44,7 @@ router.get('/api/steam/:section?', function (req, res, next) {
         });
 });
 
+// Overwatch
 router.get('/api/overwatch/:tag?', function (req, res, next) {
 
     const tag = req.params.tag.replace('#', '-');
@@ -65,6 +67,8 @@ router.get('/api/overwatch/:tag?', function (req, res, next) {
         });
     }
 });
+
+// Discord
 router.get('/api/discord', function (req, res, next) {
     let url = 'https://discordapp.com/api/guilds/259097331046023168/widget.json';
     fetch(url, res);
@@ -73,7 +77,7 @@ router.get('/api/discord', function (req, res, next) {
 // World of Warcraft API
 router.get('/api/wow/?*', function (req, res, next) {
     if (req.params[0] === '') {
-        res.json(getRouteList());
+        res.send(getRouteList());
         return false;
     }
     let [api, param2, param3, param4] = req.params[0].split('/');
@@ -175,13 +179,13 @@ function getRouteList() {
         '/wow/zone/:zoneid': '/wow/zone/6912'
     };
 
+    let html = '<htm><body><h2>World of Warcraft API Endpoints</h2><ul style="font-family:Courier">';
     Object.keys(validEndpoints).forEach(key => {
-        validEndpoints[key] = 'http://localhost:8080/api' + validEndpoints[key];
+        html += '<li><a href="/api' + validEndpoints[key] + '" target="_blank" style="text-decoration:none;">' + key + '</a></li>';
     });
+    html += '</ul></body></html>';
 
-    return {
-        validEndpoints
-    };
+    return html;
 }
 
 // router.get('/pano', function(req, res, next) {
