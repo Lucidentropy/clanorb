@@ -116,15 +116,17 @@ router.get('/api/d3/profile/:battletag/:heroid?', function (req, res, next) {
 });
 
 function fetch(url, res) {
+    
     request.get(url).end((err, response) => {
         if (response && response.text) {
 
+            
             let parsed = JSON.parse(response.text);
             if (parsed.status === 'nok') {
                 res.json({
                     error: {
                         status: 'nok',
-                        url,
+                        url : url.split('?')[0],
                         reason: parsed.reason
                     }
                 })
@@ -132,11 +134,10 @@ function fetch(url, res) {
                 res.json(parsed);
             }
         } else {
-            console.log('Empty response text', response);
             res.json({
                 error: {
                     reason: 'Response.text was empty',
-                    url,
+                    url : url.split('?')[0],
                     response
                 }
             })
