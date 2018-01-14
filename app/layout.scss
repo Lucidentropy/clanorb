@@ -1,6 +1,7 @@
 @import './styles/reset';
 @import './styles/videoPlayer';
 @import './styles/keyframes';
+@import './styles/game-wow';
 html {
     font-family: sans-serif;
     box-sizing: border-box;
@@ -107,11 +108,13 @@ main {
     }
     ul {
         margin: 0 0 10px 20px;
+        list-style: inside;
         list-style-type: square;
-        list-style: none inside none;
         &.column-list {
             column-count: 4;
             column-gap: 20px;
+            list-style: inside;
+            list-style-type: square;
         }
     }
     img {

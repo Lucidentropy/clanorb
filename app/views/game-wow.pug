@@ -1,0 +1,34 @@
+extends layout
+block content
+    h1 Guild Orb
+    p Guild Created : Thursday, November 25, 2004, 5:35 PM PST
+    -let options = { weekday: "long", year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit", timeZoneName : 'short' }
+    p='Last updated : ' + new Date(guild.lastModified).toLocaleDateString('en-us', options)
+    p=guild.members.length + ' characters.'
+    p=guild.members.filter(member => member.character.level === 110).length + ' max level characters.'
+
+    #members
+        -let members = guild.members;
+        -members = members.filter(member => member.character.level > 100);
+        -members = members.sort((a, b) => b.character.name < a.character.name);
+        -let classNames = [,"Warrior", "Paladin", "Hunter", "Rogue", "Priest", "Death Knight", "Shaman", "Mage", "Warlock", "Monk", "Druid","Demon Hunter"]
+
+        h2 Orb Guild Member list
+            span=members.length + ' players above level 100 shown'
+        .classList
+            - for (let i = 1; i < 13; ++i) {
+                -let thisClasslist = members.filter(member => member.character.class == i);
+                div(class='charclass-' + i)
+                    p=classNames[i]
+                        span=thisClasslist.length
+                    ul
+                        each member in thisClasslist
+                            -let character = member.character;
+                            li= character.name
+            - }
+
+    //- #news
+    //-     h2 Orb Guild News Feed
+    //-     each entry in guild.news
+    //-         .entry
+    //-             p= entry.character + ' ' + entry.type

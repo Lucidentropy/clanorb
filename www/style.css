@@ -508,6 +508,94 @@ main .theaterModeToggle.on {
   }
 }
 
+#members h2 {
+  margin: 0;
+}
+
+#members h2 span {
+  float: right;
+  font-size: 11px;
+}
+
+#members .classList {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#members .classList > div {
+  width: calc(100% / 6);
+  padding: 10px 20px 15px;
+  border: 1px solid rgba(0, 204, 255, 0.2);
+  border-radius: 10px;
+  min-width: 160px;
+}
+
+#members .classList > div.charclass-1 {
+  color: #c69b6d;
+}
+
+#members .classList > div.charclass-2 {
+  color: #f48cba;
+}
+
+#members .classList > div.charclass-3 {
+  color: #aad372;
+}
+
+#members .classList > div.charclass-4 {
+  color: #fff468;
+}
+
+#members .classList > div.charclass-5 {
+  color: #f0ebe0;
+}
+
+#members .classList > div.charclass-6 {
+  color: #c41e3b;
+}
+
+#members .classList > div.charclass-7 {
+  color: #2359ff;
+}
+
+#members .classList > div.charclass-8 {
+  color: #68ccef;
+}
+
+#members .classList > div.charclass-9 {
+  color: #9382c9;
+}
+
+#members .classList > div.charclass-10 {
+  color: #00ffba;
+}
+
+#members .classList > div.charclass-11 {
+  color: #ff7c0a;
+}
+
+#members .classList > div.charclass-12 {
+  color: #a330c9;
+}
+
+#members .classList > div p {
+  margin: -0 0 5px;
+  font-weight: bold;
+  border-bottom: 1px solid;
+  text-transform: uppercase;
+  font-size: 13px;
+  font-family: "Ropa Sans", sans-serif;
+}
+
+#members .classList > div p span {
+  float: right;
+}
+
+#members .classList > div ul {
+  list-style: none inside none;
+  margin: 0;
+}
+
 html {
   font-family: sans-serif;
   box-sizing: border-box;
@@ -624,13 +712,15 @@ main p {
 
 main ul {
   margin: 0 0 10px 20px;
+  list-style: inside;
   list-style-type: square;
-  list-style: none inside none;
 }
 
 main ul.column-list {
   column-count: 4;
   column-gap: 20px;
+  list-style: inside;
+  list-style-type: square;
 }
 
 main img {
