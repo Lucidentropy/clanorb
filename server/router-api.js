@@ -87,7 +87,7 @@ module.exports = function (router) {
                         players.push({
                             name,
                             score: parseInt(score),
-                            teamId: parseInt(team),
+                            team: parseInt(team),
                             ping: parseInt(ping),
                             packetLoss: parseInt(packetLoss)
                         });
@@ -98,13 +98,13 @@ module.exports = function (router) {
             let teamStatus = data.slice(2, game.numteams + 2);
             if (teamStatus) {
                 teamStatus.forEach(row => {
-                    let [name, score, playercount, teamid] = row.split(',');
-                    let teamsPlayers = players.filter(player => player.teamId === parseInt(teamid));
+                    let [name, score, playercount, id] = row.split(',');
+                    let teamsPlayers = players.filter(player => player.id === parseInt(id));
                     teams.push({
+                        id : parseInt(id),
                         name,
                         score: parseInt(score),
-                        playercount: parseInt(teamsPlayers.length),
-                        teamId : parseInt(teamid)
+                        playercount: parseInt(teamsPlayers.length)
                     });
 
                 });
