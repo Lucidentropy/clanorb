@@ -44,7 +44,7 @@ module.exports = function (router) {
         execute("quakestat -tbs " + host + " -P -R -raw ,", function (output) {
             console.log('quakestat ouput', output);
             res.json({
-                output: output.split("/n")
+                output: output.split("\n")
             });
         });
     })
