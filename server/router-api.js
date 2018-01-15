@@ -53,7 +53,7 @@ module.exports = function (router) {
             gamedata = gamedata = ",";
             let gameStatus = gamedata.match(/(\w*)\=(.*?)\,/g);
             console.log('game status', gameStatus);
-            if ( gameStatus.length !== 0 ) {
+            if ( gameStatus ) {
 
                 gameStatus.forEach(row => {
                     let [attr, val] = row.split('=');
