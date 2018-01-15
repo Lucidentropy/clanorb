@@ -48,7 +48,7 @@ module.exports = function (router) {
             }
             let data = output.split("\n");
 
-            let game;
+            let game = {};
             let gameStatus = data[1].split(',');
             if ( gameStatus ) {
                 gameStatus.forEach(row => {
