@@ -39,13 +39,12 @@ module.exports = function (router) {
 
     // tribes server status
     router.get('/api/tribes/:serverip', function (req, res, next) {
-        //173.27.38.102:28001
-        //quakestat -tbs 173.27.38.102:28001 -P -R -raw ,
-        let host = req.params.serverip;
+        let host =  req.params.serverip.replace(/[^0-9\.\: -]/g, '');
+
         execute("quakestat -tbs " + host + " -P -R -raw ,", function (output) {
             console.log('quakestat ouput', output);
             res.json({
-                output
+                output: output.split("/n")
             });
         });
     })
