@@ -20,6 +20,7 @@
     "pug": "^2.0.0-rc.2",
     "serve-favicon": "~2.3.0",
     "superagent": "^3.3.1",
+    "tough-cookie-filestore": "0.0.1",
     "xml2js": "^0.4.19"
   },
   "devDependencies": {

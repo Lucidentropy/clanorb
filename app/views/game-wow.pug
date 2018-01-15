@@ -14,7 +14,7 @@ block content
         -let classNames = [,"Warrior", "Paladin", "Hunter", "Rogue", "Priest", "Death Knight", "Shaman", "Mage", "Warlock", "Monk", "Druid","Demon Hunter"]
 
         h2 Orb Guild Member list
-            span=members.length + ' players above level 100 shown'
+            span=members.length + ' characters above level 100 shown'
         .classList
             - for (let i = 1; i < 13; ++i) {
                 -let thisClasslist = members.filter(member => member.character.class == i);
