@@ -49,12 +49,8 @@ module.exports = function (router) {
             let data = output.split("\n");
 
             let game;
-            let gamedata = data[1];
-            gamedata = gamedata = ",";
-            let gameStatus = gamedata.match(/(\w*)\=(.*?)\,/g);
-            console.log('game status', gameStatus);
+            let gameStatus = data[1].split(',');
             if ( gameStatus ) {
-
                 gameStatus.forEach(row => {
                     let [attr, val] = row.split('=');
                     game[attr] = val;
@@ -69,9 +65,9 @@ module.exports = function (router) {
                     address : status[1],
                     name : status[2],
                     map : status[3],
-                    maxPlayers : status[4],
-                    currentPlayers : status[5],
-                    ping : status[6]
+                    maxPlayers : parseInt(status[4]),
+                    currentPlayers : parseInt(status[5]),
+                    ping : parseInt(status[6])
                 },
                 game : gameStatus,
                 teams : {
