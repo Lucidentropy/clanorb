@@ -50,6 +50,7 @@ module.exports = function (router) {
 
             let game;
             let gameStatus = data[1] + ','.match(/(\w*)\=(.*?)\,/g);
+            console.log('game status', gameStatus);
             if ( gameStatus.length !== 0 ) {
 
                 gameStatus.forEach(row => {
