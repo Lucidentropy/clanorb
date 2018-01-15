@@ -49,7 +49,9 @@ module.exports = function (router) {
             let data = output.split("\n");
 
             let game;
-            let gameStatus = data[1] + ','.match(/(\w*)\=(.*?)\,/g);
+            let gamedata = data[1];
+            gamedata = gamedata = ",";
+            let gameStatus = gamedata.match(/(\w*)\=(.*?)\,/g);
             console.log('game status', gameStatus);
             if ( gameStatus.length !== 0 ) {
 
