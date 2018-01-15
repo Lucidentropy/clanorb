@@ -69,7 +69,7 @@ module.exports = function (router) {
                     currentPlayers : parseInt(status[5]),
                     ping : parseInt(status[6])
                 },
-                game : gameStatus,
+                game,
                 teams : {
 
                 },
