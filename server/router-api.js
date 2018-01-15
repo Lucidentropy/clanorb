@@ -53,11 +53,16 @@ module.exports = function (router) {
             if ( gameStatus ) {
                 gameStatus.forEach(row => {
                     let [attr, val] = row.split('=');
+                    if ( attr === "dedicated" || attr === "needpass") {
+                        val = val === "1";
+                    }
                     game[attr] = val;
                 });
             }
             
             let status = data[0].split(',');
+
+            let teams = data.slice(3, game.numteams);
 
             res.json({
                 server : {
@@ -70,12 +75,8 @@ module.exports = function (router) {
                     ping : parseInt(status[6])
                 },
                 game,
-                teams : {
-
-                },
-                players :{
-
-                },
+                teams : data.slice(3, game.numteams),
+                players :data.slice(game.numteams),
                 raw : data
             });
         });
