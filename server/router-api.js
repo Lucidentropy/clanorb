@@ -42,12 +42,15 @@ module.exports = function (router) {
         let host =  req.params.serverip.replace(/[^0-9\.\: -]/g, '');
 
         execute("quakestat -tbs " + host + " -P -R -raw ,", function (output) {
-            console.log('quakestat ouput', output);
+            if ( output == "" ) {
+                res.json({ error : 'Output was empty' });
+                return;
+            }
             let data = output.split("\n");
 
             let game;
             let gameStatus = data[1] + ','.match(/(\w*)\=(.*?)\,/g);
-            if ( gameStatus ) {
+            if ( gameStatus.length !== 0 ) {
 
                 gameStatus.forEach(row => {
                     let [attr, val] = row.split('=');
