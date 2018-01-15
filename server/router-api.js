@@ -70,22 +70,10 @@ module.exports = function (router) {
                     if (attr === "numteams") {
                         val = parseInt(val);
                     }
+                    if ( attr === "cpu" && val === "0") {
+                        val = "N/A"
+                    }
                     game[attr] = val;
-                });
-            }
-
-            let teams = {};
-            let teamStatus = data.slice(2, game.numteams + 2);
-            if (teamStatus) {
-                teamStatus.forEach(row => {
-                    let [name, score, playercount, teamid] = row.split(',');
-
-                    teams[name] = {
-                        score: parseInt(score),
-                        playercount: parseInt(playercount),
-                        teamid: parseInt(teamid)
-                    };
-
                 });
             }
 
@@ -105,7 +93,23 @@ module.exports = function (router) {
                         });
                 });
             }
-            // 208.100.45.13:28002
+
+            let teams = [];
+            let teamStatus = data.slice(2, game.numteams + 2);
+            if (teamStatus) {
+                teamStatus.forEach(row => {
+                    let [name, score, playercount, teamid] = row.split(',');
+                    let teamsPlayers = players.filter(player => player.teamId === parseInt(teamid));
+                    teams.push({
+                        name,
+                        score: parseInt(score),
+                        playercount: parseInt(teamsPlayers.length),
+                        teamId : parseInt(teamid)
+                    });
+
+                });
+            }            
+
 
             let status = data[0].split(',');
             res.json({
