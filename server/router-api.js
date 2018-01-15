@@ -43,24 +43,18 @@ module.exports = function (router) {
 
         execute("quakestat -tbs " + host + " -P -R -raw ,", function (output) {
             if (output == "") {
-                output = ["TBS,24.36.80.25:28001,TribesRPG.org -Main,worlds_rpg,96,6,77,0",
-                "gamename=Tribes,version=1.30.RPG6,dedicated=1,needpass=0,cpu=3500,mods=rpg base,game=tribesrp,numteams=8",
-                "Citizen,0,0,0,0",
-                "Enemy,0,0,1,0",
-                "Greenskins,0,0,2,0",
-                "Enemy,0,0,3,0",
-                "Undead,0,0,4,0",
-                "Elf,0,0,5,0",
-                "Minotaur,0,0,6,0",
-                "Uber,0,0,7,0",
-                "Srnubi,0,144,0,7",
-                "Kethavin,0,40,0,0",
-                "Anju,0,76,0,0",
-                "Rogadin,0,60,0,2",
-                "rj,0,116,0,0",
-                "phantom,0,36,0,0",
-                "",
-                ""
+                output = ["TBS,208.100.45.13:28002,Niflheim,IceDaggerLT,40,6,55,0",
+                    "gamename=Tribes,version=1.11,dedicated=1,needpass=0,cpu=0,mods=base,game=LT Maps,numteams=2",
+                    "Blood Eagle,0,0,0,0",
+                    "Diamond Sword,0,0,1,0",
+                    "pyr0.dx,0,60,255,3",
+                    "ghjk,0,244,0,0",
+                    "/|Runtime|*,0,44,255,1",
+                    "PacinKo,0,60,255,0",
+                    "xpealidocious,0,60,255,0",
+                    "--{GimPower}}-->,0,60,255,0",
+                    "",
+                    ""
                 ].join("\n");
             }
             let data = output.split("\n");
@@ -84,28 +78,34 @@ module.exports = function (router) {
             let teamStatus = data.slice(2, game.numteams + 2);
             if (teamStatus) {
                 teamStatus.forEach(row => {
-                    let [name, score, playercount, teamid ] = row.split(',');
+                    let [name, score, playercount, teamid] = row.split(',');
 
                     teams[name] = {
-                        score : parseInt(score),
+                        score: parseInt(score),
                         playercount: parseInt(playercount),
-                        teamid : parseInt(teamid)
+                        teamid: parseInt(teamid)
                     };
 
                 });
             }
 
-            let players = {};
+            let players = [];
             let playerStatus = data.slice(game.numteams + 3);
-            if ( playerStatus ) {
+            if (playerStatus) {
                 playerStatus.forEach(row => {
-                    let [name, team, score, ping, packetLoss ] = row.split(',');
+                    let [name, score, ping, team, packetLoss] = row.split(',');
 
-                    if ( name )
-                        players[name] = { team, score, ping, packetLoss };
+                    if (name)
+                        players.push({
+                            name,
+                            score: parseInt(score),
+                            teamId: parseInt(team),
+                            ping: parseInt(ping),
+                            packetLoss: parseInt(packetLoss)
+                        });
                 });
             }
-
+            // 208.100.45.13:28002
 
             let status = data[0].split(',');
             res.json({
@@ -117,12 +117,12 @@ module.exports = function (router) {
                     maxPlayers: parseInt(status[4]),
                     currentPlayers: parseInt(status[5]),
                     ping: parseInt(status[6]),
-                    packetLoss : parseInt(status[7])
+                    packetLoss: parseInt(status[7])
                 },
                 game,
                 teams,
                 players,
-                raw: data
+                raw: output
             });
         });
     })
