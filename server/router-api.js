@@ -56,6 +56,9 @@ module.exports = function (router) {
                     if ( attr === "dedicated" || attr === "needpass") {
                         val = val === "1";
                     }
+                    if ( attr === "numteams" ) {
+                        val = parseInt(val);
+                    }
                     game[attr] = val;
                 });
             }
@@ -76,7 +79,7 @@ module.exports = function (router) {
                 },
                 game,
                 teams : data.slice(3, game.numteams),
-                players :data.slice(game.numteams),
+                players :data.slice(game.numteams).join('').split(''),
                 raw : data
             });
         });
