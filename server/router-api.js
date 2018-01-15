@@ -45,24 +45,27 @@ module.exports = function (router) {
             console.log('quakestat ouput', output);
             let data = output.split("\n");
 
-            let server;
+            let game;
             let gameStatus = data[1] + ','.match(/(\w*)\=(.*?)\,/g);
-            gameStatus.forEach(row => {
-                let [attr, val] = row.split('=');
-                game[attr] = val;
-            });
+            if ( gameStatus ) {
+
+                gameStatus.forEach(row => {
+                    let [attr, val] = row.split('=');
+                    game[attr] = val;
+                });
+            }
             
-            let status = data[1].split(',');
+            let status = data[0].split(',');
 
             res.json({
                 server : {
-                    game : stats[0],
-                    address : stats[1],
-                    name : stats[2],
-                    map : stats[3],
-                    maxPlayers : stats[4],
-                    currentPlayers : stats[5],
-                    ping : stats[6]
+                    game : status[0],
+                    address : status[1],
+                    name : status[2],
+                    map : status[3],
+                    maxPlayers : status[4],
+                    currentPlayers : status[5],
+                    ping : status[6]
                 },
                 game,
                 teams : {
