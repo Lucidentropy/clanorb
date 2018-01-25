@@ -1,5 +1,7 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 var webpack = require('webpack');
+var LiveReloadPlugin = require('webpack-livereload-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 var provideJQuery = new webpack.ProvidePlugin({
     $: "jquery",
@@ -8,12 +10,15 @@ var provideJQuery = new webpack.ProvidePlugin({
 
 module.exports = {
     context: __dirname + "/app",
-    entry: "./layout.js",
+    entry: {
+        "scripts": "./layout.js",
+        "scripts.min": "./layout.js",
+    },
     output: {
         path: __dirname + "/www",
-        filename: "scripts.js"
+        filename: "[name].js"
     },
-    // devtool: 'eval-source-map',
+    devtool: 'source-map',
     module: {
         rules: [{
                 test: /\.jsx?$/,
@@ -40,6 +45,11 @@ module.exports = {
     },
     plugins: [
         new ExtractTextPlugin('./style.css'),
-        provideJQuery
+        provideJQuery,
+        new webpack.optimize.UglifyJsPlugin({
+            include: /\.min\.js$/,
+            minimize: true
+        }),
+        new LiveReloadPlugin()
     ]
 };

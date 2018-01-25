@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 // Load neccessary modules
 var async = require('async');
 var cheerio = require('cheerio');

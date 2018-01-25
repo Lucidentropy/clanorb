@@ -12095,7 +12095,6 @@ $(function () {
 
     // It's easter somewhere
     __webpack_require__(3);
-
     var page = (window.location.pathname || "/").split("/")[1];
     switch (page) {
         case "about":
@@ -12679,7 +12678,7 @@ module.exports = theVideo;
 "use strict";
 
 
-var videoList = {
+var videoListObject = {
     assassinsCreed: ['gfycat:SecretBriskChital', 'gfycat:RegularCanineGerbil', '', '', '', '', '', '', '', '', '', '', '', '', ''],
     battlefield: ['gfycat:AgileMeekIrukandjijellyfish', 'imgur:3ykvWne', 'imgur:kMgCYt5', 'gfycat:AcademicTemptingEnglishpointer', 'gfycat:JampackedMediumBird', 'imgur:DqJWQlm', 'imgur:sYd7PUS', 'gfycat:UnawareGlamorousHousefly', 'gfycat:ForcefulEasyHuia', 'gfycat:HardtofindHarmlessArgali', 'gfycat:WarmBrilliantGazelle', 'gfycat:FlawedEnviousAlleycat', 'gfycat:JealousOffbeatCrossbill', 'gfycat:BlankLightheartedKite', 'gfycat:ShockedBlackEastsiberianlaika', 'gfycat:NegativeSpiritedGrassspider', 'gfycat:PerkyEcstaticChevrotain', 'gfycat:InsignificantInferiorFoxterrier', 'gfycat:GeneralArcticAffenpinscher', 'gfycat:SkinnyTiredDarwinsfox', 'gfycat:QuarterlyEachCardinal', 'gfycat:HastyAppropriateLangur', 'gfycat:GlamorousBlueHadrosaurus', 'gfycat:EthicalIdenticalBeetle', 'imgur:wlb5aEa', 'imgur:SYqnJR7', 'imgur:sLMxlK2', 'imgur:vMvk8Ci', 'imgur:J1onlCP', 'imgur:j5aYgJ6', 'imgur:wj628Nk', 'imgur:1L01II3', 'imgur:NZTG27C', 'imgur:U2ZAGKM', 'imgur:8m0aTTz', 'imgur:VY12dlz', 'imgur:IJRVRzg', 'imgur:o1DbHlN', 'imgur:RsKfZHk', 'imgur:95dy2hp', 'imgur:ePVzoBF', 'imgur:CDtXlBw', 'imgur:3SFL1Pr', 'imgur:vBqZjZ3', 'imgur:06R1wpE', 'imgur:2YKU4iF', 'imgur:hAq7dFi', 'imgur:L4EVvzc', 'imgur:Un2rXpB', 'imgur:CPd1lN1', 'imgur:qjRffmI', 'imgur:FUnSDtc', 'imgur:lP46f8Z', 'imgur:d8Lw3Y2', 'imgur:i0S8vJf', 'imgur:NsGPqLE', 'imgur:h9F3JBy', 'imgur:Nf93jHe', 'imgur:Cn6IFnQ', 'imgur:ia7spnz', 'imgur:lfw7gmv', 'imgur:zvGkLfc', 'imgur:WWChDhg', 'imgur:xCLsYOi', 'imgur:hJRdcqM', 'imgur:sj7ydGF', 'imgur:oFg7ljT', 'imgur:iH4XEs2', 'imgur:8AJR1wA', 'imgur:2HRSzFO', 'imgur:jGbSdlV', 'imgur:WGwEHvO', 'imgur:8uJLRBu', 'imgur:dzm8C5X', 'imgur:w6M4RNT', 'imgur:musuCd6', '', ''],
     // cuphead: [
@@ -12748,7 +12747,8 @@ var videoList = {
 
 };
 
-module.exports = videoList;
+module.exports = videoListObject;
 
 /***/ })
 /******/ ]);
+//# sourceMappingURL=scripts.js.map

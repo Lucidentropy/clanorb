@@ -2,15 +2,14 @@
 import './layout.scss';
 const browser = require('./scripts/includes/browserSniff');
 require('particles.js');
-
+ 
 $(function () {
     console.log("Ready", '$', $.fn.jquery, browser);
     // convert svg images into inline svg so they're easier to manipulate in css
     require('./scripts/includes/inlineSVG')();
-
+ 
     // It's easter somewhere
     require('./scripts/includes/easterEggs');
-
     let page = (window.location.pathname || "/").split("/")[1];
     switch (page) {
         case "about" :

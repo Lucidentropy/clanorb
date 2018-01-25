@@ -1,4 +1,4 @@
-const videoList = {
+const videoListObject = {
     assassinsCreed: [
         'gfycat:SecretBriskChital',
         'gfycat:RegularCanineGerbil',
@@ -720,4 +720,4 @@ const videoList = {
 
 }
 
-module.exports = videoList;
+module.exports = videoListObject;

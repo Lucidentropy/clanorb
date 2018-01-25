@@ -3,7 +3,7 @@ extends layout
 block content
     #container
         #error-body
-            h1= code + " - " + message
+            h1="Error " + code 
             if ( code === 404 )
                 //- audio(autoplay="autoplay")
                 //-     source(src="/audio/LTTP_Link_Dying.wav" type="audio/wav")

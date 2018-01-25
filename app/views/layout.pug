@@ -24,7 +24,7 @@ html
 
 		block styles
 
-	body
+	body(data-env=environment)
 		#particles-js
 		header
 			.cheeseburger
@@ -35,6 +35,12 @@ html
 				block content
 			footer 
 				| Est. 2000
-	
-		script(src='/scripts.js', type='text/javascript')
+
+		if environment === "development"
+			script(src='/scripts.js', type='text/javascript')
+			script(src='http://localhost:35729/livereload.js')
+			
+		else 
+			script(src='/scripts.min.js' , type='text/javascript')
+
 		block scripts
