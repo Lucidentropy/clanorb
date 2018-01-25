@@ -68,19 +68,17 @@ module.exports = function (router) {
                             });
                         }
 
-                        let status = row.split(',');
+                        let server = row.split(',');
                         servers.push({
-                            game,
-                            status: {
-                                game: status[0],
-                                address: status[1],
-                                name: status[2],
-                                map: status[3],
-                                maxPlayers: parseInt(status[4]),
-                                currentPlayers: parseInt(status[5]),
-                                ping: parseInt(status[6]),
-                                packetLoss: parseInt(status[7])
-                            }
+                                game: server[0],
+                                address: server[1],
+                                name: server[2],
+                                map: server[3],
+                                maxPlayers: parseInt(server[4]),
+                                currentPlayers: parseInt(server[5]),
+                                ping: parseInt(server[6]),
+                                packetLoss: parseInt(server[7]),
+                                status: game
                         });
                     }
                 }
