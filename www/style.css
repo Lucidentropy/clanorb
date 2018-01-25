@@ -615,6 +615,20 @@ main .theaterModeToggle.on {
   margin: 0;
 }
 
+#tribesMasterList {
+  text-align: center;
+}
+
+#tribesMasterList th {
+  color: #fff;
+  font-weight: bold;
+  padding: 5px;
+}
+
+#tribesMasterList .name {
+  text-align: left;
+}
+
 html {
   font-family: sans-serif;
   box-sizing: border-box;

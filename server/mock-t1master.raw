@@ -1,0 +1,80 @@
+module.exports = `TBM,t1m1.pu.net:28000,26
+
+TBS,50.47.54.30:28001,***New Crochunter's Lair***,Cazmo's Twist,24,0,34,0
+gamename=Tribes,version=1.11,dedicated=1,needpass=0,cpu=2500,mods=HaVoC  base,game=CTF,numteams=2
+
+TBS,173.27.38.102:28001,Blue SEX,Broadside,15,0,69,0
+gamename=Tribes,version=1.11,dedicated=1,needpass=0,cpu=3200,mods=Annihilation,game=CTF,numteams=3
+
+TBS,24.36.80.25:28007,Chrono Trigger RPG (up:21h),KronoSphere,24,0,72,0
+gamename=Tribes,version=1.11.RPG5,dedicated=1,needpass=0,cpu=3500,mods=rpg base,game=RPG,numteams=8
+
+TBS,73.104.26.3:28002,[TR] Renegades 4.0b,AirStrike,24,0,115,0
+gamename=Tribes,version=1.11,dedicated=1,needpass=0,cpu=0,mods=renegades4  base,game=CTF,numteams=2
+
+TBS,173.27.38.102:28002,Green SEX,raindance,15,0,68,0
+gamename=Tribes,version=1.11,dedicated=1,needpass=0,cpu=0,mods=SEX,game=CTF,numteams=2
+
+TBS,216.189.144.213:28001,Ultra Base,raindance,12,0,72,0
+gamename=Tribes,version=1.11,dedicated=1,needpass=0,cpu=0,mods=Ultra_Base  base,game=CTF,numteams=2
+
+TBS,208.100.45.13:28002,Niflheim,HildebrandLT,40,1,56,0
+gamename=Tribes,version=1.11,dedicated=1,needpass=0,cpu=0,mods=base,game=LT Maps,numteams=2
+
+TBS,24.36.80.25:28001,TribesRPG.org -Main,worlds_rpg,96,3,75,0
+gamename=Tribes,version=1.30.RPG6,dedicated=1,needpass=0,cpu=3500,mods=rpg base,game=tribesrp,numteams=8
+
+TBS,45.34.15.90:28001,Annihilation Community | Dallas ,raindance CTF,32,0,41,0
+gamename=Tribes,version=1.0,dedicated=1,needpass=0,cpu=0,mods=Annihilation,game=CTF,numteams=3
+
+TBS,156.34.248.162:28001,Dog's Ghetto,DangerousCrossin,8,1,92,0
+gamename=Tribes,version=1.11,dedicated=0,needpass=0,cpu=0,mods=TribesKOTS  base,game=CTF,numteams=2
+
+TBS,208.100.45.13:28001,=Argh!='s Duel,Duelmap4,18,0,56,0
+gamename=Tribes,version=1.11,dedicated=1,needpass=0,cpu=0,mods=base,game=Duel,numteams=8
+
+TBS,216.189.144.213:28002,VX6 Infinite,Broadside,16,0,76,0
+gamename=Tribes,version=1.11,dedicated=1,needpass=0,cpu=0,mods=Ultra_RenegadesVX6 Infinite,game=CTF,numteams=2
+
+TBS,173.27.38.102:28003,Red SEX,Rollercoaster,15,0,67,0
+gamename=Tribes,version=1.11,dedicated=1,needpass=0,cpu=0,mods=Vengeance,game=CTF,numteams=3
+
+TBS,74.117.210.42:28001,United States Base UnhappyMod 3.,Raindance,32,0,41,0
+gamename=Tribes,version=1.1998.041g,dedicated=1,needpass=0,cpu=0,mods=base,game=CTF,numteams=2
+
+TBS,47.183.248.174:28001,TRIBES Server,IceRidge,8,0,47,0
+gamename=Tribes,version=1.41,dedicated=0,needpass=0,cpu=0,mods=Annihilation,game=CTF,numteams=2
+
+TBS,203.143.83.154:28001,NET247 +Bots (Melb AU),Raindance,16,0,181,0
+gamename=Tribes,version=1.30,dedicated=1,needpass=0,cpu=0,mods=spoonbot  base,game=CTF,numteams=0
+
+TBS,50.47.54.27:28001,=Y2K= Annihilation,Monky_Map,34,0,32,0
+gamename=Tribes,version=1.11,dedicated=1,needpass=0,cpu=3000,mods=Annihilation3,game=CTF,numteams=3
+
+TBS,24.36.80.25:28006,AEON,Free,20,0,72,0
+gamename=Tribes,version=1.11,dedicated=1,needpass=0,cpu=3500,mods=Aeon,game=Aeon,numteams=1
+
+TBS,73.104.26.3:28003,[TR] Insomniax,BlackHole,24,0,108,0
+gamename=Tribes,version=1.11,dedicated=1,needpass=0,cpu=0,mods=Insomniax  base,game=CTF,numteams=2
+
+TBS,208.100.45.12:28001,Annihilation Community <!> LM {O,Canyoneros,32,11,55,0
+gamename=Tribes,version=1.0,dedicated=1,needpass=0,cpu=0,mods=Annihilation,game=CTF,numteams=3
+
+TBS,76.182.88.114:28005,▒▒▒Bob's server of DOOM▒▒▒,Spy3AI,32,0,91,0
+gamename=Tribes,version=1.11,dedicated=1,needpass=0,cpu=0,mods=spy  base,game=DM,numteams=1
+
+TBS,38.65.119.3:28001,The Rabbit Hole,OZZ_Stadium,32,0,54,0
+gamename=Tribes,version=1.11,dedicated=1,needpass=0,cpu=0,mods=base,game=CTF,numteams=2
+
+TBS,72.54.15.111:28001,# Castle L&L - Renegades Classic,DeathMiracle,20,0,107,0
+gamename=Tribes,version=1.11,dedicated=1,needpass=0,cpu=0,mods=renegadesclassic  base,game=CTF,numteams=0
+
+TBS,72.54.15.198:28001,# Castle L&L - Elite Renegades V,JointEffortGoneW,20,0,107,0
+gamename=Tribes,version=1.11,dedicated=1,needpass=0,cpu=0,mods=renegades5  base,game=CTF,numteams=0
+
+TBS,12.234.150.214:28001,Particle's Custom RPG v3.48,rpgmap5,64,1,67,0
+gamename=Tribes,version=1.11,dedicated=1,needpass=0,cpu=0,mods=RPG base,game=RPGMOD,numteams=8
+
+TBS,45.79.137.109:28001,[HvC] havoctribes.com,No Remorse,32,0,91,0
+gamename=Tribes,version=1.11,dedicated=1,needpass=0,cpu=0,mods=HaVoC v1.7.0,game=CTF,numteams=2
+`

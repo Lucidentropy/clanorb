@@ -6,6 +6,28 @@ block content
     p Orb was founded in Tribes as well as contributed of the game's several widely used mods such as Annhilation, and Shifter.
     p Thanks to the work of Plasmatic and Sevnn, a master server is still online at t1m1.tribes0.com:28000.
 
+    h2 Tribes 1 Master Server List
+    table#tribesMasterList(width="100%")
+        tr
+            th Server Name
+            th Mission Type
+            th Mission Name
+            th Players
+            th Address
+            th Version
+            th Server Type
+            
+        each server in masterList
+            tr
+                td.name=server.name
+                td=server.server.game
+                td=server.map
+                td=server.currentPlayers + '/' + server.maxPlayers
+                td=server.address
+                td=server.server.version
+                td=server.server.mods
+
+
     h2 Links
     ul
         li http://www.tribesmasterserver.com/

@@ -3,6 +3,7 @@ let request = require('superagent');
 const parseString = require('xml2js').parseString;
 const cheerio = require('cheerio');
 let exec = require('child_process').exec;
+let mockdata = require('./mock-t1master.raw');
 
 module.exports = function (router) {
     // Steam
@@ -42,6 +43,9 @@ module.exports = function (router) {
         let host = req.params.serverip;
         if (host === "master") {
             execute('quakestat -tbm t1m1.pu.net:28000 -R -raw ,', function (output) {
+                if ( output === "" ) {
+                    output = mockdata;
+                }
                 let servers = [];
                 let data = output.split("\n");
 
