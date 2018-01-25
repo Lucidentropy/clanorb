@@ -3,7 +3,7 @@ extends layout
 block content
     #container
         #error-body
-            h1="Error " + code 
+            h1="Error " + (code ? code : '')
             if ( code === 404 )
                 //- audio(autoplay="autoplay")
                 //-     source(src="/audio/LTTP_Link_Dying.wav" type="audio/wav")
@@ -15,6 +15,7 @@ block content
                 img(src="/images/deadlink.png", alt="Dead Link")
             else
                 p There seems to be a unknown server error.
+                img(src="https://i.imgur.com/rE090Tx.jpg" height=450)
                 
             if environment === "development"              
                 pre #{error.stack}

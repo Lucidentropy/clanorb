@@ -3,11 +3,6 @@ var webpack = require('webpack');
 var LiveReloadPlugin = require('webpack-livereload-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
-var provideJQuery = new webpack.ProvidePlugin({
-    $: "jquery",
-    jQuery: "jquery"
-});
-
 module.exports = {
     context: __dirname + "/app",
     entry: {
@@ -45,7 +40,10 @@ module.exports = {
     },
     plugins: [
         new ExtractTextPlugin('./style.css'),
-        provideJQuery,
+        new webpack.ProvidePlugin({
+            $: "jquery",
+            jQuery: "jquery"
+        }),
         new webpack.optimize.UglifyJsPlugin({
             include: /\.min\.js$/,
             minimize: true

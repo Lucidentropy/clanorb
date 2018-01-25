@@ -39,15 +39,33 @@ body {
         border-top: solid #6cf 1px;
     }
     h1 {
-        font-size: 2rem;
+        font-size: 1.75rem;
         line-height: 1.2;
         font-weight: normal;
-        background: linear-gradient(to bottom, #ebf1f6 0%, #abd3ee 50%, #257694 55%, #d5ebfb 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        background: #011720 url(./images/footer-bg.png) 50% 50% no-repeat;
+        margin:-20px -20px 10px;
+        padding:20px;
+        border-radius: 10px;
+        box-shadow: inset 0px 0px 10px #000;
         font-family: "Ropa Sans", sans-serif;
         font-weight: bold;
-        text-shadow: none;
+        text-shadow: 1px 1px 1px #000;
+        color:#fff;
+
+        p {
+            font-size: 13px;
+            margin: 0;
+            text-transform: uppercase;
+            font-weight: normal;
+            color: #ddd;
+        }
+
+        img, svg {
+            float: left;
+            height: 50px;
+            width:50px;
+            margin-right: 10px;
+        }
     }
     h2 {
         font-size: 17px;

@@ -39,96 +39,149 @@ module.exports = function (router) {
 
     // tribes server status
     router.get('/api/tribes/:serverip', function (req, res, next) {
-        let host = req.params.serverip.replace(/[^0-9\.\: -]/g, '');
+        let host = req.params.serverip;
+        if (host === "master") {
+            execute('quakestat -tbm t1m1.pu.net:28000 -R -raw ,', function (output) {
+                let servers = [];
+                let data = output.split("\n");
 
-        execute("quakestat -tbs " + host + " -P -R -raw ,", function (output) {
-            if (output == "") {
-                output = ["TBS,208.100.45.13:28002,Niflheim,IceDaggerLT,40,6,55,0",
-                    "gamename=Tribes,version=1.11,dedicated=1,needpass=0,cpu=0,mods=base,game=LT Maps,numteams=2",
-                    "Blood Eagle,0,0,0,0",
-                    "Diamond Sword,0,0,1,0",
-                    "pyr0.dx,0,60,255,3",
-                    "ghjk,0,244,0,0",
-                    "/|Runtime|*,0,44,255,1",
-                    "PacinKo,0,60,255,0",
-                    "xpealidocious,0,60,255,0",
-                    "--{GimPower}}-->,0,60,255,0",
-                    "",
-                    ""
-                ].join("\n");
-            }
-            let data = output.split("\n");
+                for (let i = 0; i < data.length; i++) {
+                    let row = data[i];
+                    if (row.trim() === "") continue;
+                    if (row.startsWith('TBS')) {
 
-            let game = {};
-            let gameStatus = data[1].split(',');
-            if (gameStatus) {
-                gameStatus.forEach(row => {
-                    let [attr, val] = row.split('=');
-                    if (attr === "dedicated" || attr === "needpass") {
-                        val = val === "1";
+                        let game = {};
+                        let gameStatus = data[i + 1].split(',');
+                        if (gameStatus) {
+                            gameStatus.forEach(row => {
+                                let [attr, val] = row.split('=');
+                                if (attr === "dedicated" || attr === "needpass") {
+                                    val = val === "1";
+                                }
+                                if (attr === "numteams") {
+                                    val = parseInt(val);
+                                }
+                                if (attr === "cpu" && val === "0") {
+                                    val = "N/A"
+                                }
+                                game[attr] = val;
+                            });
+                        }
+
+                        let status = row.split(',');
+                        servers.push({
+                            game,
+                            status: {
+                                game: status[0],
+                                address: status[1],
+                                name: status[2],
+                                map: status[3],
+                                maxPlayers: parseInt(status[4]),
+                                currentPlayers: parseInt(status[5]),
+                                ping: parseInt(status[6]),
+                                packetLoss: parseInt(status[7])
+                            }
+                        });
                     }
-                    if (attr === "numteams") {
-                        val = parseInt(val);
-                    }
-                    if ( attr === "cpu" && val === "0") {
-                        val = "N/A"
-                    }
-                    game[attr] = val;
+                }
+
+
+                res.json({
+                    servers,
+                    raw: output
                 });
-            }
+            });
+        } else {
+            host = host.replace(/[^0-9\.\: -]/g, '');
+            execute("quakestat -tbs " + host + " -P -R -raw ,", function (output) {
+                if (output == "") {
+                    output = ["TBS,208.100.45.13:28002,Niflheim,IceDaggerLT,40,6,55,0",
+                        "gamename=Tribes,version=1.11,dedicated=1,needpass=0,cpu=0,mods=base,game=LT Maps,numteams=2",
+                        "Blood Eagle,0,0,0,0",
+                        "Diamond Sword,0,0,1,0",
+                        "pyr0.dx,0,60,255,3",
+                        "ghjk,0,244,0,0",
+                        "/|Runtime|*,0,44,255,1",
+                        "PacinKo,0,60,255,0",
+                        "xpealidocious,0,60,255,0",
+                        "--{GimPower}}-->,0,60,255,0",
+                        "",
+                        ""
+                    ].join("\n");
+                }
+                let data = output.split("\n");
 
-            let players = [];
-            let playerStatus = data.slice(game.numteams + 3);
-            if (playerStatus) {
-                playerStatus.forEach(row => {
-                    let [name, score, ping, team, packetLoss] = row.split(',');
+                let game = {};
+                let gameStatus = data[1].split(',');
+                if (gameStatus) {
+                    gameStatus.forEach(row => {
+                        let [attr, val] = row.split('=');
+                        if (attr === "dedicated" || attr === "needpass") {
+                            val = val === "1";
+                        }
+                        if (attr === "numteams") {
+                            val = parseInt(val);
+                        }
+                        if (attr === "cpu" && val === "0") {
+                            val = "N/A"
+                        }
+                        game[attr] = val;
+                    });
+                }
 
-                    if (name)
-                        players.push({
+                let players = [];
+                let playerStatus = data.slice(game.numteams + 3);
+                if (playerStatus) {
+                    playerStatus.forEach(row => {
+                        let [name, score, ping, team, packetLoss] = row.split(',');
+
+                        if (name)
+                            players.push({
+                                name,
+                                score: parseInt(score),
+                                team: parseInt(team),
+                                ping: parseInt(ping),
+                                packetLoss: parseInt(packetLoss)
+                            });
+                    });
+                }
+
+                let teams = [];
+                let teamStatus = data.slice(2, game.numteams + 2);
+                if (teamStatus) {
+                    teamStatus.forEach(row => {
+                        let [name, score, playercount, id] = row.split(',');
+                        let teamsPlayers = players.filter(player => player.id === parseInt(id));
+                        teams.push({
+                            id: parseInt(id),
                             name,
                             score: parseInt(score),
-                            team: parseInt(team),
-                            ping: parseInt(ping),
-                            packetLoss: parseInt(packetLoss)
+                            playercount: parseInt(teamsPlayers.length)
                         });
-                });
-            }
 
-            let teams = [];
-            let teamStatus = data.slice(2, game.numteams + 2);
-            if (teamStatus) {
-                teamStatus.forEach(row => {
-                    let [name, score, playercount, id] = row.split(',');
-                    let teamsPlayers = players.filter(player => player.id === parseInt(id));
-                    teams.push({
-                        id : parseInt(id),
-                        name,
-                        score: parseInt(score),
-                        playercount: parseInt(teamsPlayers.length)
                     });
+                }
 
+
+                let status = data[0].split(',');
+                res.json({
+                    server: {
+                        game: status[0],
+                        address: status[1],
+                        name: status[2],
+                        map: status[3],
+                        maxPlayers: parseInt(status[4]),
+                        currentPlayers: parseInt(status[5]),
+                        ping: parseInt(status[6]),
+                        packetLoss: parseInt(status[7])
+                    },
+                    game,
+                    teams,
+                    players,
+                    raw: output
                 });
-            }            
-
-
-            let status = data[0].split(',');
-            res.json({
-                server: {
-                    game: status[0],
-                    address: status[1],
-                    name: status[2],
-                    map: status[3],
-                    maxPlayers: parseInt(status[4]),
-                    currentPlayers: parseInt(status[5]),
-                    ping: parseInt(status[6]),
-                    packetLoss: parseInt(status[7])
-                },
-                game,
-                teams,
-                players,
-                raw: output
             });
-        });
+        }
     })
 
     // Overwatch

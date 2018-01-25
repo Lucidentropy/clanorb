@@ -1,11 +1,19 @@
 extends layout
 block content
-    h1 Guild Orb
-    p Guild Created : Thursday, November 25, 2004, 5:35 PM PST
-    -let options = { weekday: "long", year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit", timeZoneName : 'short' }
-    p='Last updated : ' + new Date(guild.lastModified).toLocaleDateString('en-us', options)
-    p=guild.members.length + ' characters.'
-    p=guild.members.filter(member => member.character.level === 110).length + ' max level characters.'
+    h1
+        img(src="/images/icon_World_of_Warcraft.png") 
+        | World of Warcraft
+        p Guild Orb
+    .cont
+        .left
+            p Guild Orb formed on Stormreaver a day or so after WoW was released. We’re one of the oldest, if not the oldest, active guild on Stormreaver. A majority of the active core of the guild has been in the guild between 1 to 5 years. Many of our officers have been with Orb for over 8 years. The skill focus of our players span from ultra casual to progression raiders. We are primarily an adult guild; We do not require mandatory participation. Our recruitment process is extremely selective and personality driven; We look for players who are mature, laid-back, and have a sense of humor. We don’t cater to players who are loot-driven, elitist, use raid progression as a guild metric, or who think jokes don’t belong in raid chat.
+        .right
+            p Server : US-Stormreaver (PVP), Horde
+            p Guild Created : Thursday, November 25, 2004, 5:35 PM GMT
+            -let options = { weekday: "long", year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit", timeZoneName : 'short' }
+            p='Last updated : ' + new Date(guild.lastModified).toLocaleDateString('en-us', options)
+            p=guild.members.length + ' characters.'
+            p=guild.members.filter(member => member.character.level === 110).length + ' max level characters.'
 
     #members
         -let members = guild.members;
@@ -13,7 +21,7 @@ block content
         -members = members.sort((a, b) => b.character.name < a.character.name);
         -let classNames = [,"Warrior", "Paladin", "Hunter", "Rogue", "Priest", "Death Knight", "Shaman", "Mage", "Warlock", "Monk", "Druid","Demon Hunter"]
 
-        h2 Orb Guild Member list
+        h2 Guild Member list
             span=members.length + ' characters above level 100 shown'
         .classList
             - for (let i = 1; i < 13; ++i) {
@@ -27,6 +35,63 @@ block content
                             li= character.name
             - }
 
+
+    #links
+        h2 Addon Links
+        p These links are direct links for those using the Curse Client downloader. You can 
+            a(href='http://www.curse.com/client') download it here. 
+        p What is it? It's a free application that manages and updates your mods for you. The upside is that it's free, and it helps you keep your mods up to date easily. The downside is that it has ads in it, there        are some mods that aren't on Curse, and you can only update 2 mods at a time. Either way, it allows us to very easily        link them here.
+        p
+            strong Raid Essentials
+        ul
+            li
+                a(href='curse://www.curse.com/wow-addons/deadly-boss-mods/659934/download-client') Deadly Boss Mods 
+                | - Alerts and notifications for raid encounters
+            li
+                a(href='curse://www.curse.com/wow-addons/recount/658361/download-client') Recount 
+                | - Damage meters
+            li
+                a(href='curse://www.curse.com/wow-addons/gtfo/666301/download-client') GTFO 
+                | - Alerts for standing in bad things
+            li
+                a(href='curse://www.curse.com/wow-addons/target-health-percentages/594261/download-client') Target Health Percentages 
+                | - Makes sure your target frames have both health and percentages
+        p
+            strong Gameplay Enhancers
+        ul
+            li
+                a(href='curse://www.curse.com/wow-addons/omni-cc/681664/download-client') OmniCC 
+                | - See cooldowns on top of skills
+            li
+                a(href='curse://www.curse.com/wow-addons/atlasloot-enhanced/683068/download-client') AtlasLoot 
+                | - Quickly see loot for any dungeon/raid/faction/pvp/profession
+            li
+                a(href='curse://www.curse.com/wow-addons/decursive/682323/download-client') Decursive 
+                | - Dispel and Decurse with ease
+            li
+                a(href='curse://www.curse.com/wow-addons/tellmewhen/678947/download-client') TellMeWhen 
+                | - Assists with rotations with an onscreen UI indicating skill priority
+            li
+                a(href='curse://www.curse.com/wow-addons/spellflash/683466/download-client') SpellFlash 
+                | - Assists with rotations by flashing what skill you should be using next
+        p
+            strong Mods that make WoW life easier
+        ul
+            li
+                a(href='curse://www.curse.com/wow-addons/bank-stack/678627/download-client') Bankstack 
+                | - Sorts your inventory
+            li
+                a(href='curse://www.curse.com/wow-addons/bagnon/683025/download-client') Bagnon 
+                | - Your bags show in one window
+        p
+            strong Profession Assistants
+        ul
+            li
+                a(href='curse://www.curse.com/wow-addons/archy/678829/download-client') Archy 
+                | - Archeology Helper
+            li
+                a(href='curse://www.curse.com/wow-addons/gathermate2/678228/download-client') GatherMate 
+                | - Store nodes of lootable/harvestables
     //- #news
     //-     h2 Orb Guild News Feed
     //-     each entry in guild.news

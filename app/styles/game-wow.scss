@@ -1,3 +1,17 @@
+.cont {
+    display:flex;
+    flex-wrap:wrap;
+    & > div {
+        padding:10px;
+    }
+    .left {
+        width:60%;
+    }
+    .right {
+        width:40%;
+    }
+}
+
 #members {
     h2 {
         margin: 0;
