@@ -78,7 +78,7 @@ module.exports = function (router) {
                                 currentPlayers: parseInt(server[5]),
                                 ping: parseInt(server[6]),
                                 packetLoss: parseInt(server[7]),
-                                status: game
+                                server: game
                         });
                     }
                 }
