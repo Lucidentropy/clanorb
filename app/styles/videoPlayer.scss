@@ -226,6 +226,7 @@ main {
             ul {
                 padding: 10px 0;
                 margin: 10px 0 0;
+                list-style:none inside none;
                 li {
                     padding: 0 20px;
                     cursor: pointer;
@@ -265,6 +266,8 @@ main {
                 flex-wrap: wrap;
                 max-height: 92vh;
                 padding: 20px;
+                
+                list-style:none inside none;
                 li {
                     text-align: center;
                     overflow: hidden;

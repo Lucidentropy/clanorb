@@ -397,6 +397,7 @@ main .theaterModeToggle.on {
 #vid-container #playlists #video-playlist ul {
   padding: 10px 0;
   margin: 10px 0 0;
+  list-style: none inside none;
 }
 
 #vid-container #playlists #video-playlist ul li {
@@ -443,6 +444,7 @@ main .theaterModeToggle.on {
   flex-wrap: wrap;
   max-height: 92vh;
   padding: 20px;
+  list-style: none inside none;
 }
 
 #vid-container #playlists #image-playlist ul li {
