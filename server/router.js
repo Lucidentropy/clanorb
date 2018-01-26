@@ -52,6 +52,17 @@ router.get('/game/:section?', function (req, res, next) {
                 }
             });
             break;
+        case 'diablo' :
+            let userids = ['lucid-1878'];
+            request.get('localhost:8080/api/tribes/master', (error, response, body) => {
+                if (!error) {
+                    let masterList = response.body;
+                    res.render('game-diablo', {
+                        masterList : masterList.servers
+                    });
+                }
+            });
+            break;      
         default:
             res.render('game-' + section, data);
     }

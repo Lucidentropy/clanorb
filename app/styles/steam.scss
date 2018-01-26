@@ -52,11 +52,18 @@
         flex-wrap: wrap;
         justify-content: center;
         clear: both;
+
+
         &>div {
             width: 185px;
             padding: 3px;
             position: relative;
             color:#ddd;
+            &:hover {
+                .name span {
+                    display:block;
+                }
+            }            
             .avatar {
                 z-index: 1;
                 max-width: 100%;
@@ -71,6 +78,14 @@
                 background: rgba(0, 0, 0, 0.8);
                 font-weight: bold;
                 text-shadow: 1px 1px 1px #000;
+
+                span {
+                    display:none;
+                    font-style: italic;
+                    text-transform: uppercase;
+                    font-size: 10px;
+                    color: #bbb;
+                }
             }
             &.online {
                 color: #62a7e3;
