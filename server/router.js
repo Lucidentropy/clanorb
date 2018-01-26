@@ -16,6 +16,16 @@ router.get('/about/:section?', function (req, res, next) {
     res.render('about-' + section);
 });
 
+router.get('/steam/:section?', function (req, res, next) {
+    let section = req.params.section;
+    request.get('localhost:8080/api/steam/orb', (error, response, body) => {
+
+        res.render('steam-' + section, {
+            steamData : response.body
+        });
+    });
+});
+
 router.get('/game/:section?', function (req, res, next) {
     let section = req.params.section;
     let data = {};

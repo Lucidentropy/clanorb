@@ -3,7 +3,6 @@ let request = require('superagent');
 const parseString = require('xml2js').parseString;
 const cheerio = require('cheerio');
 let exec = require('child_process').exec;
-let mockdata = require('./mock-t1master.raw');
 
 module.exports = function (router) {
     // Steam
@@ -11,29 +10,40 @@ module.exports = function (router) {
         let section = req.params.section;
 
         const steamK = keys.steam;
-        const group = 'orb';
-
-        let apiUrl = 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=' + steamK + '&steamids={STEAMIDS}';
 
         let recentlyPlayedGamesUrl = 'http://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key=' + steamK + '&steamid={STEAMID}&format=json';
         let ownedGamesUrl = 'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=' + steamK + '&steamid={STEAMID}&format=json';
-        let groupMemberListUrl = 'http://steamcommunity.com/groups/' + group + '/memberslistxml/';
-        let playerSummaryUrl = 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=' + steamK + '&steamids={STEAMIDS}';
+        
+        let groupMemberListUrl = 'http://steamcommunity.com/groups/orb/memberslistxml/';
+        let playerSummaryUrl = 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=' + steamK + '&steamids={STEAMIDS}&format=json';
 
-        request.get(groupMemberListUrl)
-            .end((err, response) => {
-                // Do something
+        if (section === "orb") {
 
+            request.get(groupMemberListUrl).end((err, response) => {
                 parseString(response.text, (err, result) => {
-                    //console.log('result', result.memberList.members[0].steamID64.length)
-                    res.json(result);
+                    let steamids = result.memberList.members[0].steamID64.join(',');
+                    request.get(playerSummaryUrl.replace('{STEAMIDS}', steamids)).end((err, response) => {
+                        result.memberList.members = JSON.parse(response.text).response.players;
+                        result.memberList.members = result.memberList.members.sort(function (a, b) {
+                            var nameA = a.personaname.toUpperCase().replace('} ', '}');
+                            var nameB = b.personaname.toUpperCase().replace('} ', '}');
+                            // Sort orb tags higher
+                            if ((nameA.startsWith('{')) != (nameB.startsWith('{'))) {
+                                return nameA.startsWith('{') ? -1 : 1;
+                            }
+                            return nameA > nameB ? 1 :
+                                nameA < nameB ? -1 : 0;
+                        });
+                        res.json(result.memberList);
+                    });
                 });
-
             });
+        } else {
+            res.json({error : "No section provided" })
+        }
     });
 
     // rockstar social club
-
     router.get('/api/gta/:something?', function (req, res, next) {
 
     })
@@ -43,8 +53,8 @@ module.exports = function (router) {
         let host = req.params.serverip;
         if (host === "master") {
             execute('quakestat -tbm t1m1.pu.net:28000 -R -raw ,', function (output) {
-                if ( output === "" ) {
-                    output = mockdata;
+                if (output === "") {
+                    output = require('./mock-t1master.raw');
                 }
                 let servers = [];
                 let data = output.split("\n");
@@ -74,19 +84,18 @@ module.exports = function (router) {
 
                         let server = row.split(',');
                         servers.push({
-                                game: server[0],
-                                address: server[1],
-                                name: server[2],
-                                map: server[3],
-                                maxPlayers: parseInt(server[4]),
-                                currentPlayers: parseInt(server[5]),
-                                ping: parseInt(server[6]),
-                                packetLoss: parseInt(server[7]),
-                                server: game
+                            game: server[0],
+                            address: server[1],
+                            name: server[2],
+                            map: server[3],
+                            maxPlayers: parseInt(server[4]),
+                            currentPlayers: parseInt(server[5]),
+                            ping: parseInt(server[6]),
+                            packetLoss: parseInt(server[7]),
+                            server: game
                         });
                     }
                 }
-
 
                 res.json({
                     servers,

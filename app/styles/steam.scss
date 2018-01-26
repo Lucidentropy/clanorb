@@ -1,0 +1,30 @@
+#steam-members {
+    .memberlist {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        &>div {
+            width: 185px;
+            padding: 3px;
+            position: relative;
+            .avatar {
+                z-index: 1;
+                max-width: 100%;
+            }
+            .name {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                text-align: center;
+                box-shadow: 0 0 32px #000;
+                background: rgba(0, 0, 0, 0.8);
+                font-weight: bold;
+                text-shadow: 1px 1px 1px #000;
+            }
+            &.online {
+                color: green;
+            }
+        }
+    }
+}

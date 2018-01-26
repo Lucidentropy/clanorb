@@ -25,7 +25,7 @@ block content
             span=members.length + ' characters above level 100 shown'
         .classList
             - for (let i = 1; i < 13; ++i) {
-                -let thisClasslist = members.filter(member => member.character.class == i);
+                -let thisClasslist = members.filter(member => member.character.class == i)
                 div(class='charclass-' + i)
                     p=classNames[i]
                         span=thisClasslist.length
