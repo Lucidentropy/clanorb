@@ -1,9 +1,23 @@
 extends layout
 block content
     h1 Steam Community
+        img(src="/images/Steam_icon_logo.svg")
         p Orb Members
 
     #steam-members
+        .info
+            .left
+                img.steamAvatar(src=steamData.avatarFull)
+            //- p.headline=steamData.headline
+            .right
+                ul.counts
+                    li=steamData.memberCount + ' Members'
+                    li.online=steamData.membersOnline + ' Online'
+                    li.ingame=steamData.membersInGame + ' In Game'
+                    li.chat=steamData.membersInChat + ' In Chat'
+                p.summary!=steamData.summary
+                a(href="http://steamcommunity.com/groups/" + steamData.groupURL target="_blank") Go To Steam Page 
+                    i.fa.fa-external-link
 
         .memberlist
             each member in steamData.members
