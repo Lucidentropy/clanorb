@@ -21,10 +21,7 @@ block content
 
         .memberlist
             each member in steamData.members
-                -let statusClass = '';
-                -if ( member.personastate == 1 ) statusClass += "online"
-                -if (member.gameextrainfo !== null ) statusclass += " ingame";
-                div(class=statusClass, data-x=member.communityvisibilitystate data-y=member.personastate data-z=member.profilestate)
+                div(class=(member.personastate == 1) ? 'online' : undefined)
                     if member.communityvisibilitystate === 3 && member.profilestate === 1
                         a(href=member.profileurl, target="_blank")
                             img.avatar(src=member.avatarfull)
