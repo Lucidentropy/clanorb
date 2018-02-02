@@ -526,22 +526,31 @@ main .theaterModeToggle.on {
   width: 40%;
 }
 
-.downloads li a {
+.orbskin {
+  float: right;
+  margin-right: 10px;
+  border-radius: 5px;
+  max-width: 35%;
+}
+
+.downloads {
+  text-align: center;
+  padding: 0 20px;
+}
+
+.downloads a {
   font-weight: bold;
   display: inline-block;
   background-color: #00a5e2;
   color: #000;
   border-radius: 5px;
   padding: 5px 9px;
-  margin: 8px 0;
+  margin: 15px 0 4px;
   text-shadow: 1px 1px 1px #ccc;
 }
 
-.downloads li p {
-  margin: 0;
-  margin-left: 20px;
-  font-size: .9em;
-  color: inherit;
+.downloads p {
+  margin: 0 20px 10px 0;
 }
 
 #members h2 {
@@ -808,6 +817,7 @@ body h1 {
   font-weight: bold;
   text-shadow: 1px 1px 1px #000;
   color: #fff;
+  clear: both;
 }
 
 body h1 p {
@@ -837,6 +847,7 @@ body h2 {
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-radius: 4px;
   padding: 10px;
+  clear: both;
 }
 
 body em {
