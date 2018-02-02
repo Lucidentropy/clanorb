@@ -526,6 +526,24 @@ main .theaterModeToggle.on {
   width: 40%;
 }
 
+.downloads li a {
+  font-weight: bold;
+  display: inline-block;
+  background-color: #00a5e2;
+  color: #000;
+  border-radius: 5px;
+  padding: 5px 9px;
+  margin: 8px 0;
+  text-shadow: 1px 1px 1px #ccc;
+}
+
+.downloads li p {
+  margin: 0;
+  margin-left: 20px;
+  font-size: .9em;
+  color: inherit;
+}
+
 #members h2 {
   margin: 0;
 }

@@ -1,14 +1,35 @@
 .cont {
-    display:flex;
-    flex-wrap:wrap;
-    & > div {
-        padding:10px;
+    display: flex;
+    flex-wrap: wrap;
+    &>div {
+        padding: 10px;
     }
     .left {
-        width:60%;
+        width: 60%;
     }
     .right {
-        width:40%;
+        width: 40%;
+    }
+}
+
+.downloads {
+    li {
+        a {
+            font-weight: bold;
+            display: inline-block;
+            background-color: #00a5e2;
+            color: #000;
+            border-radius: 5px;
+            padding: 5px 9px;
+            margin: 8px 0;
+            text-shadow: 1px 1px 1px #ccc;
+        }
+        p {
+            margin: 0;
+            margin-left: 20px;
+            font-size: .9em;
+            color: inherit;
+        }
     }
 }
 
@@ -16,8 +37,8 @@
     h2 {
         margin: 0;
         span {
-            float:right;
-            font-size:11px;
+            float: right;
+            font-size: 11px;
         }
     }
     .classList {
@@ -66,16 +87,14 @@
                 color: #a330c9;
             }
             p {
-                margin: -0 0 5px;
-                // text-align: center;
+                margin: -0 0 5px; // text-align: center;
                 font-weight: bold;
                 border-bottom: 1px solid;
                 text-transform: uppercase;
                 font-size: 13px;
                 font-family: "Ropa Sans", sans-serif;
-                
                 span {
-                    float:right;
+                    float: right;
                 }
             }
             ul {
