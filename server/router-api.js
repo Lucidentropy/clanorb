@@ -1,6 +1,5 @@
 const keys = require('./apik');
 let request = require('superagent');
-var requestP = require('request-promise');
 const parseString = require('xml2js').parseString;
 
 let overwatch = require('../app/models/overwatch');
