@@ -53,8 +53,8 @@ router.get('/game/:section?', function (req, res, next) {
             });
             break;
         case 'diablo' :
-            let userids = ['lucid-1878'];
-            request.get('localhost:8080/api/tribes/master', (error, response, body) => {
+            let d3Userids = ['lucid-1878','bloodyhead-1202','templetonjax-1957'];
+            request.get('localhost:8080/api/d3/profile', (error, response, body) => {
                 if (!error) {
                     let masterList = response.body;
                     res.render('game-diablo', {
@@ -63,6 +63,17 @@ router.get('/game/:section?', function (req, res, next) {
                 }
             });
             break;      
+        case 'overwatch' :
+            let owUserids = ['lucid-1878','treshnell-1307','murrdyn-1466','Monky-1309','baconsquid-1932','templetonjax-1957','udienow-1939'];
+            request.get('localhost:8080/api/overwatch/orb', (error, response, body) => {
+                if (!error) {
+                    let masterList = response.body;
+                    res.render('game-overwatch', {
+                        masterList : masterList.servers
+                    });
+                }
+            });
+        break;
         default:
             res.render('game-' + section, data);
     }
