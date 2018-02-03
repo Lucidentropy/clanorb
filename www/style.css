@@ -664,6 +664,98 @@ main .theaterModeToggle.on {
   text-align: left;
 }
 
+#overwatch-list .player {
+  border: 1px solid #011720;
+  margin: 10px 0;
+  height: 290px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+#overwatch-list .player:nth-child(odd) {
+  background-position: bottom right;
+}
+
+#overwatch-list .player:nth-child(odd) .portrait {
+  margin-right: 20px;
+  float: left;
+}
+
+#overwatch-list .player:nth-child(even) {
+  background-position: bottom left -230px;
+  background-color: rgba(102, 204, 255, 0.5);
+}
+
+#overwatch-list .player:nth-child(even) .infobox {
+  text-align: right;
+}
+
+#overwatch-list .player:nth-child(even) .portrait {
+  margin-left: 20px;
+  float: right;
+}
+
+#overwatch-list .player:nth-child(even) .heroPlaytime {
+  position: absolute;
+  right: 40px;
+}
+
+#overwatch-list .player .infobox {
+  overflow: hidden;
+  color: #fff;
+}
+
+#overwatch-list .player .infobox .portrait {
+  height: 128px;
+  width: 128px;
+}
+
+#overwatch-list .player .infobox .username {
+  font-family: 'Big Noodle Too', impact, sans-serif;
+  font-size: 4.88281rem;
+  font-style: italic;
+  font-weight: 400;
+  font-variant: normal;
+  letter-spacing: .5px;
+  text-shadow: 3px 3px 0px #000;
+  line-height: 1em;
+}
+
+#overwatch-list .player .infobox .level {
+  font-size: 11px;
+  text-shadow: 1px 2px 1px #000;
+  text-transform: uppercase;
+}
+
+#overwatch-list .player .heroPlaytime {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 40%;
+  margin: 10px 0;
+}
+
+#overwatch-list .player .heroPlaytime > div {
+  margin: 5px;
+  text-align: center;
+}
+
+#overwatch-list .player .heroPlaytime > div img {
+  border: 1px solid #0cf;
+  background-color: #000336;
+  border-radius: 5px;
+}
+
+#overwatch-list .player .heroPlaytime > div .played {
+  margin: -23px 1px 0;
+  text-shadow: 1px 1px 2px #000;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 0 0 5px 5px;
+  font-size: 10px;
+  line-height: 17px;
+}
+
 #steam-members .info {
   line-height: 1.25em;
   overflow: hidden;
@@ -763,6 +855,20 @@ main .theaterModeToggle.on {
 
 #steam-members .memberlist > div.online {
   color: #62a7e3;
+}
+
+@font-face {
+  font-family: Big Noodle Too;
+  src: url(https://d3hmvhl7ru3t12.cloudfront.net/fonts/big-noodle-too-eaef42cc66ce3dcbe29cd88eca8801d55fe8dcc11c7153cc9c3f3418084ef1c50b1b7e270c826ded2d868a825af5c5b9d9be69d25795aae62c721c64faef1a95.woff) format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: Big Noodle Too;
+  src: url(https://d3hmvhl7ru3t12.cloudfront.net/fonts/big-noodle-too-oblique-0762bcfb7ce452ecfa21830ab40ee34f9bf2e6fbcecb649c8995bd59fdf93a74a8345855c3890ec3901ac7ca442040112f37f387c98a57ced5af61d92ee8e06c.woff) format("woff");
+  font-weight: 400;
+  font-style: italic;
 }
 
 html {

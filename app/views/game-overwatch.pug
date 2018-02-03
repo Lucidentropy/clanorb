@@ -2,5 +2,28 @@ extends layout
 block content
     h1 Overwatch
         img(src="/images/overwatch_logo_04_flat.svg")
-        p &nbsp;
-    p Nothing here yet while we develop this page!
+        p Active Member List
+    p Overwatch doesn't give us a clan list to work with, so if you'd like to be added to this page, let me know!
+    #overwatch-list
+        each player in players
+            -let first = player.stats.top_heroes.quickplay[0];
+            -console.log(first);
+            -let bigPortrait = first.img.split('.cloudfront.net')[0];
+            -let niceNames = { 'Pharah' : 'pharah', 'Mei' : 'mei', 'Widowmaker' : 'widowmaker', 'Hanzo' : 'hanzo', 'Reinhardt' : 'reinhardt', 'Junkrat' : 'junkrat', 'Torbjörn' : 'torbjorn', 'Tracer' : 'tracer', 'McCree' : 'mccree', 'Genji' : 'genji', 'Mercy' : 'mercy', 'Symmetra' : 'symmetra', 'Soldier: 76' : 'soldier76', 'Bastion' : 'bastion', 'Roadhog' : 'roadhog', 'Lúcio' : 'lucio', 'Reaper' : 'reaper', 'Zarya' : 'zarya', 'D.Va' : 'dva', 'Winston' : 'winston', 'Orisa' : 'orisa', 'Ana' : 'ana', 'Zenyatta' : 'zenyatta', 'Sombra' : 'sombra', 'Doomfist' : 'doomfist', 'Moira' : 'moira' }
+            -let fullUrl = bigPortrait + '.cloudfront.net/hero/' + niceNames[first.hero] + '/career-portrait.png';
+            
+            .player(style="background-image:url(" + fullUrl + ")")
+                .infobox
+                    img.portrait(src=player.portrait)
+                    .username #{player.username}
+                    .level 
+                        | Level #{player.level} 
+                        -let stats = player.stats.game.quickplay;
+                        | - #{stats[0].title}: #{stats[0].value }
+                        | - #{stats[1].title}: #{stats[1].value }
+                .heroPlaytime
+                    each hero in player.stats.top_heroes.quickplay.slice(1,4)
+                        div
+                            img(src=hero.img alt=hero.hero)
+                            .played #{hero.played}
+                        

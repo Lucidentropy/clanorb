@@ -8,7 +8,7 @@ let overwatch = {
         const portrait = $('.player-portrait').attr('src');
 
         const prestigeEl = $('.player-level').first().attr('style');
-        const prestigeHex = prestigeEl.match(/0x0*[1-9a-fA-F][0-9a-fA-F]*/);
+        const prestigeHex = prestigeEl ? prestigeEl.match(/0x0*[1-9a-fA-F][0-9a-fA-F]*/) : false;
         const prestigeLevel = prestigeHex ? this.getPrestigeLevel(prestigeHex[0]) : 0;
 
         const stats = {}
