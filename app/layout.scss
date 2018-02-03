@@ -140,6 +140,13 @@ main {
             list-style-type: square;
         }
     }
+    a {
+        i.fa {
+            margin-left:5px;
+            text-decoration: none;
+            color:inherit;
+        }
+    }
     img {
         max-width: 100%;
     }
@@ -364,6 +371,10 @@ footer {
     text-align: center;
 }
 
+.twocol {
+    display:flex;
+    flex-direction:row;
+}
 img.center {
     display: block;
     margin-left: auto;

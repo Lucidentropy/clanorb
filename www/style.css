@@ -526,33 +526,6 @@ main .theaterModeToggle.on {
   width: 40%;
 }
 
-.orbskin {
-  float: right;
-  margin-right: 10px;
-  border-radius: 5px;
-  max-width: 35%;
-}
-
-.downloads {
-  text-align: center;
-  padding: 0 20px;
-}
-
-.downloads a {
-  font-weight: bold;
-  display: inline-block;
-  background-color: #00a5e2;
-  color: #000;
-  border-radius: 5px;
-  padding: 5px 9px;
-  margin: 15px 0 4px;
-  text-shadow: 1px 1px 1px #ccc;
-}
-
-.downloads p {
-  margin: 0 20px 10px 0;
-}
-
 #members h2 {
   margin: 0;
 }
@@ -639,6 +612,35 @@ main .theaterModeToggle.on {
 #members .classList > div ul {
   list-style: none inside none;
   margin: 0;
+}
+
+.orbskin {
+  max-width: 35%;
+}
+
+.orbskin img {
+  border-radius: 5px;
+}
+
+.downloads {
+  text-align: center;
+  padding: 0 20px;
+  width: 65%;
+}
+
+.downloads > a {
+  font-weight: bold;
+  display: inline-block;
+  background-color: #00a5e2;
+  color: #000;
+  border-radius: 5px;
+  padding: 5px 9px;
+  margin: 15px 0 4px;
+  text-shadow: 1px 1px 1px #ccc;
+}
+
+.downloads p {
+  margin: 0 20px 10px 0;
 }
 
 #tribesMasterList {
@@ -909,6 +911,12 @@ main ul.column-list {
   column-gap: 20px;
   list-style: inside;
   list-style-type: square;
+}
+
+main a i.fa {
+  margin-left: 5px;
+  text-decoration: none;
+  color: inherit;
 }
 
 main img {
@@ -1191,6 +1199,11 @@ footer {
 
 .center {
   text-align: center;
+}
+
+.twocol {
+  display: flex;
+  flex-direction: row;
 }
 
 img.center {
